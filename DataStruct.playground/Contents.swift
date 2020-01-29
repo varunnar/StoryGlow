@@ -6,45 +6,41 @@ import UIKit
 import PlaygroundSupport
 
 
-class GlobalVar: UIViewController{
-    struct globalItems {
-        static var storyArray = [story]() //By adding this information in a struct, we can reach this information from anywhere
+class GlobalVar{
+    struct GlobalItems {
+        static var storyArray = [Story]() //By adding this information in a struct, we can reach this information from anywhere
         static var storyIndex = 0
     }
-    internal class story{ //This is the class defining what is needed in a story
-        let StoryName: String
-        var SettingsArray = [settings]() //This array holds the list of settings for that story
-        var SettingIndex = 0
-        init(storyName: String, settingsArr: [settings], settingInd: Int) {
-            StoryName = storyName
-            SettingsArray = settingsArr
-            SettingIndex = settingInd
+    internal class Story{ //This is the class defining what is needed in a story
+        let storyName: String
+        var sceneArray = [Scenes]() //This array holds the list of settings for that story
+        var sceneIndex = 0
+        init(storyN: String, settingsArr: [Scenes], settingInd: Int) {
+            storyName = storyN
+            sceneArray = settingsArr
+            sceneIndex = settingInd
         }
-        internal class settings{ //This class defines a single setting within a single story
-            let SettingName: String
-            var ButtonInfo = [Button](repeating: Button(buttonName: "", buttonSound: ""), count: 6)//this holds the name and sound name for every button. This defined for a size of 6 because there are 6 buttons
-            let ColorVal: Int //This holds the color previously selected. May have to change to a different type of int value
-            init(settingName: String, point: CGPoint, buttonSounds: [Button], colorVal: Int) {
-                SettingName = settingName
-                ButtonInfo = buttonSounds
-                ColorVal = colorVal
+        internal class Scenes{ //This class defines a single setting within a single story
+            let sceneName: String
+            var buttonInfo = [SoundAffects](repeating: SoundAffects(soundN: "", SoundV: ""), count: 6)//this holds the name and sound name for every button. This defined for a size of 6 because there are 6 buttons
+            let colorVal: Int //This holds the color previously selected. May have to change to a different type of int value
+            init(settingName: String, buttonSounds: [SoundAffects], colorV: Int) {
+                sceneName = settingName
+                buttonInfo = buttonSounds
+                colorVal = colorV
             }
-            internal class Button{ //Holds the information for a single button on one setting
-                let ButtonName: String //The name given to the button by the user
-                let ButtonSound: String //this may be a different audio type
-                init (buttonName: String, buttonSound: String)
+            internal class SoundAffects{ //Holds the information for a single button on one setting
+                let soundName: String //The name given to the button by the user
+                let soundVal: String //this may be a different audio type
+                init (soundN: String, SoundV: String)
                 {
-                    ButtonName = buttonName
-                    ButtonSound = buttonSound
+                    soundName = soundN
+                    soundVal = SoundV
                 }
             }
         }
     }
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
+    // Do any additional setup after loading the view, typically from a nib
 }
 
 /*class MyViewController : UIViewController {
