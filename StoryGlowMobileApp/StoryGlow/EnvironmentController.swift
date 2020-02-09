@@ -26,25 +26,29 @@ class EnvironmentController: UIViewController {
     var ColorWheelView = UIImageView()
     var ColorWheel = UIImage()
     
-    
+    //initializing light services
     let lightService = LightService(
         lightsChangeDispatcher: lightNotification(),
         transportGenerator: UdpTransport.self,
         extensionFactories: [LightsGroupLocationService.self]
     )
+    //Array of type light that holds all the lightbulbs found by the application
     var lightArray = [Light]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        //start the light services
         lightService.start()
+        //give a notification for when the light is added
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil)
         
-        
+        //setting up the stackviews and images
         SetupStackView1()
         SetupStackView2()
         SetupColorWheel()
+        
+        //Adding gestures to the image to allow color selection
         let imageClickedGesture = UITapGestureRecognizer(target: self, action: #selector(imageTap))
         let imageHeldGesture = UILongPressGestureRecognizer(target: self, action: #selector(imageHeld))
         ColorWheelView.addGestureRecognizer(imageClickedGesture)
@@ -55,6 +59,8 @@ class EnvironmentController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
+     //setting up buttons and adding them to stackview1
     func SetupStackView1()
     {
         SoundButton1.backgroundColor = .gray
@@ -71,6 +77,7 @@ class EnvironmentController: UIViewController {
         StackViewConfig1()
     }
     
+    //configuring stackview1's constraints
     func StackViewConfig1()
     {
         StackView1.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +88,7 @@ class EnvironmentController: UIViewController {
         
     }
     
+    //setting up buttons and adding them to stackview2
     func SetupStackView2()
     {
         SoundButton4.backgroundColor = .gray
@@ -97,6 +105,7 @@ class EnvironmentController: UIViewController {
         StackViewConfig2()
     }
     
+    
     func StackViewConfig2()
     {
         StackView2.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +115,7 @@ class EnvironmentController: UIViewController {
         StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 50).isActive = true
         
     }
-    
+    //configuring stackview2's constraints
     func SetupColorWheel()
     {
         ColorWheel = UIImage(named: "colorwheel2")!
@@ -115,41 +124,39 @@ class EnvironmentController: UIViewController {
         colorwheelConfig()
     }
     
+    //Setting up the Colorwheel image and adding Constraints
     func colorwheelConfig()
     {
         ColorWheelView.translatesAutoresizingMaskIntoConstraints = false
         ColorWheelView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         ColorWheelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        //making sure UIImageView is the same size as the image so the CGimage pixels line up with the UIImage pixels
         ColorWheelView.widthAnchor.constraint(equalToConstant: ColorWheel.size.width).isActive = true
         ColorWheelView.heightAnchor.constraint(equalToConstant: ColorWheel.size.height).isActive = true
-        /*ColorWheelView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        ColorWheelView.topAnchor.constraint(equalTo: StackView2.bottomAnchor, constant: 220).isActive = true
-        ColorWheelView.contentMode = .scaleToFill*/
         
 
         
     }
     
+    //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
     @objc func imageTap(recognizer: UITapGestureRecognizer)
     {
         let point = recognizer.location(in: ColorWheelView)
         let x = Int(point.x)
         let y = Int(point.y)
-        SoundButton1.backgroundColor = ColorWheel[x,y]
-    }
-    
-    @objc func imageHeld(recognizer: UILongPressGestureRecognizer)
-    {
-        let point = recognizer.location(in: ColorWheelView)
-        let x = Int(point.x)
-        let y = Int(point.y)
+        
+        //Iterating through all lights and changing the color
         for i in lightArray{
             let RGBcolor = ColorWheel[x,y]
             var hue: CGFloat = 0
             var saturation: CGFloat = 0
             var brightness: CGFloat = 0
             var alpha: CGFloat = 0
+            
+            //converting color from RGB to HSB
             RGBcolor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+            
+            //Setting light color
             let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
             setColor.fireAndForget()
@@ -157,6 +164,33 @@ class EnvironmentController: UIViewController {
         }
     }
     
+    //like the click function, checks the color of image as it's held, change the button color and the color of every light
+    @objc func imageHeld(recognizer: UILongPressGestureRecognizer)
+    {
+        let point = recognizer.location(in: ColorWheelView)
+        let x = Int(point.x)
+        let y = Int(point.y)
+        
+        //Iterating through all lights and changing the color
+        for i in lightArray{
+            let RGBcolor = ColorWheel[x,y]
+            var hue: CGFloat = 0
+            var saturation: CGFloat = 0
+            var brightness: CGFloat = 0
+            var alpha: CGFloat = 0
+            
+            //converting color from RGB to HSB
+            RGBcolor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+            
+            //Setting light color
+            let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+            let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
+            setColor.fireAndForget()
+            SoundButton1.backgroundColor = ColorWheel[x,y]
+        }
+    }
+    
+    //Notification for adding light. If a light is found change the light to a random color to mark that it is connected
     @objc func AddedLight(notification: Notification){
         if let light = notification.object as? Light{
             lightArray.append(light)
@@ -180,15 +214,19 @@ class EnvironmentController: UIViewController {
     */
 }
 
+//This extension gets us the pixel information of the CGimage and converts it into an RGB UIColor
 extension UIImage {
     subscript(x: Int, y: Int)-> UIColor?{
+        //makes sure that our point is within the range of the image
         guard x>=0 && x<Int(size.width) && y>=0 && y<Int(size.height),
+            //converts cgimage data into data for each byte
             let cg = cgImage,
             let provider = cg.dataProvider,
             let providedData = provider.data,
             let pureData = CFDataGetBytePtr(providedData) else{
                 return nil
         }
+        //converts data into RGBA
         let componentNum = 4
         let pixelData = ((Int(size.width)*y)+x) * componentNum
         let r = CGFloat(pureData[pixelData]) / 255.0
