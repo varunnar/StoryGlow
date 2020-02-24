@@ -7,22 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E931671823F4D1CB00243E63 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */; };
+		E931671923F4D1CB00243E63 /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */; };
+		E931671A23F4D1CB00243E63 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */; };
+		E931671B23F4D1CB00243E63 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */; };
+		E931671C23F4D1CB00243E63 /* RxLifx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7923E7827300ADB1D5 /* RxLifx.framework */; };
+		E931671D23F4D1CB00243E63 /* RxLifxApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7823E7827300ADB1D5 /* RxLifxApi.framework */; };
+		E931671E23F4D1CB00243E63 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7A23E7827300ADB1D5 /* RxSwift.framework */; };
+		E94574AD23F4D340000AD410 /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E94574AE23F4D34D000AD410 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E94574AF23F4D34D000AD410 /* RxLifx.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7923E7827300ADB1D5 /* RxLifx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E94574B023F4D34D000AD410 /* RxLifxApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7823E7827300ADB1D5 /* RxLifxApi.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E94574B123F4D34D000AD410 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7A23E7827300ADB1D5 /* RxSwift.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E94574B323F4D34D000AD410 /* LifxDomain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E94574B423F4D34D000AD410 /* RxAtomic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E947453223F08012007AC880 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947453123F08012007AC880 /* DataModel.swift */; };
-		E97F7D7223E7825600ADB1D5 /* RxAtomic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */; };
-		E97F7D7323E7825600ADB1D5 /* RxAtomic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E97F7D7423E7825600ADB1D5 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */; };
-		E97F7D7523E7825600ADB1D5 /* LifxDomain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E97F7D7D23E7827300ADB1D5 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */; };
-		E97F7D7E23E7827300ADB1D5 /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E97F7D7F23E7827300ADB1D5 /* RxLifxApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7823E7827300ADB1D5 /* RxLifxApi.framework */; };
-		E97F7D8023E7827300ADB1D5 /* RxLifxApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7823E7827300ADB1D5 /* RxLifxApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E97F7D8123E7827300ADB1D5 /* RxLifx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7923E7827300ADB1D5 /* RxLifx.framework */; };
-		E97F7D8223E7827300ADB1D5 /* RxLifx.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7923E7827300ADB1D5 /* RxLifx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E97F7D8323E7827300ADB1D5 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7A23E7827300ADB1D5 /* RxSwift.framework */; };
-		E97F7D8423E7827300ADB1D5 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7A23E7827300ADB1D5 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E97F7D8523E7827300ADB1D5 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */; };
-		E97F7D8623E7827300ADB1D5 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947453B23F39AC8007AC880 /* PageViewController.swift */; };
 		E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */; };
+		E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */; };
 		E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4723E38369004A6B9C /* AppDelegate.swift */; };
 		E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */; };
 		E9FCAF5123E3836B004A6B9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9FCAF5023E3836B004A6B9C /* Assets.xcassets */; };
@@ -33,17 +35,17 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		E97F7D7623E7825600ADB1D5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E97F7D7323E7825600ADB1D5 /* RxAtomic.framework in Embed Frameworks */,
-				E97F7D7523E7825600ADB1D5 /* LifxDomain.framework in Embed Frameworks */,
-				E97F7D8623E7827300ADB1D5 /* RxCocoa.framework in Embed Frameworks */,
-				E97F7D8423E7827300ADB1D5 /* RxSwift.framework in Embed Frameworks */,
-				E97F7D8023E7827300ADB1D5 /* RxLifxApi.framework in Embed Frameworks */,
-				E97F7D7E23E7827300ADB1D5 /* RxBlocking.framework in Embed Frameworks */,
-				E97F7D8223E7827300ADB1D5 /* RxLifx.framework in Embed Frameworks */,
+				E94574AE23F4D34D000AD410 /* RxCocoa.framework in Embed Frameworks */,
+				E94574AF23F4D34D000AD410 /* RxLifx.framework in Embed Frameworks */,
+				E94574B023F4D34D000AD410 /* RxLifxApi.framework in Embed Frameworks */,
+				E94574B123F4D34D000AD410 /* RxSwift.framework in Embed Frameworks */,
+				E94574B323F4D34D000AD410 /* LifxDomain.framework in Embed Frameworks */,
+				E94574B423F4D34D000AD410 /* RxAtomic.framework in Embed Frameworks */,
+				E94574AD23F4D340000AD410 /* RxBlocking.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		E947453123F08012007AC880 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		E947453B23F39AC8007AC880 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxAtomic.framework; path = Carthage/Build/iOS/RxAtomic.framework; sourceTree = "<group>"; };
 		E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LifxDomain.framework; path = Carthage/Build/iOS/LifxDomain.framework; sourceTree = "<group>"; };
 		E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
@@ -61,6 +64,7 @@
 		E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		E97F7D7C23E7827300ADB1D5 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFile.swift; sourceTree = "<group>"; };
+		E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSceneViewController.swift; sourceTree = "<group>"; };
 		E9FCAF4423E38369004A6B9C /* StoryGlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryGlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9FCAF4723E38369004A6B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,13 +79,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97F7D7223E7825600ADB1D5 /* RxAtomic.framework in Frameworks */,
-				E97F7D7423E7825600ADB1D5 /* LifxDomain.framework in Frameworks */,
-				E97F7D8523E7827300ADB1D5 /* RxCocoa.framework in Frameworks */,
-				E97F7D8323E7827300ADB1D5 /* RxSwift.framework in Frameworks */,
-				E97F7D7F23E7827300ADB1D5 /* RxLifxApi.framework in Frameworks */,
-				E97F7D7D23E7827300ADB1D5 /* RxBlocking.framework in Frameworks */,
-				E97F7D8123E7827300ADB1D5 /* RxLifx.framework in Frameworks */,
+				E931671823F4D1CB00243E63 /* LifxDomain.framework in Frameworks */,
+				E931671923F4D1CB00243E63 /* RxAtomic.framework in Frameworks */,
+				E931671A23F4D1CB00243E63 /* RxBlocking.framework in Frameworks */,
+				E931671B23F4D1CB00243E63 /* RxCocoa.framework in Frameworks */,
+				E931671C23F4D1CB00243E63 /* RxLifx.framework in Frameworks */,
+				E931671D23F4D1CB00243E63 /* RxLifxApi.framework in Frameworks */,
+				E931671E23F4D1CB00243E63 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,8 +127,10 @@
 		E9FCAF4623E38369004A6B9C /* StoryGlow */ = {
 			isa = PBXGroup;
 			children = (
-				E947453123F08012007AC880 /* DataModel.swift */,
+				E947453B23F39AC8007AC880 /* PageViewController.swift */,
 				E9FCAF5B23E383DE004A6B9C /* EnvironmentController.swift */,
+				E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */,
+				E947453123F08012007AC880 /* DataModel.swift */,
 				E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */,
 				E9FCAF4723E38369004A6B9C /* AppDelegate.swift */,
 				E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */,
@@ -146,7 +152,7 @@
 				E9FCAF4123E38369004A6B9C /* Frameworks */,
 				E9FCAF4223E38369004A6B9C /* Resources */,
 				E97F7D7623E7825600ADB1D5 /* Embed Frameworks */,
-				E97F7D8923E782FC00ADB1D5 /* ShellScript */,
+				E9A4FD1B23F4F624002DF295 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -203,7 +209,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E97F7D8923E782FC00ADB1D5 /* ShellScript */ = {
+		E9A4FD1B23F4F624002DF295 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -212,12 +218,12 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/LifxDomain.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxLifxApi.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxLifx.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxAtomic.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxLifx.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxLifxApi.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -225,7 +231,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -237,8 +243,10 @@
 				E947453223F08012007AC880 /* DataModel.swift in Sources */,
 				E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */,
 				E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */,
+				E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */,
 				E9FCAF5C23E383DE004A6B9C /* EnvironmentController.swift in Sources */,
 				E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */,
+				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +381,7 @@
 		E9FCAF5923E3836B004A6B9C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RF8WDUR5RE;
@@ -381,10 +390,12 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = StoryGlow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = Varun.StoryGlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -395,6 +406,7 @@
 		E9FCAF5A23E3836B004A6B9C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RF8WDUR5RE;
@@ -403,10 +415,12 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = StoryGlow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_BUNDLE_IDENTIFIER = Varun.StoryGlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

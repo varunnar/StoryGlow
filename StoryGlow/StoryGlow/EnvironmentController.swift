@@ -15,6 +15,9 @@ import LifxDomain
 
 class EnvironmentController: UIViewController {
     
+    var storyIndex = 0
+    var SceneIndex = 0
+    var colorView = UIView()
     var SoundButton1 = UIButton()
     var SoundButton2 = UIButton()
     var SoundButton3 = UIButton()
@@ -84,7 +87,7 @@ class EnvironmentController: UIViewController {
         StackView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         StackView1.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
+        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         
     }
     
@@ -112,7 +115,7 @@ class EnvironmentController: UIViewController {
         StackView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         StackView2.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 50).isActive = true
+        StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 30).isActive = true
         
     }
     //configuring stackview2's constraints
@@ -121,6 +124,7 @@ class EnvironmentController: UIViewController {
         ColorWheel = UIImage(named: "colorwheel2")!
         ColorWheelView = UIImageView(image: ColorWheel)
         view.addSubview(ColorWheelView)
+        view.addSubview(colorView)
         colorwheelConfig()
     }
     
@@ -129,10 +133,17 @@ class EnvironmentController: UIViewController {
     {
         ColorWheelView.translatesAutoresizingMaskIntoConstraints = false
         ColorWheelView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        ColorWheelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        ColorWheelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
         //making sure UIImageView is the same size as the image so the CGimage pixels line up with the UIImage pixels
         ColorWheelView.widthAnchor.constraint(equalToConstant: ColorWheel.size.width).isActive = true
         ColorWheelView.heightAnchor.constraint(equalToConstant: ColorWheel.size.height).isActive = true
+        
+        colorView.translatesAutoresizingMaskIntoConstraints = false
+        colorView.backgroundColor = .gray
+        colorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        colorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        colorView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        colorView.bottomAnchor.constraint(equalTo: ColorWheelView.topAnchor, constant:-30).isActive = true
         
 
         
@@ -141,6 +152,7 @@ class EnvironmentController: UIViewController {
     //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
     @objc func imageTap(recognizer: UITapGestureRecognizer)
     {
+        print("tapped")
         let point = recognizer.location(in: ColorWheelView)
         let x = Int(point.x)
         let y = Int(point.y)
@@ -160,7 +172,7 @@ class EnvironmentController: UIViewController {
             let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
             setColor.fireAndForget()
-            SoundButton1.backgroundColor = ColorWheel[x,y]
+            colorView.backgroundColor = ColorWheel[x,y]
         }
     }
     
@@ -186,7 +198,7 @@ class EnvironmentController: UIViewController {
             let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
             setColor.fireAndForget()
-            SoundButton1.backgroundColor = ColorWheel[x,y]
+            colorView.backgroundColor = ColorWheel[x,y]
         }
     }
     
