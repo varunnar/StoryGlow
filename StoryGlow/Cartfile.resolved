@@ -1,2 +1,3 @@
+github "3lvis/Networking" "4.4.0"
 github "ReactiveX/RxSwift" "4.5.0"
 github "flowsprenger/RxLifx-Swift" "d0e777e29842289a3cd534a09b8f0a4704b29d8c"

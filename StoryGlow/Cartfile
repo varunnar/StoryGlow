@@ -1,3 +1,4 @@
 github "flowsprenger/RxLifx-Swift" "master"
 github "ReactiveX/RxSwift"
+github "3lvis/Networking" ~> 4.4
 

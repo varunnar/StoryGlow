@@ -25,6 +25,15 @@
 		E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947453B23F39AC8007AC880 /* PageViewController.swift */; };
 		E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */; };
 		E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */; };
+		E990B4EF2404E91700187964 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E990B4EE2404E91700187964 /* Networking.framework */; };
+		E990B4F52404EA5400187964 /* URLbuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4F42404EA5400187964 /* URLbuilder.swift */; };
+		E990B4F72404EA9F00187964 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E990B4F62404EA9F00187964 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E990B4F92404EB1700187964 /* soundTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4F82404EB1700187964 /* soundTableViewController.swift */; };
+		E990B4FB2404EB5600187964 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4FA2404EB5600187964 /* ViewController.swift */; };
+		E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4FC2404EBC100187964 /* UIview+Ext.swift */; };
+		E990B5022404EC2700187964 /* data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5012404EC2700187964 /* data.swift */; };
+		E990B5042404EC6600187964 /* SoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5032404EC6600187964 /* SoundCell.swift */; };
+		E990B5062404ECAE00187964 /* HoldsPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5052404ECAE00187964 /* HoldsPages.swift */; };
 		E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4723E38369004A6B9C /* AppDelegate.swift */; };
 		E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */; };
 		E9FCAF5123E3836B004A6B9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9FCAF5023E3836B004A6B9C /* Assets.xcassets */; };
@@ -46,6 +55,7 @@
 				E94574B323F4D34D000AD410 /* LifxDomain.framework in Embed Frameworks */,
 				E94574B423F4D34D000AD410 /* RxAtomic.framework in Embed Frameworks */,
 				E94574AD23F4D340000AD410 /* RxBlocking.framework in Embed Frameworks */,
+				E990B4F72404EA9F00187964 /* Networking.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +75,15 @@
 		E97F7D7C23E7827300ADB1D5 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFile.swift; sourceTree = "<group>"; };
 		E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSceneViewController.swift; sourceTree = "<group>"; };
+		E990B4EE2404E91700187964 /* Networking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Networking.framework; path = Carthage/Build/iOS/Networking.framework; sourceTree = "<group>"; };
+		E990B4F42404EA5400187964 /* URLbuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLbuilder.swift; sourceTree = "<group>"; };
+		E990B4F62404EA9F00187964 /* Networking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Networking.framework; path = Carthage/Build/iOS/Networking.framework; sourceTree = "<group>"; };
+		E990B4F82404EB1700187964 /* soundTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundTableViewController.swift; sourceTree = "<group>"; };
+		E990B4FA2404EB5600187964 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E990B4FC2404EBC100187964 /* UIview+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIview+Ext.swift"; sourceTree = "<group>"; };
+		E990B5012404EC2700187964 /* data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = data.swift; sourceTree = "<group>"; };
+		E990B5032404EC6600187964 /* SoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundCell.swift; sourceTree = "<group>"; };
+		E990B5052404ECAE00187964 /* HoldsPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldsPages.swift; sourceTree = "<group>"; };
 		E9FCAF4423E38369004A6B9C /* StoryGlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryGlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9FCAF4723E38369004A6B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +105,7 @@
 				E931671C23F4D1CB00243E63 /* RxLifx.framework in Frameworks */,
 				E931671D23F4D1CB00243E63 /* RxLifxApi.framework in Frameworks */,
 				E931671E23F4D1CB00243E63 /* RxSwift.framework in Frameworks */,
+				E990B4EF2404E91700187964 /* Networking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +115,7 @@
 		E97F7D6D23E7821900ADB1D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E990B4EE2404E91700187964 /* Networking.framework */,
 				E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */,
 				E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */,
 				E97F7D7923E7827300ADB1D5 /* RxLifx.framework */,
@@ -107,9 +128,50 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E990B4FE2404EBCD00187964 /* Extension-Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E990B4FC2404EBC100187964 /* UIview+Ext.swift */,
+			);
+			path = "Extension-Utilities";
+			sourceTree = "<group>";
+		};
+		E990B5002404EBF900187964 /* soundControl */ = {
+			isa = PBXGroup;
+			children = (
+				E990B4F42404EA5400187964 /* URLbuilder.swift */,
+				E990B4F82404EB1700187964 /* soundTableViewController.swift */,
+				E990B4FA2404EB5600187964 /* ViewController.swift */,
+				E990B4FE2404EBCD00187964 /* Extension-Utilities */,
+				E990B5012404EC2700187964 /* data.swift */,
+				E990B5032404EC6600187964 /* SoundCell.swift */,
+				E990B5052404ECAE00187964 /* HoldsPages.swift */,
+			);
+			path = soundControl;
+			sourceTree = "<group>";
+		};
+		E990B5072404F06000187964 /* SceneControl */ = {
+			isa = PBXGroup;
+			children = (
+				E947453B23F39AC8007AC880 /* PageViewController.swift */,
+				E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */,
+			);
+			path = SceneControl;
+			sourceTree = "<group>";
+		};
+		E990B5082404F0A900187964 /* lightControl */ = {
+			isa = PBXGroup;
+			children = (
+				E9FCAF5B23E383DE004A6B9C /* EnvironmentController.swift */,
+				E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */,
+			);
+			path = lightControl;
+			sourceTree = "<group>";
+		};
 		E9FCAF3B23E38369004A6B9C = {
 			isa = PBXGroup;
 			children = (
+				E990B4F62404EA9F00187964 /* Networking.framework */,
 				E9FCAF4623E38369004A6B9C /* StoryGlow */,
 				E9FCAF4523E38369004A6B9C /* Products */,
 				E97F7D6D23E7821900ADB1D5 /* Frameworks */,
@@ -127,13 +189,12 @@
 		E9FCAF4623E38369004A6B9C /* StoryGlow */ = {
 			isa = PBXGroup;
 			children = (
-				E947453B23F39AC8007AC880 /* PageViewController.swift */,
-				E9FCAF5B23E383DE004A6B9C /* EnvironmentController.swift */,
-				E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */,
-				E947453123F08012007AC880 /* DataModel.swift */,
-				E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */,
-				E9FCAF4723E38369004A6B9C /* AppDelegate.swift */,
 				E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */,
+				E9FCAF4723E38369004A6B9C /* AppDelegate.swift */,
+				E990B5002404EBF900187964 /* soundControl */,
+				E990B5082404F0A900187964 /* lightControl */,
+				E990B5072404F06000187964 /* SceneControl */,
+				E947453123F08012007AC880 /* DataModel.swift */,
 				E9FCAF5023E3836B004A6B9C /* Assets.xcassets */,
 				E9FCAF5223E3836B004A6B9C /* LaunchScreen.storyboard */,
 				E9FCAF5523E3836B004A6B9C /* Info.plist */,
@@ -240,13 +301,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E990B4FB2404EB5600187964 /* ViewController.swift in Sources */,
+				E990B5062404ECAE00187964 /* HoldsPages.swift in Sources */,
 				E947453223F08012007AC880 /* DataModel.swift in Sources */,
 				E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */,
 				E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */,
 				E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */,
 				E9FCAF5C23E383DE004A6B9C /* EnvironmentController.swift in Sources */,
+				E990B4F52404EA5400187964 /* URLbuilder.swift in Sources */,
+				E990B5022404EC2700187964 /* data.swift in Sources */,
+				E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */,
 				E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */,
+				E990B4F92404EB1700187964 /* soundTableViewController.swift in Sources */,
 				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
+				E990B5042404EC6600187964 /* SoundCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

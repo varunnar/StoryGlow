@@ -17,7 +17,6 @@ class PageHolder: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("here")
         setup()
         setupPageControl()
         pageviewControl.delegate = self
@@ -50,6 +49,7 @@ class PageHolder: UIViewController {
     
     func setupPageControl()
     {
+        print("pagecontrol done")
         pageControl.frame = CGRect(x: 50, y: 300, width: 200, height: 20)
         pageControl.currentPageIndicatorTintColor = .black
         pageControl.pageIndicatorTintColor = .gray
@@ -62,11 +62,10 @@ class PageHolder: UIViewController {
     func PageControlConstraints()
     {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.bottomAnchor.constraint(equalTo: pageviewControl.view.bottomAnchor, constant: 20).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: pageviewControl.view.bottomAnchor, constant: -10).isActive = true
         pageControl.widthAnchor.constraint(equalTo: pageviewControl.view.widthAnchor, constant: -20).isActive = true
         pageControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
         pageControl.centerXAnchor.constraint(equalTo: pageviewControl.view.centerXAnchor).isActive = true
-        pageControl.backgroundColor = .red
         pageviewControl.view.bringSubviewToFront(pageControl)
 
     }
@@ -75,8 +74,9 @@ class PageHolder: UIViewController {
     {
         print("add page")
         let NewPage = EnvironmentController()
-        pages.append(NewPage)
-        pageviewControl.setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
+        pages.insert(NewPage, at: pages.count-2)
+        pageviewControl.setViewControllers([pages[pages.count-2]], direction: .reverse, animated: true, completion: nil)
+        pageControl.numberOfPages = pages.count
     }
     
 
@@ -97,13 +97,14 @@ extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelega
         if let viewControllerIndex = self.pages.firstIndex(of: viewController) {
             print("index backward \(viewControllerIndex)")
             print("in this function")
-            if viewControllerIndex == 0 {
+            if viewControllerIndex != 0 {
                 // wrap to last page in array
-                return self.pages.last
-            } else {
-                // go to previous page in array
+                print("lookingback")
                 return self.pages[viewControllerIndex - 1]
-            }
+            } /*else {
+                // go to previous page in array
+                return self.pages.last
+            }*/
         }
         return nil
     }
@@ -115,10 +116,10 @@ extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelega
             if viewControllerIndex < self.pages.count - 1 {
                 // go to next page in array
                 return self.pages[viewControllerIndex + 1]
-            } else {
+            } /*else {
                 // wrap to first page in array
-                return self.pages.first
-            }
+                pageControl.currentPageIndicatorTintColor = .white
+            }*/
         }
         return nil
     }
@@ -130,17 +131,17 @@ extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelega
                     }
                 }
         }
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+    /*func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
             return pages.count
         }
 
-        func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-            guard let firstViewController = pageViewController.viewControllers?.first,
-                let firstViewControllerIndex = pages.firstIndex(of: firstViewController) else {
-                    return 0
-            }
-
-            return firstViewControllerIndex
+    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+        guard let firstViewController = pageViewController.viewControllers?.first,
+            let firstViewControllerIndex = pages.firstIndex(of: firstViewController) else {
+                return 0
         }
+
+        return firstViewControllerIndex
+    }*/
     
 }

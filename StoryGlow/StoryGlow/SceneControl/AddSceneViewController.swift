@@ -14,21 +14,26 @@ class AddSceneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.addSubview(AddButton)
         setupAddButton()
 
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
     func setupAddButton()
     {
         AddButton.setTitle("Add Environment", for: .normal)
-        AddButton.backgroundColor = .green
+        AddButton.backgroundColor = .blue
         AddButton.addTarget(self, action: #selector(AddViewController), for: .touchUpInside)
         AddButton.translatesAutoresizingMaskIntoConstraints = false
         AddButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         AddButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        AddButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     @objc func AddViewController()

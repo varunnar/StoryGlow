@@ -52,6 +52,7 @@ class EnvironmentController: UIViewController {
         SetupColorWheel()
         
         //Adding gestures to the image to allow color selection
+        SoundButton1.addTarget(self, action: #selector(AddSounds), for: .touchUpInside)
         let imageClickedGesture = UITapGestureRecognizer(target: self, action: #selector(imageTap))
         let imageHeldGesture = UILongPressGestureRecognizer(target: self, action: #selector(imageHeld))
         ColorWheelView.addGestureRecognizer(imageClickedGesture)
@@ -60,6 +61,13 @@ class EnvironmentController: UIViewController {
         
 
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func AddSounds()
+    {
+        let nextScreen = HoldsPages()
+        nextScreen.title = "Add a Sound"
+        navigationController?.pushViewController(nextScreen, animated: true)
     }
     
     
@@ -86,7 +94,7 @@ class EnvironmentController: UIViewController {
         StackView1.translatesAutoresizingMaskIntoConstraints = false
         StackView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        StackView1.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        StackView1.heightAnchor.constraint(equalToConstant: 80).isActive = true
         StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         
     }
@@ -114,8 +122,8 @@ class EnvironmentController: UIViewController {
         StackView2.translatesAutoresizingMaskIntoConstraints = false
         StackView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        StackView2.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 30).isActive = true
+        StackView2.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 20).isActive = true
         
     }
     //configuring stackview2's constraints
