@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
+class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
     //variables
     let audioSession = AVAudioSession.sharedInstance()
     var audioPlayer: AVAudioPlayer?
@@ -26,16 +26,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
     var SaveButton = UIButton(frame: CGRect(x: 100, y: 500, width: 200, height: 50))
 
     override func viewDidLoad() {
-       super.viewDidLoad()
-        
+        super.viewDidLoad()
         view.backgroundColor = .white
-         
-         //MARK: UI FOR APP
+//MARK: UI FOR APP
     //Record button
         ControlRecordingButton()
         RecButton.addTarget(self, action: #selector(RecButtonAction), for: .touchUpInside)
         self.view.addSubview(RecButton)
-         
     //Play Button
         PlayButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
         ControlPlayButton()
@@ -46,12 +43,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
         SaveButton.setTitle("Save Sound", for: .normal)
         PlayButton.addTarget(self, action: #selector(saveSound), for: .touchUpInside)
         self.view.addSubview(SaveButton)
-    
-    
         
-        //MARK: Other Code in View Did Load
+//MARK: Other Code in View Did Load
         // enable play and stop since we don't have any audio to work with on load
-         
              //get path for the audio file
              let dirPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
              let docDir = dirPath[0]
@@ -84,9 +78,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDe
          }
      }
     
-    
-    
-    //MARK:Button actions
+//MARK:Button actions
     @objc func RecButtonAction(sender: UIButton!) {
         if let recorder = audioRecorder {
             //check to make sure we aren't already recording

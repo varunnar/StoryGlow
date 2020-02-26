@@ -9,7 +9,6 @@
 import UIKit
 
 class HoldsPages: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-
     var pages = [UIViewController]()
     var currentIndex = 0
 
@@ -19,13 +18,13 @@ class HoldsPages: UIPageViewController, UIPageViewControllerDataSource, UIPageVi
     }
     
     func setupPages(){
-        let page1 = ViewController()
-        let page2 = soundTableViewController()
+        let page1 = RecordAudioController()
+        let page2 = SoundTableViewController()
         pages.append(page1)
         pages.append(page2)
         delegate=self
         dataSource=self
-        setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
+        setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
     }
     
     

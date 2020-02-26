@@ -28,11 +28,11 @@
 		E990B4EF2404E91700187964 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E990B4EE2404E91700187964 /* Networking.framework */; };
 		E990B4F52404EA5400187964 /* URLbuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4F42404EA5400187964 /* URLbuilder.swift */; };
 		E990B4F72404EA9F00187964 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E990B4F62404EA9F00187964 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E990B4F92404EB1700187964 /* soundTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4F82404EB1700187964 /* soundTableViewController.swift */; };
-		E990B4FB2404EB5600187964 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4FA2404EB5600187964 /* ViewController.swift */; };
+		E990B4F92404EB1700187964 /* SoundTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4F82404EB1700187964 /* SoundTableViewController.swift */; };
+		E990B4FB2404EB5600187964 /* RecordAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4FA2404EB5600187964 /* RecordAudioController.swift */; };
 		E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4FC2404EBC100187964 /* UIview+Ext.swift */; };
 		E990B5022404EC2700187964 /* data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5012404EC2700187964 /* data.swift */; };
-		E990B5042404EC6600187964 /* SoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5032404EC6600187964 /* SoundCell.swift */; };
+		E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5032404EC6600187964 /* CustomSoundCell.swift */; };
 		E990B5062404ECAE00187964 /* HoldsPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5052404ECAE00187964 /* HoldsPages.swift */; };
 		E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4723E38369004A6B9C /* AppDelegate.swift */; };
 		E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */; };
@@ -78,11 +78,11 @@
 		E990B4EE2404E91700187964 /* Networking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Networking.framework; path = Carthage/Build/iOS/Networking.framework; sourceTree = "<group>"; };
 		E990B4F42404EA5400187964 /* URLbuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLbuilder.swift; sourceTree = "<group>"; };
 		E990B4F62404EA9F00187964 /* Networking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Networking.framework; path = Carthage/Build/iOS/Networking.framework; sourceTree = "<group>"; };
-		E990B4F82404EB1700187964 /* soundTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundTableViewController.swift; sourceTree = "<group>"; };
-		E990B4FA2404EB5600187964 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E990B4F82404EB1700187964 /* SoundTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundTableViewController.swift; sourceTree = "<group>"; };
+		E990B4FA2404EB5600187964 /* RecordAudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudioController.swift; sourceTree = "<group>"; };
 		E990B4FC2404EBC100187964 /* UIview+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIview+Ext.swift"; sourceTree = "<group>"; };
 		E990B5012404EC2700187964 /* data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = data.swift; sourceTree = "<group>"; };
-		E990B5032404EC6600187964 /* SoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundCell.swift; sourceTree = "<group>"; };
+		E990B5032404EC6600187964 /* CustomSoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSoundCell.swift; sourceTree = "<group>"; };
 		E990B5052404ECAE00187964 /* HoldsPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldsPages.swift; sourceTree = "<group>"; };
 		E9FCAF4423E38369004A6B9C /* StoryGlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryGlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9FCAF4723E38369004A6B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,12 +139,12 @@
 		E990B5002404EBF900187964 /* soundControl */ = {
 			isa = PBXGroup;
 			children = (
-				E990B4F42404EA5400187964 /* URLbuilder.swift */,
-				E990B4F82404EB1700187964 /* soundTableViewController.swift */,
-				E990B4FA2404EB5600187964 /* ViewController.swift */,
+				E990B4FA2404EB5600187964 /* RecordAudioController.swift */,
 				E990B4FE2404EBCD00187964 /* Extension-Utilities */,
+				E990B4F42404EA5400187964 /* URLbuilder.swift */,
+				E990B4F82404EB1700187964 /* SoundTableViewController.swift */,
+				E990B5032404EC6600187964 /* CustomSoundCell.swift */,
 				E990B5012404EC2700187964 /* data.swift */,
-				E990B5032404EC6600187964 /* SoundCell.swift */,
 				E990B5052404ECAE00187964 /* HoldsPages.swift */,
 			);
 			path = soundControl;
@@ -301,7 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E990B4FB2404EB5600187964 /* ViewController.swift in Sources */,
+				E990B4FB2404EB5600187964 /* RecordAudioController.swift in Sources */,
 				E990B5062404ECAE00187964 /* HoldsPages.swift in Sources */,
 				E947453223F08012007AC880 /* DataModel.swift in Sources */,
 				E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */,
@@ -312,9 +312,9 @@
 				E990B5022404EC2700187964 /* data.swift in Sources */,
 				E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */,
 				E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */,
-				E990B4F92404EB1700187964 /* soundTableViewController.swift in Sources */,
+				E990B4F92404EB1700187964 /* SoundTableViewController.swift in Sources */,
 				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
-				E990B5042404EC6600187964 /* SoundCell.swift in Sources */,
+				E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +452,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RF8WDUR5RE;
+				DEVELOPMENT_TEAM = 32C86W6J58;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -477,7 +477,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RF8WDUR5RE;
+				DEVELOPMENT_TEAM = 32C86W6J58;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
