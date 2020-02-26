@@ -17,6 +17,8 @@ class PageHolder: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let Story = GlobalVar.Story(storyName: "NewStory")
+        GlobalVar.GlobalItems.storyArray.append(Story)
         setup()
         setupPageControl()
         pageviewControl.delegate = self
@@ -33,7 +35,9 @@ class PageHolder: UIViewController {
     {
         pageviewControl = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         let page1 = EnvironmentController()
+        page1.SceneIndex = 0
         let page2 = EnvironmentController()
+         page2.SceneIndex = 1
         let page3 = AddSceneViewController()
         pages.append(page1)
         pages.append(page2)
@@ -74,6 +78,7 @@ class PageHolder: UIViewController {
     {
         print("add page")
         let NewPage = EnvironmentController()
+        NewPage.SceneIndex = pages.count-1
         pages.insert(NewPage, at: pages.count-2)
         pageviewControl.setViewControllers([pages[pages.count-2]], direction: .reverse, animated: true, completion: nil)
         pageControl.numberOfPages = pages.count

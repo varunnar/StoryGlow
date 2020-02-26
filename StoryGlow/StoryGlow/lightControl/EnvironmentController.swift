@@ -17,6 +17,7 @@ class EnvironmentController: UIViewController {
     
     var storyIndex = 0
     var SceneIndex = 0
+    var soundButtonArray = [UIButton]()
     var colorView = UIView()
     var SoundButton1 = UIButton()
     var SoundButton2 = UIButton()
@@ -40,6 +41,8 @@ class EnvironmentController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor())
+        GlobalVar.GlobalItems.storyArray[0].sceneArray.append(Scene)
         view.backgroundColor = .white
         //start the light services
         lightService.start()
@@ -52,19 +55,40 @@ class EnvironmentController: UIViewController {
         SetupColorWheel()
         
         //Adding gestures to the image to allow color selection
-        SoundButton1.addTarget(self, action: #selector(AddSounds), for: .touchUpInside)
         let imageClickedGesture = UITapGestureRecognizer(target: self, action: #selector(imageTap))
-        let imageHeldGesture = UILongPressGestureRecognizer(target: self, action: #selector(imageHeld))
+        let imageDragGesture = UIPanGestureRecognizer(target: self, action: #selector(imageTap))
         ColorWheelView.addGestureRecognizer(imageClickedGesture)
-        ColorWheelView.addGestureRecognizer(imageHeldGesture)
+        ColorWheelView.addGestureRecognizer(imageDragGesture)
         ColorWheelView.isUserInteractionEnabled = true
-        
+        SoundButtonSyncing()
 
         // Do any additional setup after loading the view.
     }
     
-    @objc func AddSounds()
+    func SoundButtonSyncing()
     {
+        soundButtonArray.append(SoundButton1)
+        soundButtonArray.append(SoundButton2)
+        soundButtonArray.append(SoundButton3)
+        soundButtonArray.append(SoundButton4)
+        soundButtonArray.append(SoundButton5)
+        soundButtonArray.append(SoundButton6)
+        SoundButton1.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        SoundButton2.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        SoundButton3.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        SoundButton4.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        SoundButton5.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        SoundButton6.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+    }
+    
+    @objc func AddSounds(sender: UIButton)
+    {
+        if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
+        {
+            print(SceneIndex)
+            GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
+            print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName)
+        }
         let nextScreen = HoldsPages()
         nextScreen.title = "Add a Sound"
         navigationController?.pushViewController(nextScreen, animated: true)
@@ -124,7 +148,6 @@ class EnvironmentController: UIViewController {
         StackView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         StackView2.heightAnchor.constraint(equalToConstant: 80).isActive = true
         StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 20).isActive = true
-        
     }
     //configuring stackview2's constraints
     func SetupColorWheel()
@@ -152,9 +175,6 @@ class EnvironmentController: UIViewController {
         colorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         colorView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         colorView.bottomAnchor.constraint(equalTo: ColorWheelView.topAnchor, constant:-30).isActive = true
-        
-
-        
     }
     
     //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
@@ -165,19 +185,21 @@ class EnvironmentController: UIViewController {
         let x = Int(point.x)
         let y = Int(point.y)
         
+        let RGBcolor = ColorWheel[x,y]
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal = RGBcolor!
+        print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal)
+        //converting color from RGB to HSB
+        RGBcolor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        //Setting light color
+        let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+        
         //Iterating through all lights and changing the color
         for i in lightArray{
-            let RGBcolor = ColorWheel[x,y]
-            var hue: CGFloat = 0
-            var saturation: CGFloat = 0
-            var brightness: CGFloat = 0
-            var alpha: CGFloat = 0
-            
-            //converting color from RGB to HSB
-            RGBcolor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-            
-            //Setting light color
-            let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
             setColor.fireAndForget()
             colorView.backgroundColor = ColorWheel[x,y]
@@ -185,7 +207,7 @@ class EnvironmentController: UIViewController {
     }
     
     //like the click function, checks the color of image as it's held, change the button color and the color of every light
-    @objc func imageHeld(recognizer: UILongPressGestureRecognizer)
+    /*@objc func imageHeld(recognizer: UILongPressGestureRecognizer)
     {
         let point = recognizer.location(in: ColorWheelView)
         let x = Int(point.x)
@@ -208,7 +230,7 @@ class EnvironmentController: UIViewController {
             setColor.fireAndForget()
             colorView.backgroundColor = ColorWheel[x,y]
         }
-    }
+    }*/
     
     //Notification for adding light. If a light is found change the light to a random color to mark that it is connected
     @objc func AddedLight(notification: Notification){
