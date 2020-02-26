@@ -150,7 +150,6 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     }
     
     func ControlPlayButton(){
-        print (playing)
         if playing == false{
             PlayButton.setTitle("Play Sound", for: .normal)
         }else{
