@@ -15,6 +15,7 @@ import LifxDomain
 
 class EnvironmentController: UIViewController {
     
+    var colorSelected = false
     var storyIndex = 0
     var SceneIndex = 0
     var soundButtonArray = [UIButton]()
@@ -29,25 +30,12 @@ class EnvironmentController: UIViewController {
     var StackView2 = UIStackView()
     var ColorWheelView = UIImageView()
     var ColorWheel = UIImage()
-    
-    //initializing light services
-    let lightService = LightService(
-        lightsChangeDispatcher: lightNotification(),
-        transportGenerator: UdpTransport.self,
-        extensionFactories: [LightsGroupLocationService.self]
-    )
-    //Array of type light that holds all the lightbulbs found by the application
-    var lightArray = [Light]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor())
         GlobalVar.GlobalItems.storyArray[0].sceneArray.append(Scene)
         view.backgroundColor = .white
-        //start the light services
-        lightService.start()
-        //give a notification for when the light is added
-        NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil)
         
         //setting up the stackviews and images
         SetupStackView1()
@@ -63,6 +51,28 @@ class EnvironmentController: UIViewController {
         SoundButtonSyncing()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if (colorSelected == true)
+        {
+            var hue: CGFloat = 0
+            var saturation: CGFloat = 0
+            var brightness: CGFloat = 0
+            var alpha: CGFloat = 0
+            let previousColor = GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal
+            previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+            
+            //Setting light color
+            let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+            
+            //Iterating through all lights and changing the color
+            for i in PageHolder.lightsStruct.lightArray{
+                let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
+                setColor.fireAndForget()
+            }
+            
+        }
     }
     
     func SoundButtonSyncing()
@@ -190,19 +200,22 @@ class EnvironmentController: UIViewController {
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
-        GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal = RGBcolor!
-        print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal)
-        //converting color from RGB to HSB
-        RGBcolor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        //Setting light color
-        let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
-        
-        //Iterating through all lights and changing the color
-        for i in lightArray{
-            let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
-            setColor.fireAndForget()
-            colorView.backgroundColor = ColorWheel[x,y]
+        if let realColor = RGBcolor{
+            colorSelected = true
+            GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal = realColor
+            print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal)
+            //converting color from RGB to HSB
+            realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+            
+            //Setting light color
+            let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+            
+            //Iterating through all lights and changing the color
+            for i in PageHolder.lightsStruct.lightArray{
+                let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
+                setColor.fireAndForget()
+                colorView.backgroundColor = realColor
+            }
         }
     }
     
@@ -233,7 +246,7 @@ class EnvironmentController: UIViewController {
     }*/
     
     //Notification for adding light. If a light is found change the light to a random color to mark that it is connected
-    @objc func AddedLight(notification: Notification){
+    /*@objc func AddedLight(notification: Notification){
         if let light = notification.object as? Light{
             lightArray.append(light)
             let color = HSBK(hue: UInt16(.random(in: 0...1) * Float(UInt16.max)), saturation: UInt16(.random(in: 0...1) * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0)
@@ -243,7 +256,7 @@ class EnvironmentController: UIViewController {
             let setColor = LightSetColorCommand.create(light: light, color: color, duration: 0)
             setColor.fireAndForget()
         }
-    }
+    }*/
     
     /*
     // MARK: - Navigation

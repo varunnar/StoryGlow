@@ -7,8 +7,21 @@
 //
 
 import UIKit
+import RxLifxApi
+import RxLifx
+import LifxDomain
 
 class PageHolder: UIViewController {
+    
+    struct lightsStruct{
+        static var lightArray = [Light]()
+    }
+    
+    let lightService = LightService(
+        lightsChangeDispatcher: lightNotification(),
+        transportGenerator: UdpTransport.self,
+        extensionFactories: [LightsGroupLocationService.self]
+    )
     
     var pageControl =  UIPageControl()
     var pageviewControl = UIPageViewController()
@@ -17,6 +30,8 @@ class PageHolder: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        lightService.start()
+        NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil)
         let Story = GlobalVar.Story(storyName: "NewStory")
         GlobalVar.GlobalItems.storyArray.append(Story)
         setup()
@@ -79,9 +94,21 @@ class PageHolder: UIViewController {
         print("add page")
         let NewPage = EnvironmentController()
         NewPage.SceneIndex = pages.count-1
-        pages.insert(NewPage, at: pages.count-2)
+        pages.insert(NewPage, at: pages.count-1)
         pageviewControl.setViewControllers([pages[pages.count-2]], direction: .reverse, animated: true, completion: nil)
         pageControl.numberOfPages = pages.count
+    }
+    
+    @objc func AddedLight(notification: Notification){
+        if let light = notification.object as? Light{
+            lightsStruct.lightArray.append(light)
+            let color = HSBK(hue: UInt16(.random(in: 0...1) * Float(UInt16.max)), saturation: UInt16(.random(in: 0...1) * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0)
+            print(color.brightness)
+            print(color.hue)
+            print(color.saturation)
+            let setColor = LightSetColorCommand.create(light: light, color: color, duration: 0)
+            setColor.fireAndForget()
+        }
     }
     
 
