@@ -7,20 +7,18 @@
 //
 
 import UIKit
-
-class SoundCell: UITableViewCell {
+//MARK: Class for our custom tableview cells when searching sounds
+class CustomSoundCell: UITableViewCell {
     
-    var playButton  = UIButton(type: .custom)
+    var actionButton  = UIButton(type: .custom)
     var addButton = UIButton(type: .custom)
     var soundName = UILabel()
-    var TableViewIndex = 0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(playButton)
+        addSubview(actionButton)
         addSubview(soundName)
         addSubview(addButton)
-        
         
         configureTitleLabel()
         configurePlayButton()
@@ -39,12 +37,13 @@ class SoundCell: UITableViewCell {
     {
         soundName.text = cellHold.title
         soundName.font = UIFont.boldSystemFont(ofSize: 20)
-        playButton = cellHold.button
+        actionButton = cellHold.button
 
     }
     
     func configurePlayButton(){
-        playButton.setImage(UIImage(named: "play.png"), for: .normal)
+        actionButton.setImage(UIImage(named: "play.png"), for: .normal)
+        actionButton.setTitle("play", for:.normal)
     }
     
     func configureAddButton(){
@@ -69,11 +68,10 @@ class SoundCell: UITableViewCell {
     
     
     func setUpPlayButtonConstraints()
-    {
-        playButton.translatesAutoresizingMaskIntoConstraints = false
-        playButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30).isActive = true
-        playButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+    {   actionButton.translatesAutoresizingMaskIntoConstraints = false
+        actionButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        actionButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30).isActive = true
+        actionButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
     }
     
@@ -81,7 +79,7 @@ class SoundCell: UITableViewCell {
     {
         soundName.translatesAutoresizingMaskIntoConstraints = false
         soundName.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        soundName.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 20).isActive = true
+        soundName.leadingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 20).isActive = true
         soundName.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -20).isActive = true
         soundName.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }

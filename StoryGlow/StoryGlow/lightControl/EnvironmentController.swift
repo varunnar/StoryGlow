@@ -100,7 +100,7 @@ class EnvironmentController: UIViewController {
             print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName)
         }
         let nextScreen = HoldsPages()
-        nextScreen.title = "Add a Sound"
+        nextScreen.title = "Add a Sound Efffect"
         navigationController?.pushViewController(nextScreen, animated: true)
     }
     
