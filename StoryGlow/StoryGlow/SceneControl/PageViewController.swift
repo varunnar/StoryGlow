@@ -13,6 +13,8 @@ import LifxDomain
 
 class PageHolder: UIViewController {
     
+    var storyIndex = 0
+    
     struct lightsStruct{
         static var lightArray = [Light]()
     }

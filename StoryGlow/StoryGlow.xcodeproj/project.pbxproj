@@ -23,6 +23,9 @@
 		E94574B423F4D34D000AD410 /* RxAtomic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E947453223F08012007AC880 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947453123F08012007AC880 /* DataModel.swift */; };
 		E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947453B23F39AC8007AC880 /* PageViewController.swift */; };
+		E96B18BE240C5D21004B4308 /* IntroPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96B18BD240C5D21004B4308 /* IntroPage.swift */; };
+		E97E3DBA240CA684000C7BCD /* storyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E3DB9240CA684000C7BCD /* storyTableView.swift */; };
+		E97E3DBC240CB3C2000C7BCD /* storyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E3DBB240CB3C2000C7BCD /* storyCell.swift */; };
 		E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97F7D8C23E78C0000ADB1D5 /* NotificationFile.swift */; };
 		E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9862E5823F39CAF000FEF7C /* AddSceneViewController.swift */; };
 		E990B4EF2404E91700187964 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E990B4EE2404E91700187964 /* Networking.framework */; };
@@ -65,6 +68,9 @@
 /* Begin PBXFileReference section */
 		E947453123F08012007AC880 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		E947453B23F39AC8007AC880 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		E96B18BD240C5D21004B4308 /* IntroPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroPage.swift; sourceTree = "<group>"; };
+		E97E3DB9240CA684000C7BCD /* storyTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyTableView.swift; sourceTree = "<group>"; };
+		E97E3DBB240CB3C2000C7BCD /* storyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyCell.swift; sourceTree = "<group>"; };
 		E97F7D7023E7825600ADB1D5 /* RxAtomic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxAtomic.framework; path = Carthage/Build/iOS/RxAtomic.framework; sourceTree = "<group>"; };
 		E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LifxDomain.framework; path = Carthage/Build/iOS/LifxDomain.framework; sourceTree = "<group>"; };
 		E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
@@ -195,6 +201,9 @@
 				E990B5082404F0A900187964 /* lightControl */,
 				E990B5072404F06000187964 /* SceneControl */,
 				E947453123F08012007AC880 /* DataModel.swift */,
+				E97E3DB9240CA684000C7BCD /* storyTableView.swift */,
+				E97E3DBB240CB3C2000C7BCD /* storyCell.swift */,
+				E96B18BD240C5D21004B4308 /* IntroPage.swift */,
 				E9FCAF5023E3836B004A6B9C /* Assets.xcassets */,
 				E9FCAF5223E3836B004A6B9C /* LaunchScreen.storyboard */,
 				E9FCAF5523E3836B004A6B9C /* Info.plist */,
@@ -304,6 +313,8 @@
 				E990B4FB2404EB5600187964 /* RecordAudioController.swift in Sources */,
 				E990B5062404ECAE00187964 /* HoldsPages.swift in Sources */,
 				E947453223F08012007AC880 /* DataModel.swift in Sources */,
+				E97E3DBA240CA684000C7BCD /* storyTableView.swift in Sources */,
+				E97E3DBC240CB3C2000C7BCD /* storyCell.swift in Sources */,
 				E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */,
 				E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */,
 				E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */,
@@ -313,6 +324,7 @@
 				E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */,
 				E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */,
 				E990B4F92404EB1700187964 /* SoundTableViewController.swift in Sources */,
+				E96B18BE240C5D21004B4308 /* IntroPage.swift in Sources */,
 				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
 				E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */,
 			);

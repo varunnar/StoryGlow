@@ -15,11 +15,11 @@ import LifxDomain
 
 class EnvironmentController: UIViewController {
     
-    var colorSelected = false
+    var colorSelected = false //Color preselected for this scene
     var storyIndex = 0
     var SceneIndex = 0
-    var soundButtonArray = [UIButton]()
-    var colorView = UIView()
+    var soundButtonArray = [UIButton]() //Array of 6 buttons
+    var colorView = UIView() //band color
     var SoundButton1 = UIButton()
     var SoundButton2 = UIButton()
     var SoundButton3 = UIButton()
@@ -33,7 +33,7 @@ class EnvironmentController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor())
+        let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
         GlobalVar.GlobalItems.storyArray[0].sceneArray.append(Scene)
         view.backgroundColor = .white
         
@@ -53,7 +53,7 @@ class EnvironmentController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) { //readding light color when swiping back
         if (colorSelected == true)
         {
             var hue: CGFloat = 0
@@ -91,6 +91,7 @@ class EnvironmentController: UIViewController {
         SoundButton6.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
     }
     
+    //Navigating to sound screen and getting button info
     @objc func AddSounds(sender: UIButton)
     {
         if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
@@ -103,6 +104,8 @@ class EnvironmentController: UIViewController {
         nextScreen.title = "Add a Sound Efffect"
         navigationController?.pushViewController(nextScreen, animated: true)
     }
+    
+    //Make a function that recieve 2 strings from sound control, sets the to UIButton and then uses line 100 to populate data model
     
     
      //setting up buttons and adding them to stackview1
@@ -219,44 +222,6 @@ class EnvironmentController: UIViewController {
         }
     }
     
-    //like the click function, checks the color of image as it's held, change the button color and the color of every light
-    /*@objc func imageHeld(recognizer: UILongPressGestureRecognizer)
-    {
-        let point = recognizer.location(in: ColorWheelView)
-        let x = Int(point.x)
-        let y = Int(point.y)
-        
-        //Iterating through all lights and changing the color
-        for i in lightArray{
-            let RGBcolor = ColorWheel[x,y]
-            var hue: CGFloat = 0
-            var saturation: CGFloat = 0
-            var brightness: CGFloat = 0
-            var alpha: CGFloat = 0
-            
-            //converting color from RGB to HSB
-            RGBcolor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-            
-            //Setting light color
-            let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
-            let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
-            setColor.fireAndForget()
-            colorView.backgroundColor = ColorWheel[x,y]
-        }
-    }*/
-    
-    //Notification for adding light. If a light is found change the light to a random color to mark that it is connected
-    /*@objc func AddedLight(notification: Notification){
-        if let light = notification.object as? Light{
-            lightArray.append(light)
-            let color = HSBK(hue: UInt16(.random(in: 0...1) * Float(UInt16.max)), saturation: UInt16(.random(in: 0...1) * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0)
-            print(color.brightness)
-            print(color.hue)
-            print(color.saturation)
-            let setColor = LightSetColorCommand.create(light: light, color: color, duration: 0)
-            setColor.fireAndForget()
-        }
-    }*/
     
     /*
     // MARK: - Navigation
