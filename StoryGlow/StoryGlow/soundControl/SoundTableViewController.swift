@@ -13,9 +13,15 @@ import AVKit
 
 
 class SoundTableViewController: UIViewController, UISearchBarDelegate {
+    var storyIndexSTV = Int()
+    var sceneIndexSTV = Int()
+    var buttonIndexSTV = Int()
+    
+    
     var player: AVPlayer!
     var SoundNamesArray = [String]()
     var SoundURLArray = [String]()
+   
     
 //MARK:UI Items
     var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
@@ -108,8 +114,23 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
     }
     
     //Adding the sound to the sound board
-    @objc func addingSounds(){
-        print( "Add sounds")
+    @objc func addingSounds(_ sender: UIButton){
+        let buttonPostion = sender.convert(sender.bounds.origin, to: tableView) // gives position of tap
+        if let indexPath = tableView.indexPathForRow(at: buttonPostion) {
+            let soundURLString = SoundURLArray[indexPath.row]
+            let soundNameString = SoundNamesArray[indexPath.row]
+        GlobalVar.GlobalItems.storyArray[storyIndexSTV].sceneArray[sceneIndexSTV].buttonInfo[buttonIndexSTV].soundName = soundNameString
+            print(soundURLString)
+            print(sceneIndexSTV)
+            print(buttonIndexSTV)
+        GlobalVar.GlobalItems.storyArray[storyIndexSTV].sceneArray[sceneIndexSTV].buttonInfo[buttonIndexSTV].soundVal = soundURLString
+            let vc = self.navigationController?.viewControllers.filter({$0 is PageHolder}).first //is first first or last?
+            navigationController?.popToViewController(vc!, animated: true)
+        
+        }
+
+       
+
     }
 }
 

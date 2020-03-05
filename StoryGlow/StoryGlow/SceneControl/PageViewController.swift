@@ -52,11 +52,14 @@ class PageHolder: UIViewController {
     {
         pageviewControl = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         let page1 = EnvironmentController()
-        page1.SceneIndex = 0
+        page1.sceneIndex = 0
         page1.storyIndex = 0
-        let page2 = AddSceneViewController()
+        let page2 = EnvironmentController()
+        page2.sceneIndex = 1
+        let page3 = AddSceneViewController()
         pages.append(page1)
         pages.append(page2)
+        pages.append(page3)
         addChild(pageviewControl)
         view.addSubview(pageviewControl.view)
         print("added as subview")
@@ -93,7 +96,7 @@ class PageHolder: UIViewController {
     {
         print("add page")
         let NewPage = EnvironmentController()
-        NewPage.SceneIndex = pages.count-1
+        NewPage.sceneIndex = pages.count-1
         NewPage.storyIndex = storyIndex
         pages.insert(NewPage, at: pages.count-1)
         pageviewControl.setViewControllers([pages[pages.count-2]], direction: .reverse, animated: true, completion: nil)

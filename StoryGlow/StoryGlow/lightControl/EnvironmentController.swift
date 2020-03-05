@@ -17,7 +17,7 @@ class EnvironmentController: UIViewController {
     
     var colorSelected = false //Color preselected for this scene
     var storyIndex = 0
-    var SceneIndex = 0
+    var sceneIndex = 0
     
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     var colorView = UIView() //band color
@@ -35,7 +35,7 @@ class EnvironmentController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
-        GlobalVar.GlobalItems.storyArray[0].sceneArray.append(Scene)
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
         view.backgroundColor = .white
         
         //setting up the stackviews and images
@@ -50,7 +50,7 @@ class EnvironmentController: UIViewController {
         ColorWheelView.addGestureRecognizer(imageDragGesture)
         ColorWheelView.isUserInteractionEnabled = true
         SoundButtonSyncing()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -61,7 +61,7 @@ class EnvironmentController: UIViewController {
             var saturation: CGFloat = 0
             var brightness: CGFloat = 0
             var alpha: CGFloat = 0
-            let previousColor = GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal
+            let previousColor = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal
             previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
             
             //Setting light color
@@ -72,8 +72,10 @@ class EnvironmentController: UIViewController {
                 let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
                 setColor.fireAndForget()
             }
-            
         }
+        for n in 0...5{            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
+        }
+        
     }
     
     func SoundButtonSyncing()
@@ -94,16 +96,20 @@ class EnvironmentController: UIViewController {
     
     //Navigating to sound screen and getting button info
     @objc func AddSounds(sender: UIButton)
-    {
+    {//this is also where we will need to sort out if we are adding or playing the item
         if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
         {
-            print(SceneIndex)
-            GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
-            print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName)
+            print(sceneIndex)
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
+            print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName)
+            let nextScreen = RecordAudioController()//change later
+            nextScreen.buttonIndexRec = buttonIndex
+            nextScreen.sceneIndexRec = sceneIndex
+            nextScreen.storyIndexRec = storyIndex
+            nextScreen.title = "Add a Sound Efffect"
+            navigationController?.pushViewController(nextScreen, animated: true)
         }
-        let nextScreen = HoldsPages()
-        nextScreen.title = "Add a Sound Efffect"
-        navigationController?.pushViewController(nextScreen, animated: true)
+        
     }
     
     //Make a function that recieve 2 strings from sound control, sets the to UIButton and then uses line 100 to populate data model
@@ -206,8 +212,8 @@ class EnvironmentController: UIViewController {
         var alpha: CGFloat = 0
         if let realColor = RGBcolor{
             colorSelected = true
-            GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal = realColor
-            print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].colorVal)
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal = realColor
+            print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal)
             //converting color from RGB to HSB
             realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
             
