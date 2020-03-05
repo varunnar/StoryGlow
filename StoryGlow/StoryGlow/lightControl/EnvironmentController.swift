@@ -27,6 +27,7 @@ class EnvironmentController: UIViewController {
     var SoundButton4 = UIButton()
     var SoundButton5 = UIButton()
     var SoundButton6 = UIButton()
+    let SegmentedControl = UISegmentedControl()
     var StackView1 = UIStackView()
     var StackView2 = UIStackView()
     var ColorWheelView = UIImageView()
@@ -34,9 +35,15 @@ class EnvironmentController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
-        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
+        if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex] == nil{
+            let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
+        }
         view.backgroundColor = .white
+        
+        //setting up Segmented Control
+        SegmentedControlConfig()
+        
         
         //setting up the stackviews and images
         SetupStackView1()
@@ -131,6 +138,24 @@ class EnvironmentController: UIViewController {
         StackView1.distribution = .fillEqually
         StackViewConfig1()
     }
+    //configure segmented Control
+    func SegmentedControlConfig(){
+//        SegmentedControl.center = self.view.center
+//        SegmentedControl.selectedSegmentIndex = 0
+//        SegmentedControl.addTarget(self, action: #selector(ViewController.indexChanged(_:)), for: .valueChanged)
+//
+//        SegmentedControl.layer.cornerRadius = 5.0
+//        SegmentedControl.backgroundColor = .red
+//        SegmentedControl.tintColor = .yellow
+//
+//        self.view.addSubview(SegmentedControl)
+//        SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+//        SegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        SegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        SegmentedControl.heightAnchor.constraint(equalToConstant: 80).isActive = true
+//        SegmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+
+    }
     
     //configuring stackview1's constraints
     func StackViewConfig1()
@@ -139,7 +164,7 @@ class EnvironmentController: UIViewController {
         StackView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         StackView1.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
         
     }
     
