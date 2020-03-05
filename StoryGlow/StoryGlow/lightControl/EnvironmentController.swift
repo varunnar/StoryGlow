@@ -35,7 +35,7 @@ class EnvironmentController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
-        GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray.append(Scene)
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
         view.backgroundColor = .white
         
         //setting up the stackviews and images
@@ -61,7 +61,7 @@ class EnvironmentController: UIViewController {
             var saturation: CGFloat = 0
             var brightness: CGFloat = 0
             var alpha: CGFloat = 0
-            let previousColor = GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray[sceneIndex].colorVal
+            let previousColor = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal
             previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
             
             //Setting light color
@@ -73,7 +73,7 @@ class EnvironmentController: UIViewController {
                 setColor.fireAndForget()
             }
         }
-        for n in 0...5{            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
+        for n in 0...5{            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
         }
         
     }
@@ -100,8 +100,8 @@ class EnvironmentController: UIViewController {
         if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
         {
             print(sceneIndex)
-            GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
-            print(GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName)
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
+            print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName)
             let nextScreen = RecordAudioController()//change later
             nextScreen.buttonIndexRec = buttonIndex
             nextScreen.sceneIndexRec = sceneIndex
@@ -212,8 +212,8 @@ class EnvironmentController: UIViewController {
         var alpha: CGFloat = 0
         if let realColor = RGBcolor{
             colorSelected = true
-            GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray[sceneIndex].colorVal = realColor
-            print(GlobalVar.GlobalItems.storyArray[sceneIndex].sceneArray[sceneIndex].colorVal)
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal = realColor
+            print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal)
             //converting color from RGB to HSB
             realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
             
