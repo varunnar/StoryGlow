@@ -35,7 +35,7 @@ class EnvironmentController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex] == nil{
+        if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count == sceneIndex{
             let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
             GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
         }

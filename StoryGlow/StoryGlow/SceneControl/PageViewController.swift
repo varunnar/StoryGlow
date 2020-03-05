@@ -34,8 +34,6 @@ class PageHolder: UIViewController {
         super.viewDidLoad()
         lightService.start()
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil)
-        let Story = GlobalVar.Story(storyName: "NewStory")
-        GlobalVar.GlobalItems.storyArray.append(Story)
         setup()
         setupPageControl()
         pageviewControl.delegate = self
