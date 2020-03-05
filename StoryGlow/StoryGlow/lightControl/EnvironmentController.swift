@@ -16,8 +16,8 @@ import LifxDomain
 class EnvironmentController: UIViewController {
     
     var colorSelected = false //Color preselected for this scene
-    var storyIndex = 0
-    var sceneIndex = 0
+    var storyIndex = Int()
+    var sceneIndex = Int()
     
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     var colorView = UIView() //band color

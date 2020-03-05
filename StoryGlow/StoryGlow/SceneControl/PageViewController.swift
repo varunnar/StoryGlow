@@ -13,7 +13,7 @@ import LifxDomain
 
 class PageHolder: UIViewController {
     
-    var storyIndex = 0
+    var storyIndex = Int()
     
     struct lightsStruct{
         static var lightArray = [Light]()
@@ -54,12 +54,9 @@ class PageHolder: UIViewController {
         let page1 = EnvironmentController()
         page1.sceneIndex = 0
         page1.storyIndex = 0
-        let page2 = EnvironmentController()
-        page2.sceneIndex = 1
-        let page3 = AddSceneViewController()
+        let page2 = AddSceneViewController()
         pages.append(page1)
         pages.append(page2)
-        pages.append(page3)
         addChild(pageviewControl)
         view.addSubview(pageviewControl.view)
         print("added as subview")
