@@ -113,7 +113,7 @@ class EnvironmentController: UIViewController {
             nextScreen.buttonIndexRec = buttonIndex
             nextScreen.sceneIndexRec = sceneIndex
             nextScreen.storyIndexRec = storyIndex
-            nextScreen.title = "Add a Sound Efffect"
+            nextScreen.title = "Add a Sound Effect"
             navigationController?.pushViewController(nextScreen, animated: true)
         }
         
