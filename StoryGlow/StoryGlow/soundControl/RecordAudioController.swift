@@ -10,6 +10,10 @@ import UIKit
 import AVFoundation
 
 class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
+    var storyIndexRec = Int()
+    var sceneIndexRec = Int()
+    var buttonIndexRec = Int()
+    
     //variables
     let audioSession = AVAudioSession.sharedInstance()
     var audioPlayer: AVAudioPlayer?
@@ -18,14 +22,14 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     var recording = false
     var playing = false
 
-    
-
     //MARK:audio recording filename constant
     let filename = "audio.m4a"
 
     var RecButton = UIButton(frame: CGRect(x: 100, y: 300, width: 200, height: 50))
     var PlayButton = UIButton(frame: CGRect(x: 100, y: 400, width: 200, height: 50))
     var SaveButton = UIButton(frame: CGRect(x: 100, y: 500, width: 200, height: 50))
+    var SearchButton = UIButton(frame: CGRect(x: 100, y: 600, width: 200, height: 50))
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +49,12 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         SaveButton.setTitle("Save Sound", for: .normal)
         SaveButton.addTarget(self, action: #selector(saveSound), for: .touchUpInside)
         self.view.addSubview(SaveButton)
+        
+    //Search Button
+        SearchButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.3, blue: 0.5, alpha: 0.4)
+        SearchButton.setTitle("Search for Sound", for: .normal)
+        SearchButton.addTarget(self, action: #selector(searchSound), for: .touchUpInside)
+        self.view.addSubview(SearchButton)
         
 //MARK: Other Code in View Did Load
         // enable play and stop since we don't have any audio to work with on load
@@ -81,10 +91,24 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
      }
     
 //MARK:Button actions
+    @objc func searchSound(sender: UIButton!) {
+        let nextScreen = SoundTableViewController()
+        nextScreen.buttonIndexSTV = buttonIndexRec
+        nextScreen.sceneIndexSTV = sceneIndexRec
+        nextScreen.storyIndexSTV = 0
+        nextScreen.title = "Search Sounds"
+        navigationController?.pushViewController(nextScreen, animated: true)
+    }
+    
+    
     @objc func saveSound(sender: UIButton!) {
         let audioFile = (audioRecorder?.url)!
-        print (audioFile)
+        let audioFileString = audioFile.absoluteString
+        GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundName = "Sound 1"
+        GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundVal = audioFileString
         
+        let vc = self.navigationController?.viewControllers.filter({$0 is PageHolder}).first //is first first or last?
+        navigationController?.popToViewController(vc!, animated: true)
     }
     
     @objc func RecButtonAction(sender: UIButton!) {

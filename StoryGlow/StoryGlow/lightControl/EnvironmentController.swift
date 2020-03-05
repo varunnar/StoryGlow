@@ -49,7 +49,7 @@ class EnvironmentController: UIViewController {
         ColorWheelView.addGestureRecognizer(imageDragGesture)
         ColorWheelView.isUserInteractionEnabled = true
         SoundButtonSyncing()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -71,8 +71,10 @@ class EnvironmentController: UIViewController {
                 let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
                 setColor.fireAndForget()
             }
-            
         }
+        for n in 0...5{            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[n].soundName, for: .normal)
+        }
+        
     }
     
     func SoundButtonSyncing()
@@ -99,10 +101,14 @@ class EnvironmentController: UIViewController {
             print(SceneIndex)
             GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
             print(GlobalVar.GlobalItems.storyArray[0].sceneArray[SceneIndex].buttonInfo[buttonIndex].soundName)
+            let nextScreen = RecordAudioController()//change later
+            nextScreen.buttonIndexRec = buttonIndex
+            nextScreen.sceneIndexRec = SceneIndex
+            nextScreen.storyIndexRec = 0
+            nextScreen.title = "Add a Sound Efffect"
+            navigationController?.pushViewController(nextScreen, animated: true)
         }
-        let nextScreen = HoldsPages()
-        nextScreen.title = "Add a Sound Efffect"
-        navigationController?.pushViewController(nextScreen, animated: true)
+        
     }
     
     //Make a function that recieve 2 strings from sound control, sets the to UIButton and then uses line 100 to populate data model

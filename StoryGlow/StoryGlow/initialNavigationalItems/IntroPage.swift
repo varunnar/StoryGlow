@@ -69,10 +69,10 @@ class IntroPage: UIViewController {
             let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
             GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
             print(GlobalVar.GlobalItems.storyArray)
-            //let nextScreen = PageHolder()
-            //nextScreen.title = GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].storyName
-            //nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
-            //self.navigationController?.pushViewController(nextScreen, animated: true)
+            let nextScreen = PageHolder()
+            nextScreen.title = GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].storyName
+            nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
+            self.navigationController?.pushViewController(nextScreen, animated: true)
             
         })
         alert.addAction(submitAction)
