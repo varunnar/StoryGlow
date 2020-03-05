@@ -95,7 +95,7 @@ class EnvironmentController: UIViewController {
     
     //Navigating to sound screen and getting button info
     @objc func AddSounds(sender: UIButton)
-    {
+    {//this is also where we will need to sort out if we are adding or playing the item
         if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
         {
             print(SceneIndex)
