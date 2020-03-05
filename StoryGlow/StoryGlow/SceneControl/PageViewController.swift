@@ -14,6 +14,11 @@ import LifxDomain
 class PageHolder: UIViewController {
     
     var storyIndex = Int()
+    //bool to keep present mode
+    var editModeNotification = Notification.Name("editMode")
+    struct editModeStruct {
+        static var editMode = true
+    }
     
     struct lightsStruct{
         static var lightArray = [Light]()
@@ -39,6 +44,8 @@ class PageHolder: UIViewController {
         pageviewControl.delegate = self
         pageviewControl.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(addPage), name: .some(addPageNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(controlEditMode), name: .some(editModeNotification), object: nil)
 
         
     
@@ -85,6 +92,11 @@ class PageHolder: UIViewController {
         pageControl.centerXAnchor.constraint(equalTo: pageviewControl.view.centerXAnchor).isActive = true
         pageviewControl.view.bringSubviewToFront(pageControl)
 
+    }
+    
+    @objc func controlEditMode(){
+        //add case statement
+        editModeStruct.editMode.toggle()
     }
     
     @objc func addPage()

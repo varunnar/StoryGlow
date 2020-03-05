@@ -19,6 +19,7 @@ class EnvironmentController: UIViewController {
     var storyIndex = Int()
     var sceneIndex = Int()
     
+    
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     var colorView = UIView() //band color
     var SoundButton1 = UIButton()
@@ -27,14 +28,16 @@ class EnvironmentController: UIViewController {
     var SoundButton4 = UIButton()
     var SoundButton5 = UIButton()
     var SoundButton6 = UIButton()
-    let SegmentedControl = UISegmentedControl()
+    let SegmentedControl = UISegmentedControl(items : ["Edit Mode" , "Presentation Mode"])
     var StackView1 = UIStackView()
     var StackView2 = UIStackView()
     var ColorWheelView = UIImageView()
     var ColorWheel = UIImage()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count == sceneIndex{
             let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
             GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
@@ -62,6 +65,8 @@ class EnvironmentController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) { //readding light color when swiping back
+        print(PageHolder.editModeStruct.editMode)
+
         if (colorSelected == true)
         {
             var hue: CGFloat = 0
@@ -119,9 +124,16 @@ class EnvironmentController: UIViewController {
         
     }
     
-    //Make a function that recieve 2 strings from sound control, sets the to UIButton and then uses line 100 to populate data model
+    
+    //Control segmented control
+    @objc func indexChanged(_ sender: UISegmentedControl) {
+        let EditModeNotification = Notification.Name("editMode")
+        NotificationCenter.default.post(Notification(name: EditModeNotification))
+    }
     
     
+    
+    //MARK:Constraints
      //setting up buttons and adding them to stackview1
     func SetupStackView1()
     {
@@ -140,20 +152,20 @@ class EnvironmentController: UIViewController {
     }
     //configure segmented Control
     func SegmentedControlConfig(){
-//        SegmentedControl.center = self.view.center
-//        SegmentedControl.selectedSegmentIndex = 0
-//        SegmentedControl.addTarget(self, action: #selector(ViewController.indexChanged(_:)), for: .valueChanged)
-//
-//        SegmentedControl.layer.cornerRadius = 5.0
-//        SegmentedControl.backgroundColor = .red
-//        SegmentedControl.tintColor = .yellow
-//
-//        self.view.addSubview(SegmentedControl)
-//        SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-//        SegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        SegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        SegmentedControl.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//        SegmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        SegmentedControl.center = self.view.center
+        SegmentedControl.selectedSegmentIndex = 0
+        SegmentedControl.addTarget(self, action: #selector(EnvironmentController.indexChanged(_:)), for: .valueChanged)
+
+        SegmentedControl.layer.cornerRadius = 5.0
+        SegmentedControl.backgroundColor = .blue
+        SegmentedControl.tintColor = .yellow
+
+        self.view.addSubview(SegmentedControl)
+        SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        SegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        SegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        SegmentedControl.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        SegmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
 
     }
     
