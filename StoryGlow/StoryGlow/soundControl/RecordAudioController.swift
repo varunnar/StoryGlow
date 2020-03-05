@@ -95,7 +95,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         let nextScreen = SoundTableViewController()
         nextScreen.buttonIndexSTV = buttonIndexRec
         nextScreen.sceneIndexSTV = sceneIndexRec
-        nextScreen.storyIndexSTV = 0
+        nextScreen.storyIndexSTV = storyIndexRec
         nextScreen.title = "Search Sounds"
         navigationController?.pushViewController(nextScreen, animated: true)
     }

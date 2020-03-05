@@ -17,6 +17,7 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
     var sceneIndexSTV = Int()
     var buttonIndexSTV = Int()
     
+    
     var player: AVPlayer!
     var SoundNamesArray = [String]()
     var SoundURLArray = [String]()
@@ -118,11 +119,11 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
         if let indexPath = tableView.indexPathForRow(at: buttonPostion) {
             let soundURLString = SoundURLArray[indexPath.row]
             let soundNameString = SoundNamesArray[indexPath.row]
-        GlobalVar.GlobalItems.storyArray[0].sceneArray[sceneIndexSTV].buttonInfo[buttonIndexSTV].soundName = soundNameString
+        GlobalVar.GlobalItems.storyArray[storyIndexSTV].sceneArray[sceneIndexSTV].buttonInfo[buttonIndexSTV].soundName = soundNameString
             print(soundURLString)
             print(sceneIndexSTV)
             print(buttonIndexSTV)
-        GlobalVar.GlobalItems.storyArray[0].sceneArray[sceneIndexSTV].buttonInfo[buttonIndexSTV].soundVal = soundURLString
+        GlobalVar.GlobalItems.storyArray[storyIndexSTV].sceneArray[sceneIndexSTV].buttonInfo[buttonIndexSTV].soundVal = soundURLString
             let vc = self.navigationController?.viewControllers.filter({$0 is PageHolder}).first //is first first or last?
             navigationController?.popToViewController(vc!, animated: true)
         
