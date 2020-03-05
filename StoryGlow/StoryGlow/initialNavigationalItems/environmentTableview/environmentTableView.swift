@@ -1,14 +1,16 @@
 //
-//  storyTableView.swift
+//  environmentTableView.swift
 //  StoryGlow
 //
-//  Created by Varun Narayanswamy on 3/1/20.
+//  Created by Varun Narayanswamy on 3/4/20.
 //  Copyright © 2020 Varun Narayanswamy. All rights reserved.
 //
 
 import UIKit
 
-class storyTableView: UITableViewController {
+class environmentTableView: UITableViewController {
+    
+    var storyIndex = Int()
     
     struct cells {
         static let cellID = "cellID" //why is this in a struct?
@@ -17,6 +19,7 @@ class storyTableView: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableViewCell()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -25,10 +28,22 @@ class storyTableView: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func setupTableViewCell()
+    @objc func addTapped()
     {
-        tableView.register(storyCell.self, forCellReuseIdentifier: cells.cellID)
+        let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
+        alert.addTextField()
+        let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
+            let answer = alert.textFields![0].text
+            let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray.append(scene)
+            print(GlobalVar.GlobalItems.storyArray)
+            self.tableView.reloadData()
+            
+        })
+        alert.addAction(submitAction)
+        present(alert, animated: true, completion: nil)
     }
+    
 
     // MARK: - Table view data source
 
@@ -39,23 +54,25 @@ class storyTableView: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return GlobalVar.GlobalItems.storyArray.count
+        return GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count
+    }
+    
+    func setupTableViewCell()
+    {
+        tableView.register(environmentCell.self, forCellReuseIdentifier: cells.cellID)
     }
 
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cells.cellID, for: indexPath) as! storyCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cells.cellID, for: indexPath) as! environmentCell
         if (GlobalVar.GlobalItems.storyArray.count != 0){
-            cell.storyName.text = GlobalVar.GlobalItems.storyArray[indexPath.row].storyName
+            cell.environmentName.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
         }
         else{
             return UITableViewCell()
         }
-
-        // Configure the cell...
-
         return cell
     }
-    
 
     /*
     // Override to support conditional editing of the table view.
