@@ -18,6 +18,7 @@ class EnvironmentController: UIViewController {
     var colorSelected = false //Color preselected for this scene
     var storyIndex = 0
     var SceneIndex = 0
+    
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     var colorView = UIView() //band color
     var SoundButton1 = UIButton()

@@ -73,6 +73,13 @@ class environmentTableView: UITableViewController {
         }
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let nextScreen = PageHolder()
+        nextScreen.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
+        nextScreen.storyIndex = storyIndex
+        navigationController?.pushViewController(nextScreen, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.
