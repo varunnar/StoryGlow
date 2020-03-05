@@ -46,14 +46,15 @@ class IntroPage: UIViewController {
     
     @objc func storyNameAlert()
     {
-        print("in story")
         let alert = UIAlertController(title: "Story name", message: "What is the name of your story?", preferredStyle: .alert)
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Next", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            let story = GlobalVar.Story(storyName: answer!)
-            GlobalVar.GlobalItems.storyArray.append(story)
-            self.SceneNameAlert()
+            if (answer != ""){
+                let story = GlobalVar.Story(storyName: answer!)
+                GlobalVar.GlobalItems.storyArray.append(story)
+                self.SceneNameAlert()
+            }
         })
         alert.addAction(submitAction)
         present(alert, animated: true, completion: nil)
