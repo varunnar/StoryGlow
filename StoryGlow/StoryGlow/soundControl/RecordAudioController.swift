@@ -18,7 +18,9 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     var recording = false
     var playing = false
 
-    //audio recording filename constant
+    
+
+    //MARK:audio recording filename constant
     let filename = "audio.m4a"
 
     var RecButton = UIButton(frame: CGRect(x: 100, y: 300, width: 200, height: 50))
@@ -41,7 +43,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     //Save Button
         SaveButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.3, blue: 0.5, alpha: 0.4)
         SaveButton.setTitle("Save Sound", for: .normal)
-        PlayButton.addTarget(self, action: #selector(saveSound), for: .touchUpInside)
+        SaveButton.addTarget(self, action: #selector(saveSound), for: .touchUpInside)
         self.view.addSubview(SaveButton)
         
 //MARK: Other Code in View Did Load
@@ -50,7 +52,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
              let dirPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
              let docDir = dirPath[0]
              let audioFileURL = docDir.appendingPathComponent(filename)
-             print(audioFileURL)
+             print("AUDIO FILE NAME: \(audioFileURL)")
              
              //configure our audioSession
              do {
@@ -79,6 +81,12 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
      }
     
 //MARK:Button actions
+    @objc func saveSound(sender: UIButton!) {
+        let audioFile = (audioRecorder?.url)!
+        print (audioFile)
+        
+    }
+    
     @objc func RecButtonAction(sender: UIButton!) {
         if let recorder = audioRecorder {
             //check to make sure we aren't already recording
@@ -115,7 +123,6 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
             }
         }
         if audioRecorder?.isRecording == false {
-            RecButton.isEnabled = false
             if playing == true{
                 do {
                     try audioPlayer = AVAudioPlayer(contentsOf: (audioRecorder?.url)!)
@@ -131,15 +138,9 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
             
         }
     }
-    @objc func saveSound(sender: UIButton!) {
-        //Add saved sound onto device
-        // populate it into the array of sounds at the correct spot
-        //load original enviornment page
-        
-    }
+    
 
     func ControlRecordingButton() {
-        print(recording)
         if recording == false{
             RecButton.setTitle("Start Recording", for: .normal)
             RecButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.7, blue: 0.0, alpha: 1.0)
