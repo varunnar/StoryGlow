@@ -22,9 +22,6 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     var recording = false
     var playing = false
 
-    //MARK:audio recording filename constant
-    let filename = "audio.m4a"
-
     var RecButton = UIButton(frame: CGRect(x: 100, y: 300, width: 200, height: 50))
     var PlayButton = UIButton(frame: CGRect(x: 100, y: 400, width: 200, height: 50))
     var SaveButton = UIButton(frame: CGRect(x: 100, y: 500, width: 200, height: 50))
@@ -61,6 +58,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
              //get path for the audio file
              let dirPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
              let docDir = dirPath[0]
+             let filename = "audio\(String(buttonIndexRec)).m4a"
              let audioFileURL = docDir.appendingPathComponent(filename)
              print("AUDIO FILE NAME: \(audioFileURL)")
              
@@ -104,7 +102,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     @objc func saveSound(sender: UIButton!) {
         let audioFile = (audioRecorder?.url)!
         let audioFileString = audioFile.absoluteString
-        GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundName = "Sound 1"
+        GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundName = "Sound \(String(buttonIndexRec))"
         GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundVal = audioFileString
         
         let vc = self.navigationController?.viewControllers.filter({$0 is PageHolder}).first //is first first or last?

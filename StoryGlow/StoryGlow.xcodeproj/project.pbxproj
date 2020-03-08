@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28EDE1B42415A30B004CB220 /* playerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EDE1B32415A30B004CB220 /* playerModel.swift */; };
 		E9254A7324105CD700BE0D09 /* environmentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9254A7224105CD700BE0D09 /* environmentTableView.swift */; };
 		E9254A7724105D0300BE0D09 /* environmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9254A7624105D0300BE0D09 /* environmentCell.swift */; };
 		E931671823F4D1CB00243E63 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */; };
@@ -67,6 +68,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		28EDE1B32415A30B004CB220 /* playerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = playerModel.swift; sourceTree = "<group>"; };
 		E9254A7224105CD700BE0D09 /* environmentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environmentTableView.swift; sourceTree = "<group>"; };
 		E9254A7624105D0300BE0D09 /* environmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environmentCell.swift; sourceTree = "<group>"; };
 		E947453123F08012007AC880 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */,
 				E9FCAF4723E38369004A6B9C /* AppDelegate.swift */,
+				28EDE1B32415A30B004CB220 /* playerModel.swift */,
 				E990B5002404EBF900187964 /* soundControl */,
 				E990B5082404F0A900187964 /* lightControl */,
 				E990B5072404F06000187964 /* SceneControl */,
@@ -345,6 +348,7 @@
 				E990B4F92404EB1700187964 /* SoundTableViewController.swift in Sources */,
 				E96B18BE240C5D21004B4308 /* IntroPage.swift in Sources */,
 				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
+				28EDE1B42415A30B004CB220 /* playerModel.swift in Sources */,
 				E9254A7724105D0300BE0D09 /* environmentCell.swift in Sources */,
 				E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */,
 			);

@@ -43,7 +43,6 @@ class CustomSoundCell: UITableViewCell {
     
     func configurePlayButton(){
         actionButton.setImage(UIImage(named: "play.png"), for: .normal)
-        actionButton.setTitle("play", for:.normal)
     }
     
     func configureAddButton(){

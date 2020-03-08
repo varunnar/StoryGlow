@@ -12,13 +12,22 @@ import CoreData
 import RxLifxApi
 import RxLifx
 import LifxDomain
+import AVFoundation
 
-class EnvironmentController: UIViewController {
+
+class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     var colorSelected = false //Color preselected for this scene
     var storyIndex = Int()
     var sceneIndex = Int()
     
+    var playerMod = [playerModel](repeating: playerModel(), count: 6)
+    
+    var audioPlayer: AVAudioPlayer?
+    //let audioSession = AVAudioSession.sharedInstance()
+    //var player = AVPlayer(url: URL(string: "https://freesound.org/data/previews/392/392617_7383104-lq.mp3")!)
+
+    var playingArray = [Bool](repeating: Bool(false), count: 6)
     
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     var colorView = UIView() //band color
@@ -65,8 +74,6 @@ class EnvironmentController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) { //readding light color when swiping back
-        print(PageHolder.editModeStruct.editMode)
- 
         if (colorSelected == true)
         {
             var hue: CGFloat = 0
@@ -86,6 +93,21 @@ class EnvironmentController: UIViewController {
             }
         }
         for n in 0...5{            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
+        }
+        
+        //when adding a new scene control what is shown on the segmented control
+        if PageHolder.editModeStruct.editMode == false{
+            for i in 0...5{
+                if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
+                    soundButtonArray[i].isHidden = true
+                }
+            }
+            SegmentedControl.selectedSegmentIndex = 1
+        }else{
+            for i in 0...5{
+                soundButtonArray[i].isHidden = false
+            }
+            SegmentedControl.selectedSegmentIndex = 0
         }
         
     }
@@ -111,15 +133,52 @@ class EnvironmentController: UIViewController {
     {//this is also where we will need to sort out if we are adding or playing the item
         if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
         {
-            print(sceneIndex)
-            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName = "sound \(buttonIndex)"
-            print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundName)
-            let nextScreen = RecordAudioController()//change later
-            nextScreen.buttonIndexRec = buttonIndex
-            nextScreen.sceneIndexRec = sceneIndex
-            nextScreen.storyIndexRec = storyIndex
-            nextScreen.title = "Add a Sound Effect"
-            navigationController?.pushViewController(nextScreen, animated: true)
+            if PageHolder.editModeStruct.editMode == true{
+               let nextScreen = RecordAudioController()//change later
+               nextScreen.buttonIndexRec = buttonIndex
+               nextScreen.sceneIndexRec = sceneIndex
+               nextScreen.storyIndexRec = storyIndex
+               nextScreen.title = "Add a Sound Effect"
+               navigationController?.pushViewController(nextScreen, animated: true)
+            }else{
+            //play sounds
+                if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal.contains("https") == true {
+                    if (playingArray[buttonIndex] == true && playerMod[buttonIndex].player.timeControlStatus == .playing){
+                        print("pause")
+                        print(playingArray[buttonIndex])
+                        print(buttonIndex)
+                        playerMod[buttonIndex].player.pause()
+                        playingArray[buttonIndex] = false
+                    }else{
+                        print("play")
+                        print(playingArray[buttonIndex])
+                        print(buttonIndex)
+                        print(playerMod[buttonIndex].player.rate)
+                        let url = URL.init(string:GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal)
+                        let playerItem: AVPlayerItem = AVPlayerItem(url: url!)
+                        playerMod[buttonIndex].player = AVPlayer(playerItem: playerItem)
+                        let playerLayer = AVPlayerLayer(player: playerMod[buttonIndex].player)
+                        playerLayer.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
+                        self.view.layer.addSublayer(playerLayer)
+                        playingArray[buttonIndex] = true
+                        playerMod[buttonIndex].player.play()
+                    }
+                } else{
+                    let soundUrl = URL(string: GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal)
+                    do {
+                        try audioPlayer = AVAudioPlayer(contentsOf: soundUrl!)
+                        //set to playback mode for optimal volume
+                        try audioSession.setCategory(AVAudioSession.Category.playback)
+                        audioPlayer!.delegate = self
+                        audioPlayer!.prepareToPlay() // preload audio
+                        audioPlayer!.play() //plays audio file
+                    } catch {
+                        print("audioPlayer error")
+                    }
+                }
+                
+            }
+        
         }
         
     }
@@ -129,6 +188,19 @@ class EnvironmentController: UIViewController {
     @objc func indexChanged(_ sender: UISegmentedControl) {
         let EditModeNotification = Notification.Name("editMode")
         NotificationCenter.default.post(Notification(name: EditModeNotification))
+        //Take out buttons
+        if sender.selectedSegmentIndex == 1{
+            for i in 0...5{
+                if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
+                    soundButtonArray[i].isHidden = true
+                }
+            }
+        }else{
+            for i in 0...5{
+                soundButtonArray[i].isHidden = false
+            }
+        }
+        
     }
     
     
@@ -266,18 +338,9 @@ class EnvironmentController: UIViewController {
         }
     }
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
+//MARK:Extensions
 //This extension gets us the pixel information of the CGimage and converts it into an RGB UIColor
 extension UIImage {
     subscript(x: Int, y: Int)-> UIColor?{
