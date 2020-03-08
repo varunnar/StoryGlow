@@ -164,16 +164,22 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
                         playerMod[buttonIndex].player.play()
                     }
                 } else{
-                    let soundUrl = URL(string: GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal)
-                    do {
-                        try audioPlayer = AVAudioPlayer(contentsOf: soundUrl!)
-                        //set to playback mode for optimal volume
-                        try audioSession.setCategory(AVAudioSession.Category.playback)
-                        audioPlayer!.delegate = self
-                        audioPlayer!.prepareToPlay() // preload audio
-                        audioPlayer!.play() //plays audio file
-                    } catch {
-                        print("audioPlayer error")
+                    if (playingArray[buttonIndex]==true && audioPlayer?.isPlaying == true){
+                        audioPlayer?.stop()
+                    }
+                    else{
+                        playingArray[buttonIndex] = true
+                        let soundUrl = URL(string: GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal)
+                        do {
+                            try audioPlayer = AVAudioPlayer(contentsOf: soundUrl!)
+                            //set to playback mode for optimal volume
+                            //try audioSession.setCategory(AVAudioSession.Category.playback)
+                            audioPlayer!.delegate = self
+                            audioPlayer!.prepareToPlay() // preload audio
+                            audioPlayer!.play() //plays audio file
+                        } catch {
+                            print("audioPlayer error")
+                        }
                     }
                 }
                 

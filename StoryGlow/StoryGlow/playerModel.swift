@@ -11,6 +11,5 @@ import AVFoundation
 
 struct playerModel {
     var player = AVPlayer(url: URL(string: "https://freesound.org/data/previews/392/392617_7383104-lq.mp3")!)
-    var session: AVAudioSession?
     var playing = false
 }
