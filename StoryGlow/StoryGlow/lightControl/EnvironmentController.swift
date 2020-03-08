@@ -66,7 +66,7 @@ class EnvironmentController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) { //readding light color when swiping back
         print(PageHolder.editModeStruct.editMode)
-
+ 
         if (colorSelected == true)
         {
             var hue: CGFloat = 0
