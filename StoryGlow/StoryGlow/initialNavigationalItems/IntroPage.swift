@@ -47,7 +47,7 @@ class IntroPage: UIViewController {
     @objc func storyNameAlert()
     {
         let alert = UIAlertController(title: "Story name", message: "What is the name of your story?", preferredStyle: .alert)
-        alert.addTextField()
+        alert.addTextField() //https://gist.github.com/TheCodedSelf/c4f3984dd9fcc015b3ab2f9f60f8ad51 reference to make button inaccessable
         let submitAction = UIAlertAction(title: "Next", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
             if (answer != ""){
@@ -55,8 +55,13 @@ class IntroPage: UIViewController {
                 GlobalVar.GlobalItems.storyArray.append(story)
                 self.SceneNameAlert()
             }
+            else{
+                print("else")
+            }
         })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submitAction)
+        alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
     
@@ -66,15 +71,21 @@ class IntroPage: UIViewController {
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
-            GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
-            print(GlobalVar.GlobalItems.storyArray)
-            let nextScreen = PageHolder()
-            nextScreen.title = GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].storyName
-            nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
-            self.navigationController?.pushViewController(nextScreen, animated: true)
+            if (answer != ""){
+                let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+                GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
+                let nextScreen = PageHolder()
+                nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
+                self.navigationController?.pushViewController(nextScreen, animated: true)
+            }
+            else{
+                print("else")
+                alert.message = "Please make a valid scene name"
+            }
         })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submitAction)
+        alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
     

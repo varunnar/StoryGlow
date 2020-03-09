@@ -38,13 +38,20 @@ class environmentTableView: UITableViewController {
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
+            if (answer != ""){
             let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray.append(scene)
-            print(GlobalVar.GlobalItems.storyArray)
             self.tableView.reloadData()
+            }
+            else{
+                print("else")
+                alert.message = "Please make a valid scene name"
+            }
             
         })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submitAction)
+        alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
     
@@ -80,8 +87,8 @@ class environmentTableView: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nextScreen = PageHolder()
-        nextScreen.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
         nextScreen.storyIndex = storyIndex
+        nextScreen.currentSceneIndex = indexPath.row
         navigationController?.pushViewController(nextScreen, animated: true)
     }
 

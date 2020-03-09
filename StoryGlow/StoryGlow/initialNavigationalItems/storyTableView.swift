@@ -32,11 +32,17 @@ class storyTableView: UITableViewController {
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Next", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            let story = GlobalVar.Story(storyName: answer!)
-            GlobalVar.GlobalItems.storyArray.append(story)
-            self.SceneNameAlert()
+            if (answer != ""){
+                let story = GlobalVar.Story(storyName: answer!)
+                GlobalVar.GlobalItems.storyArray.append(story)
+                self.SceneNameAlert()
+            }else{
+                alert.message = "please make a valid story name"
+            }
         })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submitAction)
+        alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
     
@@ -46,13 +52,21 @@ class storyTableView: UITableViewController {
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
-            GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
-            print(GlobalVar.GlobalItems.storyArray)
-            self.tableView.reloadData()
+            if (answer != ""){
+                let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+                GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
+                let nextScreen = PageHolder()
+                nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
+                self.navigationController?.pushViewController(nextScreen, animated: true)
+            }
+            else{
+                alert.message = "Please make a valid scene name"
+            }
             
         })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submitAction)
+        alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
     

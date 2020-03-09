@@ -14,6 +14,7 @@ import LifxDomain
 class PageHolder: UIViewController {
     
     var storyIndex = Int()
+    var currentSceneIndex = 0
     //bool to keep present mode
     var editModeNotification = Notification.Name("editMode")
     struct editModeStruct {
@@ -51,6 +52,23 @@ class PageHolder: UIViewController {
     
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        pages.removeAll()
+        for i in 0...GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count-1{
+            let NewPage = EnvironmentController()
+            NewPage.sceneIndex = i
+            NewPage.storyIndex = storyIndex
+            pages.insert(NewPage, at: i)
+        }
+        let finalPage = AddSceneViewController()
+        pages.append(finalPage)
+        print("currentscene")
+        print(currentSceneIndex)
+        pageviewControl.setViewControllers([pages[currentSceneIndex]], direction: .reverse, animated: false, completion: nil)
+        pageControl.numberOfPages = pages.count
+        pageControl.currentPage = currentSceneIndex
     }
     
     func setup()

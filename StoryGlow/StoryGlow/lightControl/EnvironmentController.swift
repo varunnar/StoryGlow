@@ -74,6 +74,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
     override func viewDidAppear(_ animated: Bool) { //readding light color when swiping back
+        self.navigationController?.navigationBar.topItem?.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName
         if (colorSelected == true)
         {
             var hue: CGFloat = 0
