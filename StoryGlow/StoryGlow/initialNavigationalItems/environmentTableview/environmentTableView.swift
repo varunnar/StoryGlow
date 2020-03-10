@@ -89,7 +89,7 @@ class environmentTableView: UITableViewController {
         let nextScreen = PageHolder()
         nextScreen.storyIndex = storyIndex
         nextScreen.currentSceneIndex = indexPath.row
-        navigationController?.pushViewController(nextScreen, animated: true)
+        navigationController?.pushViewController(nextScreen, animated: false)
     }
 
     /*

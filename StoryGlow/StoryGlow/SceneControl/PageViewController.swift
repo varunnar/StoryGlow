@@ -21,15 +21,7 @@ class PageHolder: UIViewController {
         static var editMode = true
     }
     
-    struct lightsStruct{
-        static var lightArray = [Light]()
-    }
     
-    let lightService = LightService(
-        lightsChangeDispatcher: lightNotification(),
-        transportGenerator: UdpTransport.self,
-        extensionFactories: [LightsGroupLocationService.self]
-    )
     
     var pageControl =  UIPageControl()
     var pageviewControl = UIPageViewController()
@@ -38,14 +30,12 @@ class PageHolder: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        lightService.start()
-        NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setup()
         setupPageControl()
         pageviewControl.delegate = self
         pageviewControl.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(addPage), name: .some(addPageNotification), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(controlEditMode), name: .some(editModeNotification), object: nil)
 
         
@@ -70,6 +60,8 @@ class PageHolder: UIViewController {
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = currentSceneIndex
     }
+    
+    
     
     func setup()
     {
@@ -126,18 +118,6 @@ class PageHolder: UIViewController {
         pages.insert(NewPage, at: pages.count-1)
         pageviewControl.setViewControllers([pages[pages.count-2]], direction: .reverse, animated: true, completion: nil)
         pageControl.numberOfPages = pages.count
-    }
-    
-    @objc func AddedLight(notification: Notification){
-        if let light = notification.object as? Light{
-            lightsStruct.lightArray.append(light)
-            let color = HSBK(hue: UInt16(.random(in: 0...1) * Float(UInt16.max)), saturation: UInt16(.random(in: 0...1) * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0)
-            print(color.brightness)
-            print(color.hue)
-            print(color.saturation)
-            let setColor = LightSetColorCommand.create(light: light, color: color, duration: 0)
-            setColor.fireAndForget()
-        }
     }
     
 

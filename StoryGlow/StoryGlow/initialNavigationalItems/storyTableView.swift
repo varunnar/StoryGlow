@@ -25,7 +25,7 @@ class storyTableView: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
+        
     @objc func addTapped()
     {
         let alert = UIAlertController(title: "Story name", message: "What is the name of your story?", preferredStyle: .alert)
@@ -55,9 +55,7 @@ class storyTableView: UITableViewController {
             if (answer != ""){
                 let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
                 GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
-                let nextScreen = PageHolder()
-                nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
-                self.navigationController?.pushViewController(nextScreen, animated: true)
+                self.tableView.reloadData()
             }
             else{
                 alert.message = "Please make a valid scene name"
@@ -105,7 +103,7 @@ class storyTableView: UITableViewController {
         let nextScreen = environmentTableView()
         nextScreen.title = GlobalVar.GlobalItems.storyArray[indexPath.row].storyName
         nextScreen.storyIndex = indexPath.row
-        self.navigationController?.pushViewController(nextScreen, animated: true)
+        self.navigationController?.pushViewController(nextScreen, animated: false)
     }
     
 
