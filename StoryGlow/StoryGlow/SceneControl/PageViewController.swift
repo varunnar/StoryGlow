@@ -16,7 +16,7 @@ class PageHolder: UIViewController {
     var storyIndex = Int()
     var currentSceneIndex = 0
     //bool to keep present mode
-    var editModeNotification = Notification.Name("editMode")
+    var editModeNotification = Notification.Name("editMode") //notification if we are in edit more or present mode. Notificaion sent when segmented control changed
     struct editModeStruct {
         static var editMode = true
     }
@@ -26,11 +26,11 @@ class PageHolder: UIViewController {
     var pageControl =  UIPageControl()
     var pageviewControl = UIPageViewController()
     var pages = [UIViewController]()
-    var addPageNotification = Notification.Name("addPage")
+    var addPageNotification = Notification.Name("addPage") //add page notification
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false //make sure the swiping in pageivewcontroller does not swipe back to tableviews and intropage
         setup()
         setupPageControl()
         pageviewControl.delegate = self
@@ -38,20 +38,20 @@ class PageHolder: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(addPage), name: .some(addPageNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(controlEditMode), name: .some(editModeNotification), object: nil)
 
-        
-    
-
         // Do any additional setup after loading the view.
     }
     
+    //reset pageholder
     override func viewDidAppear(_ animated: Bool) {
-        pages.removeAll()
+        pages.removeAll() //remove wipe pages and reset them
+        //rebuilding all pages in array of pageholder
         for i in 0...GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count-1{
             let NewPage = EnvironmentController()
             NewPage.sceneIndex = i
             NewPage.storyIndex = storyIndex
             pages.insert(NewPage, at: i)
         }
+        //add in final page
         let finalPage = AddSceneViewController()
         pages.append(finalPage)
         print("currentscene")
@@ -62,7 +62,7 @@ class PageHolder: UIViewController {
     }
     
     
-    
+    //add initial pages and setup pageviewcontroller
     func setup()
     {
         pageviewControl = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
@@ -81,6 +81,8 @@ class PageHolder: UIViewController {
         view.gestureRecognizers = pageviewControl.gestureRecognizers
     }
     
+    //MARK: Setup and Contraints
+    //setup pagecontrol which is the small navigational dots on the bottom of the screen
     func setupPageControl()
     {
         print("pagecontrol done")
@@ -104,14 +106,17 @@ class PageHolder: UIViewController {
 
     }
     
+    //MARK: Notification Functions
+    
+    //Function that is called when editmode notification is run. Toggles boolean
     @objc func controlEditMode(){
         //add case statement
         editModeStruct.editMode.toggle()
     }
     
+    //Function that is called with addPage notification is run. Adds new environmentalcontroller and initializes story and scene indexes
     @objc func addPage()
     {
-        print("add page")
         let NewPage = EnvironmentController()
         NewPage.sceneIndex = pages.count-1
         NewPage.storyIndex = storyIndex
@@ -132,6 +137,8 @@ class PageHolder: UIViewController {
     */
 
 }
+
+//MARK: Extensions and Delegates
 
 extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {

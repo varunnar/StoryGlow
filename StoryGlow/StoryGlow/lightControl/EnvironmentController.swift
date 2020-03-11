@@ -17,16 +17,14 @@ import AVFoundation
 
 class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
-    var colorSelected = false //Color preselected for this scene
-    var storyIndex = Int()
-    var sceneIndex = Int()
+    var storyIndex = Int() //index that holds the current story number
+    var sceneIndex = Int() //index that holds the scene number within that story
     
-    var playerMod = [playerModel](repeating: playerModel(), count: 6)
+    var playerMod = [playerModel](repeating: playerModel(), count: 6) //each environmentController has an array of players so that we can
     var audioPlayer: AVAudioPlayer?
-    let audioSession = AVAudioSession.sharedInstance()
-    //var player = AVPlayer(url: URL(string: "https://freesound.org/data/previews/392/392617_7383104-lq.mp3")!)
+    let audioSession = AVAudioSession.sharedInstance() //used inorder to play sound at setup volume
 
-    var playingArray = [Bool](repeating: Bool(false), count: 6)
+    var playingArray = [Bool](repeating: Bool(false), count: 6) //array of booleans used to determining pausing and playing
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     var colorView = UIView() //band color
     var SoundButton1 = UIButton()
@@ -45,9 +43,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count == sceneIndex{
+        if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count == sceneIndex{ //check if this is a new scene
             let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
-            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene)
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene) //add scene with the array of scenes
         }
         view.backgroundColor = .white
         
@@ -70,20 +68,24 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) { //readding light color when swiping back
-        self.navigationController?.navigationBar.topItem?.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName
-            var hue: CGFloat = 0
-            var saturation: CGFloat = 0
-            var brightness: CGFloat = 0
-            var alpha: CGFloat = 0
-        let previousColor = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal
-                previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-                let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
-                for i in IntroPage.lightsStruct.lightArray{
-                    let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
-                    setColor.fireAndForget()
-            }
-        for n in 0...5{            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
+    //this viewdidappear is used to add colors and sounds after swiping data model
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.topItem?.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName //Set title of each screen and change with swiping
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        let previousColor = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal //get color value from data model. Color is initialized to white
+        previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) //setup colors as HSBK colors and set light colors
+        let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+        for i in IntroPage.lightsStruct.lightArray{
+            let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
+            setColor.fireAndForget()
+        }
+        
+        //readding sounds to buttons on swiping
+        for n in 0...5{
+            soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
             if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != "")
             {
                 print("adding interaction")
@@ -93,7 +95,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             }
         }
         
-        //when adding a new scene control what is shown on the segmented control
+        //check if story is in present mode or not on swiping
         if PageHolder.editModeStruct.editMode == false{
             for i in 0...5{
                 if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
@@ -110,6 +112,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         
     }
     
+    //adds soundbuttons to sound array, give them accessibilityIndentifiers for contextMenus and add target functionality
     func SoundButtonSyncing()
     {
         soundButtonArray.append(SoundButton1)
@@ -132,11 +135,14 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SoundButton6.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
     }
     
+    //MARK: Button Control
     //Navigating to sound screen and getting button info
     @objc func AddSounds(sender: UIButton)
-    {//this is also where we will need to sort out if we are adding or playing the item
+    {
+        //this is also where we will need to sort out if we are adding or playing the item
         if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
         {
+            //if we are in edit mode
             if PageHolder.editModeStruct.editMode == true{
                let nextScreen = RecordAudioController()//change later
                nextScreen.buttonIndexRec = buttonIndex
@@ -144,6 +150,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
                nextScreen.storyIndexRec = storyIndex
                nextScreen.title = "Add a Sound Effect"
                navigationController?.pushViewController(nextScreen, animated: true)
+            //if we are in present mode
             }else{
             //play sounds
                 playSounds(buttonIndex: buttonIndex)
@@ -151,21 +158,17 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
     }
     
+    //function that actually plays sound
     func playSounds(buttonIndex:Int)
     {
+        //If audio string is an url from freesound
         if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal.contains("https") == true {
+            //If player boolean is true and player is playing (boolean may not be needed)
             if (playingArray[buttonIndex] == true && playerMod[buttonIndex].player.timeControlStatus == .playing){
-                print("pause")
-                print(playingArray[buttonIndex])
-                print(buttonIndex)
                 playerMod[buttonIndex].player.pause()
                 playingArray[buttonIndex] = false
             }else{
-                print("play")
-                print(playingArray[buttonIndex])
-                print(buttonIndex)
-                print(playerMod[buttonIndex].player.rate)
-                let url = URL.init(string:GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal)
+                let url = URL.init(string:GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal) //convert string from data model to url
                 let playerItem: AVPlayerItem = AVPlayerItem(url: url!)
                 playerMod[buttonIndex].player = AVPlayer(playerItem: playerItem)
                 playerMod[buttonIndex].player.volume = 1.0
@@ -175,7 +178,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
                 playingArray[buttonIndex] = true
                 playerMod[buttonIndex].player.play()
             }
-        } else{
+        }
+        //if audio string is a url we recorded
+        else{
+            //If player boolean is true and player is playing (boolean may not be needed)
             if (playingArray[buttonIndex]==true && audioPlayer?.isPlaying == true){
                 audioPlayer?.stop()
             }
@@ -199,25 +205,28 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     
     
-    
+    //MARK: Segmented Control
     //Control segmented control
     @objc func indexChanged(_ sender: UISegmentedControl) {
         let EditModeNotification = Notification.Name("editMode")
         NotificationCenter.default.post(Notification(name: EditModeNotification))
-        //Take out buttons
+        //If switched to presentation mode
         if sender.selectedSegmentIndex == 1{
-            for i in 0...5{
+            for i in 0...5
+                {
                 if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
-                    soundButtonArray[i].isHidden = true
+                    soundButtonArray[i].isHidden = true //hide unused buttons
                 }
-                soundButtonArray[i].interactions = []
+                soundButtonArray[i].interactions = [] //remove contextMenu interactions
             }
-        }else{
+        }
+        //
+        else{
             for i in 0...5{
-                soundButtonArray[i].isHidden = false
+                soundButtonArray[i].isHidden = false //show buttons
                 if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName != ""){
                     let interaction = UIContextMenuInteraction(delegate: self)
-                    soundButtonArray[i].addInteraction(interaction)
+                    soundButtonArray[i].addInteraction(interaction) //add interactions to buttons that are populated
                 }
             }
         }
@@ -226,7 +235,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     
     
-    //MARK:Constraints
+    //MARK:Constraints and Setup
      //setting up buttons and adding them to stackview1
     func SetupStackView1()
     {
@@ -331,6 +340,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         colorView.bottomAnchor.constraint(equalTo: ColorWheelView.topAnchor, constant:-20).isActive = true
     }
     
+    //MARK: Image
     //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
     @objc func imageTap(recognizer: UITapGestureRecognizer)
     {
@@ -345,7 +355,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
         if let realColor = RGBcolor{
-            colorSelected = true
             GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal = realColor
             print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal)
             //converting color from RGB to HSB
@@ -391,6 +400,7 @@ extension UIImage {
     }
 }
 
+//The setup of the context menu, choosing buttons
 extension EnvironmentController: UIContextMenuInteractionDelegate{
     func contextMenuInteraction(
       _ interaction: UIContextMenuInteraction,
@@ -404,6 +414,7 @@ extension EnvironmentController: UIContextMenuInteractionDelegate{
       })
     }
     
+    //Building context menu
     func makeContextMenu(interact: UIContextMenuInteraction) -> UIMenu
     {
         var buttonIndex = 0
