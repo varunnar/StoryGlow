@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+//create URL for API call
 func createURL(search:String, page:String) -> String {
     let url = "https://freesound.org/apiv2/search/text/?query=" + search + "&fields=name,id,previews"
     return url

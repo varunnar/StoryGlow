@@ -89,6 +89,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
      }
     
 //MARK:Button actions
+    //load table view
     @objc func searchSound(sender: UIButton!) {
         let nextScreen = SoundTableViewController()
         nextScreen.buttonIndexSTV = buttonIndexRec
@@ -98,7 +99,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         navigationController?.pushViewController(nextScreen, animated: true)
     }
     
-    
+    //save URL and sound name
     @objc func saveSound(sender: UIButton!) {
         let audioFile = (audioRecorder?.url)!
         let audioFileString = audioFile.absoluteString
@@ -109,6 +110,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         navigationController?.popToViewController(vc!, animated: true)
     }
     
+    //record sounds
     @objc func RecButtonAction(sender: UIButton!) {
         if let recorder = audioRecorder {
             //check to make sure we aren't already recording
@@ -127,7 +129,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
             print("No audio recorder instance")
         }
     }
-    
+    //play sounds
     @objc func playButtonAction(sender: UIButton!) {
         if playing == false{
             playing = true
@@ -161,7 +163,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         }
     }
     
-
+//control UI for record button
     func ControlRecordingButton() {
         if recording == false{
             RecButton.setTitle("Start Recording", for: .normal)
@@ -171,7 +173,7 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
             RecButton.backgroundColor = UIColor(displayP3Red: 0.7, green: 0.0, blue: 0.0, alpha: 1.0)
         }
     }
-    
+    //control UI for play button
     func ControlPlayButton(){
         if playing == false{
             PlayButton.setTitle("Play Sound", for: .normal)

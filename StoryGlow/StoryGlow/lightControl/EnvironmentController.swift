@@ -220,7 +220,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
                 soundButtonArray[i].interactions = [] //remove contextMenu interactions
             }
         }
-        //
+        // if in edit mode load all buttons
         else{
             for i in 0...5{
                 soundButtonArray[i].isHidden = false //show buttons
@@ -420,7 +420,6 @@ extension EnvironmentController: UIContextMenuInteractionDelegate{
         var buttonIndex = 0
         for i in 0...self.soundButtonArray.count-1{
             if (interact.view?.accessibilityIdentifier == self.soundButtonArray[i].accessibilityIdentifier){
-                print(interact.view?.accessibilityIdentifier)
                 buttonIndex = i
             }
         }
