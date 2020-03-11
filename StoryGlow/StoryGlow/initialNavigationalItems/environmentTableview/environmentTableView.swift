@@ -32,22 +32,18 @@ class environmentTableView: UITableViewController {
         tableView.reloadData()
     }
     
+    //User presses add button in top corner to add a new scene
     @objc func addTapped()
     {
         let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            if (answer != ""){
+            if (answer != ""){ //if scene actually has name
             let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray.append(scene)
-            self.tableView.reloadData()
+            self.tableView.reloadData()//reload to tableview to see new name
             }
-            else{
-                print("else")
-                alert.message = "Please make a valid scene name"
-            }
-            
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(submitAction)

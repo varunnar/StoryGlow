@@ -11,26 +11,30 @@ import RxLifxApi
 import RxLifx
 import LifxDomain
 
+//Initial page the user comes across where they can create a story or look at their story list
+
 class IntroPage: UIViewController {
     
     struct lightsStruct{
-        static var lightArray = [Light]()
+        static var lightArray = [Light]() //holds all lights in an array within a struct so it is accessible on any file
     }
     
+    //setups up light services
     let lightService = LightService(
         lightsChangeDispatcher: lightNotification(),
         transportGenerator: UdpTransport.self,
         extensionFactories: [LightsGroupLocationService.self]
     )
     
+    //buttons and stackview initializing
     var addStoryButton = UIButton()
     var storyListButton = UIButton()
     var mainStackView = UIStackView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        lightService.start()
-        NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil)
-        self.navigationController?.navigationBar.topItem?.title = "Welcome"
+        lightService.start() //start looking for lights
+        NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil) //notification for when light is added
+        self.navigationController?.navigationBar.topItem?.title = "Welcome" //set top title
         view.backgroundColor = .white
         view.addSubview(mainStackView)
         addStoryButton.backgroundColor = .red
@@ -44,6 +48,7 @@ class IntroPage: UIViewController {
         self.navigationController?.navigationBar.topItem?.title = "Welcome"
     }
     
+    //function for when light is added, randomizes color in order to show user light is connected
     @objc func AddedLight(notification: Notification){
            if let light = notification.object as? Light{
                lightsStruct.lightArray.append(light)
@@ -55,6 +60,8 @@ class IntroPage: UIViewController {
                setColor.fireAndForget()
            }
        }
+    
+    //MARK: Setup and Constraints
     
     func setupStackview()
     {
@@ -75,19 +82,17 @@ class IntroPage: UIViewController {
         mainStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true
     }
     
+    //Function that is prompted when user pressed the "Add Story" button. Alert is triggered where the user can name their story
     @objc func storyNameAlert()
     {
         let alert = UIAlertController(title: "Story name", message: "What is the name of your story?", preferredStyle: .alert)
         alert.addTextField() //https://gist.github.com/TheCodedSelf/c4f3984dd9fcc015b3ab2f9f60f8ad51 reference to make button inaccessable
         let submitAction = UIAlertAction(title: "Next", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            if (answer != ""){
-                let story = GlobalVar.Story(storyName: answer!)
+            if (answer != ""){ //if story name exists
+                let story = GlobalVar.Story(storyName: answer!) //debugging for later. If user makes story but not story name, they still make a story without a scene
                 GlobalVar.GlobalItems.storyArray.append(story)
                 self.SceneNameAlert()
-            }
-            else{
-                print("else")
             }
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -95,23 +100,19 @@ class IntroPage: UIViewController {
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
-    
+    //Function is called from storyNameAlert(). Once user has made a storyname prompts them to make a scene name as well
     func SceneNameAlert()
     {
         let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
-            if (answer != ""){
+            if (answer != ""){ //if scene name exists
                 let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
                 GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
                 let nextScreen = PageHolder()
                 nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
                 self.navigationController?.pushViewController(nextScreen, animated: true)
-            }
-            else{
-                print("else")
-                alert.message = "Please make a valid scene name"
             }
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -120,6 +121,7 @@ class IntroPage: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //navigate to story list
     @objc func navigateToStoryList()
     {
         let nextScreen = storyTableView()

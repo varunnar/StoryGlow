@@ -26,6 +26,7 @@ class storyTableView: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
         
+    //Function that runs when user clicks the tab button in the top right corner. Creates an new story and prompts user through alerts
     @objc func addTapped()
     {
         let alert = UIAlertController(title: "Story name", message: "What is the name of your story?", preferredStyle: .alert)
@@ -46,6 +47,7 @@ class storyTableView: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //this function is run after the user creates their story and names it. A second alert is presented prompting the user to add the name of their story
     func SceneNameAlert()
     {
         let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
