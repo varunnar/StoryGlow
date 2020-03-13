@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// What is the purpose of this GlobalVar wrapper class around these?
 class GlobalVar{
     struct GlobalItems {
         static var storyArray = [Story]() //By adding this information in a struct, we can reach this information from anywhere

@@ -17,6 +17,12 @@ import AVFoundation
 
 class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
+    /* as mentioned in the PageViewController comments it would be great to get
+     a view model to hold all the view related info.
+     
+     For instance the view model could hold all of the information that you have to keep grabbing out of
+     the GlobalVar.GlobalItems.storyArray static property.
+    */
     var storyIndex = Int() //index that holds the current story number
     var sceneIndex = Int() //index that holds the scene number within that story
     
@@ -26,6 +32,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
 
     var playingArray = [Bool](repeating: Bool(false), count: 6) //array of booleans used to determining pausing and playing
     var soundButtonArray = [UIButton]() //Array of 6 buttons
+    
+    // best practice is to make as many properties as possible in a ViewController lazy 
+    // this allows the system to load the viewcontroller quickly
+    // then you can set them up in viewDidLoad() or later if possible
+    
+    
     var colorView = UIView() //band color
     var SoundButton1 = UIButton()
     var SoundButton2 = UIButton()
@@ -43,6 +55,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // could be determined by viewmodel
         if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count == sceneIndex{ //check if this is a new scene
             let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
             GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene) //add scene with the array of scenes
@@ -70,6 +83,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     //this viewdidappear is used to add colors and sounds after swiping data model
     override func viewDidAppear(_ animated: Bool) {
+        // should be viewModel property
         self.navigationController?.navigationBar.topItem?.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName //Set title of each screen and change with swiping
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
@@ -77,6 +91,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         var alpha: CGFloat = 0
         let previousColor = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal //get color value from data model. Color is initialized to white
         previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) //setup colors as HSBK colors and set light colors
+        // color and all the nessecary work to get it could be in the viewModel
         let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
         for i in IntroPage.lightsStruct.lightArray{
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
@@ -84,7 +99,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
         
         //readding sounds to buttons on swiping
+        // it would be less fragile to itterate through soundButtonArray
+        // in case you ever decide to have a different number of buttons
         for n in 0...5{
+           // button titles could be provided by viewModel
             soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
             if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != "")
             {
@@ -96,8 +114,11 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
         
         //check if story is in present mode or not on swiping
+        // again probably better to avoid the static var and update the viewModels
+        // in PageHolder than having to check some static var
         if PageHolder.editModeStruct.editMode == false{
             for i in 0...5{
+                // again title could be in viewModel
                 if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
                     soundButtonArray[i].isHidden = true
                 }
@@ -113,6 +134,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
     //adds soundbuttons to sound array, give them accessibilityIndentifiers for contextMenus and add target functionality
+    // this and the two setting up the stack view functions should be loops
+    // loop to populate the sound buttons into the soundButtonArray,
+    // then you could iterate through the soundButtonArray three at a time to populate the stack views
+    // ideally you wouldn't need properties for each individual button or even the stack views
     func SoundButtonSyncing()
     {
         soundButtonArray.append(SoundButton1)
@@ -162,6 +187,8 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     func playSounds(buttonIndex:Int)
     {
         //If audio string is an url from freesound
+        // would be best in viewModel could have something like:
+        // viewModel.canPlaySound(at: buttonIndex) -> Bool
         if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal.contains("https") == true {
             //If player boolean is true and player is playing (boolean may not be needed)
             if (playingArray[buttonIndex] == true && playerMod[buttonIndex].player.timeControlStatus == .playing){
@@ -208,6 +235,8 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     //MARK: Segmented Control
     //Control segmented control
     @objc func indexChanged(_ sender: UISegmentedControl) {
+        // Delegate pattern might be better for this than notifications
+        // see my notes in AddSceneViewController about this
         let EditModeNotification = Notification.Name("editMode")
         NotificationCenter.default.post(Notification(name: EditModeNotification))
         //If switched to presentation mode

@@ -16,7 +16,12 @@ class PageHolder: UIViewController {
     var storyIndex = Int()
     var currentSceneIndex = 0
     //bool to keep present mode
+    // It is good practice to add notification names as static properties to Notification.Name in an extension
+    // then you can easily resuse them without having to redeclare them all over
+    // and you avoid misspelling things
     var editModeNotification = Notification.Name("editMode") //notification if we are in edit more or present mode. Notificaion sent when segmented control changed
+    
+    
     struct editModeStruct {
         static var editMode = true
     }
@@ -31,6 +36,20 @@ class PageHolder: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false //make sure the swiping in pageivewcontroller does not swipe back to tableviews and intropage
+        /*
+         It looks like most of the logic in setup() is repeated in viewDidAppear(:)
+         I think this should be consolidated - it is expensive to create a couple new
+         ViewControllers in viewDidLoad() just to remove them and recreate them again
+         in viewDidAppear(:).
+         
+         Seems like maybe viewWillAppear(:) would be a better place to be creating them so you know you have
+         updated ones everytime the view is about to appear.
+         
+         I would also consider using ViewModels instead of a whole bunch of properties to model
+         how the EnvironmentController should appear. Then instead of deiniting and re-creating all the pages,
+         you could just update the existing ones' viewModels and the remove or create any new
+         EnvironmentControllers when needed.
+        */
         setup()
         setupPageControl()
         pageviewControl.delegate = self
@@ -45,6 +64,31 @@ class PageHolder: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         pages.removeAll() //remove wipe pages and reset them
         //rebuilding all pages in array of pageholder
+        
+        /*
+         if you use the viewModel approach you can do something like this:
+         
+         - calling enumerated() before forEach gives you the index as well as the object as you iterate through the array
+         
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.enumerated().forEach { sceneIndex, scene in
+            let sceneViewModel = SceneViewModel(scene, sceneIndex)
+            guard pages.count > sceneIndex,
+                let page = pages[sceneIndex] as? EnvironmentController else {
+                let newPage = EnvironmentController(sceneViewModel)
+                pages.insert(newPage, at: sceneIndex)
+                return
+            }
+            
+            page.update(with: sceneViewModel)
+        }
+         
+         if !(pages.last is AddSceneViewController) {
+             let finalPage = AddSceneViewController()
+             pages.append(finalPage)
+         }
+         
+        */
+        
         for i in 0...GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count-1{
             let NewPage = EnvironmentController()
             NewPage.sceneIndex = i
@@ -92,9 +136,16 @@ class PageHolder: UIViewController {
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
         pageviewControl.view.addSubview(pageControl)
+        
+        // don't forget functions and properties should begin with a lower case letter
+        // this reads like you are instatiating some sets of constraints but not doing anything with it
+        // ideally a reader shouldn't have to lookup what you are calling to understand the intention of
+        // a line of code
         PageControlConstraints()
     }
     
+    // functions should really start with a verb
+    // i.e. setupPageControlConstraints()
     func PageControlConstraints()
     {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -109,6 +160,7 @@ class PageHolder: UIViewController {
     //MARK: Notification Functions
     
     //Function that is called when editmode notification is run. Toggles boolean
+    // 'toggle' is probably more clear than 'control'
     @objc func controlEditMode(){
         //add case statement
         editModeStruct.editMode.toggle()

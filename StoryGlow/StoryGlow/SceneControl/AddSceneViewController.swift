@@ -39,6 +39,11 @@ class AddSceneViewController: UIViewController {
     
     @objc func AddViewController()
     {
+        // I think the delegate pattern probably makes more sense here.
+        // Think of Notifications as a broadcast or one to many
+        // This seems less likely that many different objects are going to need to know about this event,
+        // Since only the PageViewController really cares about this event that tells me this is actually
+        // more of a one to one sort of communication for which a Delegate is best.
         let AddPageNotification = Notification.Name("addPage")
         NotificationCenter.default.post(Notification(name: AddPageNotification))
     }

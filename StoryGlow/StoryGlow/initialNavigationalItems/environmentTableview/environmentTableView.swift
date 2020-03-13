@@ -71,6 +71,9 @@ class environmentTableView: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // this will cause a crash in certain instances.
+        // best practice is to dequeue the cell on one line
+        // then try to cast it and if the cast fails then just return the dequed cell
         let cell = tableView.dequeueReusableCell(withIdentifier: cells.cellID, for: indexPath) as! environmentCell
         if (GlobalVar.GlobalItems.storyArray.count != 0){
             cell.environmentName.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
