@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		28EDE1B42415A30B004CB220 /* playerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EDE1B32415A30B004CB220 /* playerModel.swift */; };
+		E90B993D241F00D000C6C9FF /* storyFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B993C241F00D000C6C9FF /* storyFetching.swift */; };
+		E90B993F241F00E700C6C9FF /* sceneFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B993E241F00E700C6C9FF /* sceneFetching.swift */; };
+		E90B9941241F00F200C6C9FF /* storyUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9940241F00F200C6C9FF /* storyUpdating.swift */; };
+		E90B9943241F00FD00C6C9FF /* sceneUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9942241F00FD00C6C9FF /* sceneUpdating.swift */; };
+		E90B9946241F03C200C6C9FF /* repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9945241F03C200C6C9FF /* repository.swift */; };
+		E90B994C241F040100C6C9FF /* SceneRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B994B241F040100C6C9FF /* SceneRepository.swift */; };
+		E90B994E241F041100C6C9FF /* StoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B994D241F041100C6C9FF /* StoryRepository.swift */; };
+		E90B9951241F052B00C6C9FF /* soundFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9950241F052B00C6C9FF /* soundFetching.swift */; };
+		E90B9953241F053600C6C9FF /* soundUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9952241F053600C6C9FF /* soundUpdating.swift */; };
+		E90B9955241F14EA00C6C9FF /* SoundRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9954241F14EA00C6C9FF /* SoundRepository.swift */; };
 		E9254A7324105CD700BE0D09 /* environmentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9254A7224105CD700BE0D09 /* environmentTableView.swift */; };
 		E9254A7724105D0300BE0D09 /* environmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9254A7624105D0300BE0D09 /* environmentCell.swift */; };
 		E931671823F4D1CB00243E63 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7123E7825600ADB1D5 /* LifxDomain.framework */; };
@@ -17,6 +27,9 @@
 		E931671C23F4D1CB00243E63 /* RxLifx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7923E7827300ADB1D5 /* RxLifx.framework */; };
 		E931671D23F4D1CB00243E63 /* RxLifxApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7823E7827300ADB1D5 /* RxLifxApi.framework */; };
 		E931671E23F4D1CB00243E63 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7A23E7827300ADB1D5 /* RxSwift.framework */; };
+		E9388BBC241EFD3600391285 /* story.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9388BBB241EFD3600391285 /* story.swift */; };
+		E9388BBE241EFE0600391285 /* scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9388BBD241EFE0600391285 /* scene.swift */; };
+		E9388BC6241EFFEA00391285 /* soundData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9388BC5241EFFEA00391285 /* soundData.swift */; };
 		E94574AD23F4D340000AD410 /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7723E7827300ADB1D5 /* RxBlocking.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E94574AE23F4D34D000AD410 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7B23E7827300ADB1D5 /* RxCocoa.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E94574AF23F4D34D000AD410 /* RxLifx.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97F7D7923E7827300ADB1D5 /* RxLifx.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -69,8 +82,21 @@
 
 /* Begin PBXFileReference section */
 		28EDE1B32415A30B004CB220 /* playerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = playerModel.swift; sourceTree = "<group>"; };
+		E90B993C241F00D000C6C9FF /* storyFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyFetching.swift; sourceTree = "<group>"; };
+		E90B993E241F00E700C6C9FF /* sceneFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sceneFetching.swift; sourceTree = "<group>"; };
+		E90B9940241F00F200C6C9FF /* storyUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyUpdating.swift; sourceTree = "<group>"; };
+		E90B9942241F00FD00C6C9FF /* sceneUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sceneUpdating.swift; sourceTree = "<group>"; };
+		E90B9945241F03C200C6C9FF /* repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repository.swift; sourceTree = "<group>"; };
+		E90B994B241F040100C6C9FF /* SceneRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRepository.swift; sourceTree = "<group>"; };
+		E90B994D241F041100C6C9FF /* StoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRepository.swift; sourceTree = "<group>"; };
+		E90B9950241F052B00C6C9FF /* soundFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundFetching.swift; sourceTree = "<group>"; };
+		E90B9952241F053600C6C9FF /* soundUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundUpdating.swift; sourceTree = "<group>"; };
+		E90B9954241F14EA00C6C9FF /* SoundRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundRepository.swift; sourceTree = "<group>"; };
 		E9254A7224105CD700BE0D09 /* environmentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environmentTableView.swift; sourceTree = "<group>"; };
 		E9254A7624105D0300BE0D09 /* environmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environmentCell.swift; sourceTree = "<group>"; };
+		E9388BBB241EFD3600391285 /* story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = story.swift; sourceTree = "<group>"; };
+		E9388BBD241EFE0600391285 /* scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scene.swift; sourceTree = "<group>"; };
+		E9388BC5241EFFEA00391285 /* soundData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundData.swift; sourceTree = "<group>"; };
 		E947453123F08012007AC880 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		E947453B23F39AC8007AC880 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		E96B18BD240C5D21004B4308 /* IntroPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroPage.swift; sourceTree = "<group>"; };
@@ -122,6 +148,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E90B9939241F008400C6C9FF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E9388BBB241EFD3600391285 /* story.swift */,
+				E9388BBD241EFE0600391285 /* scene.swift */,
+				E9388BC5241EFFEA00391285 /* soundData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E90B9944241F010400C6C9FF /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				E90B993C241F00D000C6C9FF /* storyFetching.swift */,
+				E90B993E241F00E700C6C9FF /* sceneFetching.swift */,
+				E90B9950241F052B00C6C9FF /* soundFetching.swift */,
+				E90B9940241F00F200C6C9FF /* storyUpdating.swift */,
+				E90B9942241F00FD00C6C9FF /* sceneUpdating.swift */,
+				E90B9952241F053600C6C9FF /* soundUpdating.swift */,
+			);
+			path = protocol;
+			sourceTree = "<group>";
+		};
+		E90B994F241F041B00C6C9FF /* repositories */ = {
+			isa = PBXGroup;
+			children = (
+				E90B9945241F03C200C6C9FF /* repository.swift */,
+				E90B994D241F041100C6C9FF /* StoryRepository.swift */,
+				E90B994B241F040100C6C9FF /* SceneRepository.swift */,
+				E90B9954241F14EA00C6C9FF /* SoundRepository.swift */,
+			);
+			path = repositories;
+			sourceTree = "<group>";
+		};
 		E97F7D6D23E7821900ADB1D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +285,9 @@
 				E990B5082404F0A900187964 /* lightControl */,
 				E990B5072404F06000187964 /* SceneControl */,
 				E947453123F08012007AC880 /* DataModel.swift */,
+				E90B994F241F041B00C6C9FF /* repositories */,
+				E90B9944241F010400C6C9FF /* protocol */,
+				E90B9939241F008400C6C9FF /* Model */,
 				E9C72B15241064AA0087E6E4 /* initialNavigationalItems */,
 				E9FCAF5023E3836B004A6B9C /* Assets.xcassets */,
 				E9FCAF5223E3836B004A6B9C /* LaunchScreen.storyboard */,
@@ -333,24 +396,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				E990B4FB2404EB5600187964 /* RecordAudioController.swift in Sources */,
+				E90B9951241F052B00C6C9FF /* soundFetching.swift in Sources */,
+				E9388BC6241EFFEA00391285 /* soundData.swift in Sources */,
 				E947453223F08012007AC880 /* DataModel.swift in Sources */,
 				E97E3DBA240CA684000C7BCD /* storyTableView.swift in Sources */,
+				E90B993F241F00E700C6C9FF /* sceneFetching.swift in Sources */,
 				E97E3DBC240CB3C2000C7BCD /* storyCell.swift in Sources */,
 				E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */,
 				E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */,
 				E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */,
+				E90B994E241F041100C6C9FF /* StoryRepository.swift in Sources */,
 				E9FCAF5C23E383DE004A6B9C /* EnvironmentController.swift in Sources */,
+				E90B994C241F040100C6C9FF /* SceneRepository.swift in Sources */,
 				E990B4F52404EA5400187964 /* URLbuilder.swift in Sources */,
 				E990B5022404EC2700187964 /* data.swift in Sources */,
+				E90B9946241F03C200C6C9FF /* repository.swift in Sources */,
 				E9254A7324105CD700BE0D09 /* environmentTableView.swift in Sources */,
+				E90B9953241F053600C6C9FF /* soundUpdating.swift in Sources */,
 				E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */,
 				E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */,
 				E990B4F92404EB1700187964 /* SoundTableViewController.swift in Sources */,
+				E9388BBE241EFE0600391285 /* scene.swift in Sources */,
 				E96B18BE240C5D21004B4308 /* IntroPage.swift in Sources */,
 				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
 				28EDE1B42415A30B004CB220 /* playerModel.swift in Sources */,
+				E90B9955241F14EA00C6C9FF /* SoundRepository.swift in Sources */,
 				E9254A7724105D0300BE0D09 /* environmentCell.swift in Sources */,
 				E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */,
+				E90B9943241F00FD00C6C9FF /* sceneUpdating.swift in Sources */,
+				E9388BBC241EFD3600391285 /* story.swift in Sources */,
+				E90B9941241F00F200C6C9FF /* storyUpdating.swift in Sources */,
+				E90B993D241F00D000C6C9FF /* storyFetching.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
