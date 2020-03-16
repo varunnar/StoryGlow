@@ -29,6 +29,7 @@ class PageHolder: UIViewController {
     var addPageNotification = Notification.Name("addPage") //add page notification
 
     override func viewDidLoad() {
+        self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[currentSceneIndex].sceneName
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false //make sure the swiping in pageivewcontroller does not swipe back to tableviews and intropage
         setup()
@@ -117,12 +118,26 @@ class PageHolder: UIViewController {
     //Function that is called with addPage notification is run. Adds new environmentalcontroller and initializes story and scene indexes
     @objc func addPage()
     {
-        let NewPage = EnvironmentController()
-        NewPage.sceneIndex = pages.count-1
-        NewPage.storyIndex = storyIndex
-        pages.insert(NewPage, at: pages.count-1)
-        pageviewControl.setViewControllers([pages[pages.count-2]], direction: .reverse, animated: true, completion: nil)
-        pageControl.numberOfPages = pages.count
+        let alert = UIAlertController(title: "Scene name", message: "What is the name of your new scene?", preferredStyle: .alert)
+        alert.addTextField()
+        let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
+            let answer = alert.textFields![0].text
+            if (answer != ""){ //if scene actually has name
+            let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray.append(scene)
+            self.title = answer
+            let NewPage = EnvironmentController()
+            NewPage.sceneIndex = self.pages.count-1
+            NewPage.storyIndex = self.storyIndex
+            self.pages.insert(NewPage, at: self.pages.count-1)
+            self.pageviewControl.setViewControllers([self.pages[self.pages.count-2]], direction: .reverse, animated: true, completion: nil)
+            self.pageControl.numberOfPages = self.pages.count
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(submitAction)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
     
 
@@ -175,6 +190,7 @@ extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelega
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
             if let viewControllers = pageViewController.viewControllers {
                 if let viewControllerIndex = self.pages.firstIndex(of: viewControllers[0]) {
+                    navigationItem.title = viewControllers[0].title
                         pageControl.currentPage = viewControllerIndex
                     }
                 }

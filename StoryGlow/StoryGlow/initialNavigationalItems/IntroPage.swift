@@ -90,9 +90,7 @@ class IntroPage: UIViewController {
         let submitAction = UIAlertAction(title: "Next", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
             if (answer != ""){ //if story name exists
-                let story = GlobalVar.Story(storyName: answer!) //debugging for later. If user makes story but not story name, they still make a story without a scene
-                GlobalVar.GlobalItems.storyArray.append(story)
-                self.SceneNameAlert()
+                self.SceneNameAlert(storyName: answer!)
             }
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -101,15 +99,18 @@ class IntroPage: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     //Function is called from storyNameAlert(). Once user has made a storyname prompts them to make a scene name as well
-    func SceneNameAlert()
+    func SceneNameAlert(storyName: String)
     {
         let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
             if (answer != ""){ //if scene name exists
+                var story = GlobalVar.Story(storyName: storyName)
                 let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
-                GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
+                story.sceneArray.append(scene)
+                GlobalVar.GlobalItems.storyArray.append(story)
+                
                 let nextScreen = PageHolder()
                 nextScreen.storyIndex = GlobalVar.GlobalItems.storyArray.count-1
                 self.navigationController?.pushViewController(nextScreen, animated: true)

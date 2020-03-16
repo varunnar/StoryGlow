@@ -106,8 +106,9 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundName = "Sound \(String(buttonIndexRec))"
         GlobalVar.GlobalItems.storyArray[storyIndexRec].sceneArray[sceneIndexRec].buttonInfo[buttonIndexRec].soundVal = audioFileString
         
-        let vc = self.navigationController?.viewControllers.filter({$0 is PageHolder}).first //is first first or last?
-        navigationController?.popToViewController(vc!, animated: true)
+        let vc = self.navigationController?.viewControllers.filter({$0 is PageHolder}).first as! PageHolder//is first first or last?
+        vc.currentSceneIndex = sceneIndexRec
+        navigationController?.popToViewController(vc, animated: true)
     }
     
     //record sounds

@@ -13,16 +13,13 @@ class AddSceneViewController: UIViewController {
     let AddButton = UIButton()
 
     override func viewDidLoad() {
+        self.title = "Add a New Scene"
         super.viewDidLoad()
         view.backgroundColor = .black
         view.addSubview(AddButton)
         setupAddButton()
 
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = "Add a New Scene"
     }
 
     

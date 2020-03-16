@@ -34,9 +34,7 @@ class storyTableView: UITableViewController {
         let submitAction = UIAlertAction(title: "Next", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
             if (answer != ""){
-                let story = GlobalVar.Story(storyName: answer!)
-                GlobalVar.GlobalItems.storyArray.append(story)
-                self.SceneNameAlert()
+                self.SceneNameAlert(storyName: answer!)
             }else{
                 alert.message = "please make a valid story name"
             }
@@ -48,15 +46,17 @@ class storyTableView: UITableViewController {
     }
     
     //this function is run after the user creates their story and names it. A second alert is presented prompting the user to add the name of their story
-    func SceneNameAlert()
+    func SceneNameAlert(storyName: String)
     {
         let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
             if (answer != ""){
+                var story = GlobalVar.Story(storyName: storyName)
                 let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
-                GlobalVar.GlobalItems.storyArray[GlobalVar.GlobalItems.storyArray.count-1].sceneArray.append(scene)
+                story.sceneArray.append(scene)
+                GlobalVar.GlobalItems.storyArray.append(story)
                 self.tableView.reloadData()
             }
             else{

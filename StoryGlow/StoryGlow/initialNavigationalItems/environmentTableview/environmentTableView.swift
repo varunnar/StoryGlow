@@ -35,7 +35,7 @@ class environmentTableView: UITableViewController {
     //User presses add button in top corner to add a new scene
     @objc func addTapped()
     {
-        let alert = UIAlertController(title: "Scene name", message: "What is the name of your first scene?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Scene name", message: "What is the name of your new scene?", preferredStyle: .alert)
         alert.addTextField()
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text

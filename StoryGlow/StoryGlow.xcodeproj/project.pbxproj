@@ -182,6 +182,16 @@
 			path = repositories;
 			sourceTree = "<group>";
 		};
+		E9481A9B24201617009E7FDE /* VMMV */ = {
+			isa = PBXGroup;
+			children = (
+				E90B994F241F041B00C6C9FF /* repositories */,
+				E90B9944241F010400C6C9FF /* protocol */,
+				E90B9939241F008400C6C9FF /* Model */,
+			);
+			path = VMMV;
+			sourceTree = "<group>";
+		};
 		E97F7D6D23E7821900ADB1D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,13 +291,11 @@
 				E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */,
 				E9FCAF4723E38369004A6B9C /* AppDelegate.swift */,
 				28EDE1B32415A30B004CB220 /* playerModel.swift */,
+				E947453123F08012007AC880 /* DataModel.swift */,
 				E990B5002404EBF900187964 /* soundControl */,
 				E990B5082404F0A900187964 /* lightControl */,
 				E990B5072404F06000187964 /* SceneControl */,
-				E947453123F08012007AC880 /* DataModel.swift */,
-				E90B994F241F041B00C6C9FF /* repositories */,
-				E90B9944241F010400C6C9FF /* protocol */,
-				E90B9939241F008400C6C9FF /* Model */,
+				E9481A9B24201617009E7FDE /* VMMV */,
 				E9C72B15241064AA0087E6E4 /* initialNavigationalItems */,
 				E9FCAF5023E3836B004A6B9C /* Assets.xcassets */,
 				E9FCAF5223E3836B004A6B9C /* LaunchScreen.storyboard */,

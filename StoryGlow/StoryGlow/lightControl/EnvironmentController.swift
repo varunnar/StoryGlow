@@ -42,11 +42,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count == sceneIndex{ //check if this is a new scene
-            let Scene = GlobalVar.Scenes(sceneName: "newScene", colorVal: UIColor()) //define a new scene
-            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.append(Scene) //add scene with the array of scenes
-        }
+        self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName
         view.backgroundColor = .white
         
         //setting up Segmented Control
@@ -70,7 +66,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     //this viewdidappear is used to add colors and sounds after swiping data model
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName //Set title of each screen and change with swiping
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
