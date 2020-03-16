@@ -52,6 +52,7 @@
 		E990B4FD2404EBC100187964 /* UIview+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B4FC2404EBC100187964 /* UIview+Ext.swift */; };
 		E990B5022404EC2700187964 /* data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5012404EC2700187964 /* data.swift */; };
 		E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B5032404EC6600187964 /* CustomSoundCell.swift */; };
+		E9F6E574242000F7009646A9 /* viewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F6E573242000F7009646A9 /* viewModelFactory.swift */; };
 		E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4723E38369004A6B9C /* AppDelegate.swift */; };
 		E9FCAF4A23E38369004A6B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */; };
 		E9FCAF5123E3836B004A6B9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9FCAF5023E3836B004A6B9C /* Assets.xcassets */; };
@@ -120,6 +121,7 @@
 		E990B4FC2404EBC100187964 /* UIview+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIview+Ext.swift"; sourceTree = "<group>"; };
 		E990B5012404EC2700187964 /* data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = data.swift; sourceTree = "<group>"; };
 		E990B5032404EC6600187964 /* CustomSoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSoundCell.swift; sourceTree = "<group>"; };
+		E9F6E573242000F7009646A9 /* viewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewModelFactory.swift; sourceTree = "<group>"; };
 		E9FCAF4423E38369004A6B9C /* StoryGlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryGlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9FCAF4723E38369004A6B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				E9FCAF4923E38369004A6B9C /* SceneDelegate.swift */,
 				E9FCAF4723E38369004A6B9C /* AppDelegate.swift */,
 				28EDE1B32415A30B004CB220 /* playerModel.swift */,
+				E9F6E573242000F7009646A9 /* viewModelFactory.swift */,
 				E990B5002404EBF900187964 /* soundControl */,
 				E990B5082404F0A900187964 /* lightControl */,
 				E990B5072404F06000187964 /* SceneControl */,
@@ -423,6 +426,7 @@
 				E90B9955241F14EA00C6C9FF /* SoundRepository.swift in Sources */,
 				E9254A7724105D0300BE0D09 /* environmentCell.swift in Sources */,
 				E990B5042404EC6600187964 /* CustomSoundCell.swift in Sources */,
+				E9F6E574242000F7009646A9 /* viewModelFactory.swift in Sources */,
 				E90B9943241F00FD00C6C9FF /* sceneUpdating.swift in Sources */,
 				E9388BBC241EFD3600391285 /* story.swift in Sources */,
 				E90B9941241F00F200C6C9FF /* storyUpdating.swift in Sources */,
