@@ -26,6 +26,8 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
 
     var playingArray = [Bool](repeating: Bool(false), count: 6) //array of booleans used to determining pausing and playing
     var soundButtonArray = [UIButton]() //Array of 6 buttons
+    
+    //UI Items
     var colorView = UIView() //band color
     var SoundButton1 = UIButton()
     var SoundButton2 = UIButton()
@@ -38,12 +40,17 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     var StackView2 = UIStackView()
     var ColorWheelView = UIImageView()
     var ColorWheel = UIImage()
+    let startTextField =  UITextField(frame: CGRect(x: 100, y: 100, width: 200, height: 30))
+    let endTextField =  UITextField(frame: CGRect(x: 100, y: 100, width: 200, height: 30))
+
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName
         view.backgroundColor = .white
+        
+        editTextConfig()
         
         //setting up Segmented Control
         SegmentedControlConfig()
@@ -92,6 +99,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         
         //check if story is in present mode or not on swiping
         if PageHolder.editModeStruct.editMode == false{
+            startTextField.borderStyle = UITextField.BorderStyle.none
+            endTextField.borderStyle = UITextField.BorderStyle.none
+            startTextField.text = "Start: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
+            endTextField.text = "Stop: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
+            startTextField.isUserInteractionEnabled = false
+            endTextField.isUserInteractionEnabled = false
             for i in 0...5{
                 if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
                     soundButtonArray[i].isHidden = true
@@ -99,6 +112,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             }
             SegmentedControl.selectedSegmentIndex = 1
         }else{
+            startTextField.borderStyle = UITextField.BorderStyle.line
+            endTextField.borderStyle = UITextField.BorderStyle.line
+            startTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
+            endTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
+            startTextField.isUserInteractionEnabled = true
+            endTextField.isUserInteractionEnabled = true
             for i in 0...5{
                 soundButtonArray[i].isHidden = false
             }
@@ -198,6 +217,11 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
     }
     
+    //text change function
+    @objc func textFieldEditingDidChange(){
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText = startTextField.text!
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText = endTextField.text!
+    }
     
     
     //MARK: Segmented Control
@@ -207,6 +231,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         NotificationCenter.default.post(Notification(name: EditModeNotification))
         //If switched to presentation mode
         if sender.selectedSegmentIndex == 1{
+            startTextField.borderStyle = UITextField.BorderStyle.none
+            endTextField.borderStyle = UITextField.BorderStyle.none
+            startTextField.text = "Start: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
+            endTextField.text = "Stop: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
+            startTextField.isUserInteractionEnabled = false
+            endTextField.isUserInteractionEnabled = false
             for i in 0...5
                 {
                 if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
@@ -217,6 +247,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
         // if in edit mode load all buttons
         else{
+            startTextField.borderStyle = UITextField.BorderStyle.line
+            endTextField.borderStyle = UITextField.BorderStyle.line
+            startTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
+            endTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
+            startTextField.isUserInteractionEnabled = true
+            endTextField.isUserInteractionEnabled = true
             for i in 0...5{
                 soundButtonArray[i].isHidden = false //show buttons
                 if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName != ""){
@@ -231,22 +267,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     
     //MARK:Constraints and Setup
-     //setting up buttons and adding them to stackview1
-    func SetupStackView1()
-    {
-        SoundButton1.backgroundColor = .gray
-        SoundButton2.backgroundColor = .gray
-        SoundButton3.backgroundColor = .gray
-        view.addSubview(StackView1)
-        StackView1.addArrangedSubview(SoundButton1)
-        StackView1.addArrangedSubview(SoundButton2)
-        StackView1.addArrangedSubview(SoundButton3)
-        StackView1.axis = .horizontal
-        StackView1.alignment = .fill
-        StackView1.spacing = 40
-        StackView1.distribution = .fillEqually
-        StackViewConfig1()
-    }
     //configure segmented Control
     func SegmentedControlConfig(){
         SegmentedControl.center = self.view.center
@@ -261,9 +281,70 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         SegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         SegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        SegmentedControl.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        SegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
         SegmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
 
+    }
+    
+    //Addint the edit texts
+    func editTextConfig(){
+        startTextField.borderStyle = UITextField.BorderStyle.line
+        startTextField.backgroundColor = UIColor.white
+        startTextField.placeholder = "Start"
+        startTextField.font = UIFont.systemFont(ofSize: 15)
+        startTextField.autocorrectionType = UITextAutocorrectionType.no
+        startTextField.keyboardType = UIKeyboardType.default
+        startTextField.returnKeyType = UIReturnKeyType.done
+        startTextField.clearButtonMode = UITextField.ViewMode.whileEditing;
+        startTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        startTextField.delegate = self as? UITextFieldDelegate
+        startTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
+        self.view.addSubview(startTextField)
+        
+        
+        endTextField.borderStyle = UITextField.BorderStyle.line
+        endTextField.backgroundColor = UIColor.white
+        endTextField.placeholder = "Stop"
+        endTextField.font = UIFont.systemFont(ofSize: 15)
+        endTextField.autocorrectionType = UITextAutocorrectionType.no
+        endTextField.keyboardType = UIKeyboardType.default
+        endTextField.returnKeyType = UIReturnKeyType.done
+        endTextField.clearButtonMode = UITextField.ViewMode.whileEditing;
+        endTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        endTextField.delegate = self as? UITextFieldDelegate
+        endTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
+        self.view.addSubview(endTextField)
+
+        endTextField.translatesAutoresizingMaskIntoConstraints = false
+        endTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        endTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        endTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        
+        startTextField.translatesAutoresizingMaskIntoConstraints = false
+        startTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        startTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        startTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
+
+    }
+    
+     //setting up buttons and adding them to stackview1
+    func SetupStackView1()
+    {
+        SoundButton1.backgroundColor = .gray
+        SoundButton2.backgroundColor = .gray
+        SoundButton3.backgroundColor = .gray
+        SoundButton1.layer.cornerRadius = 10
+        SoundButton2.layer.cornerRadius = 10
+        SoundButton3.layer.cornerRadius = 10
+        view.addSubview(StackView1)
+        StackView1.addArrangedSubview(SoundButton1)
+        StackView1.addArrangedSubview(SoundButton2)
+        StackView1.addArrangedSubview(SoundButton3)
+        StackView1.axis = .horizontal
+        StackView1.alignment = .fill
+        StackView1.spacing = 40
+        StackView1.distribution = .fillEqually
+        StackViewConfig1()
     }
     
     //configuring stackview1's constraints
@@ -273,7 +354,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         StackView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         StackView1.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
+        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 170).isActive = true
         
     }
     
@@ -283,6 +364,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SoundButton4.backgroundColor = .gray
         SoundButton5.backgroundColor = .gray
         SoundButton6.backgroundColor = .gray
+        SoundButton4.layer.cornerRadius = 10
+        SoundButton5.layer.cornerRadius = 10
+        SoundButton6.layer.cornerRadius = 10
         view.addSubview(StackView2)
         StackView2.addArrangedSubview(SoundButton4)
         StackView2.addArrangedSubview(SoundButton5)
@@ -293,7 +377,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         StackView2.distribution = .fillEqually
         StackViewConfig2()
     }
-    
     
     func StackViewConfig2()
     {
@@ -366,6 +449,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             }
         }
     }
+    
+    
+    
     
 }
 

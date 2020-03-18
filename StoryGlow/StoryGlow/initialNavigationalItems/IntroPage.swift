@@ -41,6 +41,9 @@ class IntroPage: UIViewController {
         storyListButton.backgroundColor = .blue
         addStoryButton.setTitle("Add Story", for: .normal)
         storyListButton.setTitle("Story List", for: .normal)
+        addStoryButton.layer.cornerRadius = 10
+        storyListButton.layer.cornerRadius = 10
+
         setupStackview()
         // Do any additional setup after loading the view.
     }

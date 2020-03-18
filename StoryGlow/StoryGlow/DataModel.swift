@@ -21,6 +21,8 @@ class GlobalVar{
         var sceneName: String
         var buttonInfo = [SoundAffects](repeating: SoundAffects(soundName: "", soundVal: ""), count: 6)//this holds the name and sound name for every button. This defined for a size of 6 because there are 6 buttons
         var colorVal = UIColor.white //This holds the color previously selected. May have to change to a different type of int value
+        var startText = "" //Store the start infomation for each scene
+        var endText = "" //Store the end information from each scene
     }
     struct SoundAffects{ //Holds the information for a single button on one setting
             var soundName: String //The name given to the button by the user
