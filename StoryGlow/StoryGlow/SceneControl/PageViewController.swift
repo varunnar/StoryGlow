@@ -55,8 +55,6 @@ class PageHolder: UIViewController {
         //add in final page
         let finalPage = AddSceneViewController()
         pages.append(finalPage)
-        print("currentscene")
-        print(currentSceneIndex)
         pageviewControl.setViewControllers([pages[currentSceneIndex]], direction: .reverse, animated: false, completion: nil)
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = currentSceneIndex
@@ -75,7 +73,6 @@ class PageHolder: UIViewController {
         pages.append(page2)
         addChild(pageviewControl)
         view.addSubview(pageviewControl.view)
-        print("added as subview")
         pageviewControl.setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
         pageviewControl.view.frame = self.view.bounds
         pageviewControl.didMove(toParent: self)

@@ -19,7 +19,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     var storyIndex = Int() //index that holds the current story number
     var sceneIndex = Int() //index that holds the scene number within that story
-    
     var playerMod = [playerModel](repeating: playerModel(), count: 6) //each environmentController has an array of players so that we can
     var audioPlayer: AVAudioPlayer?
     let audioSession = AVAudioSession.sharedInstance() //used inorder to play sound at setup volume
@@ -28,7 +27,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     var soundButtonArray = [UIButton]() //Array of 6 buttons
     
     //UI Items
-    var colorView = UIView() //band color
     var SoundButton1 = UIButton()
     var SoundButton2 = UIButton()
     var SoundButton3 = UIButton()
@@ -58,6 +56,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         //setting up the stackviews and images
         SetupStackView1()
         SetupStackView2()
+        SoundButtonSyncing()
         SetupColorWheel()
         
         //Adding gestures to the image to allow color selection
@@ -66,7 +65,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         ColorWheelView.addGestureRecognizer(imageClickedGesture)
         ColorWheelView.addGestureRecognizer(imageDragGesture)
         ColorWheelView.isUserInteractionEnabled = true
-        SoundButtonSyncing()
         
         // Do any additional setup after loading the view.
     }
@@ -90,7 +88,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
             if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != "")
             {
-                print("adding interaction")
                 soundButtonArray[n].interactions = []
                 let interaction = UIContextMenuInteraction(delegate: self)
                 soundButtonArray[n].addInteraction(interaction)
@@ -135,7 +132,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         soundButtonArray.append(SoundButton4)
         soundButtonArray.append(SoundButton5)
         soundButtonArray.append(SoundButton6)
-        SoundButton1.accessibilityIdentifier = "soundButton1"
+        /*SoundButton1.accessibilityIdentifier = "soundButton1"
         SoundButton2.accessibilityIdentifier = "soundButton2"
         SoundButton3.accessibilityIdentifier = "soundButton3"
         SoundButton4.accessibilityIdentifier = "soundButton4"
@@ -146,7 +143,13 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SoundButton3.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
         SoundButton4.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
         SoundButton5.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-        SoundButton6.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        SoundButton6.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)*/
+        for i in 0...5{
+            soundButtonArray[i].layer.borderColor = UIColor.gray.cgColor
+            soundButtonArray[i].layer.borderWidth = 2
+            soundButtonArray[i].accessibilityIdentifier = "soundButton\(i+1)"
+            soundButtonArray[i].addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+        }
     }
     
     //MARK: Button Control
@@ -394,7 +397,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         ColorWheelView.layer.cornerRadius = ColorWheelView.frame.width/2
         ColorWheelView.clipsToBounds = true
         view.addSubview(ColorWheelView)
-        view.addSubview(colorView)
         colorwheelConfig()
     }
     
@@ -403,49 +405,49 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     {
         ColorWheelView.translatesAutoresizingMaskIntoConstraints = false
         ColorWheelView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        ColorWheelView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        ColorWheelView.topAnchor.constraint(equalTo: StackView2.bottomAnchor, constant: 50).isActive = true
         //making sure UIImageView is the same size as the image so the CGimage pixels line up with the UIImage pixels
         ColorWheelView.widthAnchor.constraint(equalToConstant: ColorWheel.size.width).isActive = true
         ColorWheelView.heightAnchor.constraint(equalToConstant: ColorWheel.size.height).isActive = true
-        
-        colorView.translatesAutoresizingMaskIntoConstraints = false
-        colorView.layer.borderColor = UIColor.gray.cgColor
-        colorView.layer.borderWidth = 2
-        colorView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        colorView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        //colorView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        colorView.topAnchor.constraint(equalTo: StackView2.bottomAnchor, constant: 20).isActive = true
-        colorView.bottomAnchor.constraint(equalTo: ColorWheelView.topAnchor, constant:-20).isActive = true
     }
     
     //MARK: Image
     //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
     @objc func imageTap(recognizer: UITapGestureRecognizer)
     {
-        print("tapped")
         let point = recognizer.location(in: ColorWheelView)
-        let x = Int(point.x)
-        let y = Int(point.y)
-        
-        let RGBcolor = ColorWheel[x,y]
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
-        if let realColor = RGBcolor{
-            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal = realColor
-            print(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal)
-            //converting color from RGB to HSB
-            realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        let point2 = recognizer.location(in: view)
+        let centerPoint = ColorWheelView.center
+        let distance = (pow(centerPoint.x-point2.x, 2) + pow(centerPoint.y-point2.y,2)).squareRoot()
+        if (distance>ColorWheelView.frame.width-3){
+            print("out of circle")
+        }
+        else{
+            let x = Int(point.x)
+            let y = Int(point.y)
             
-            //Setting light color
-            let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
-            
-            //Iterating through all lights and changing the color
-            colorView.backgroundColor = realColor
-            for i in IntroPage.lightsStruct.lightArray{
-                let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
-                setColor.fireAndForget()
+            let RGBcolor = ColorWheel[x,y]
+            var hue: CGFloat = 0
+            var saturation: CGFloat = 0
+            var brightness: CGFloat = 0
+            var alpha: CGFloat = 0
+            if let realColor = RGBcolor{
+                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal = realColor
+                //converting color from RGB to HSB
+                realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+                //maybe get saturation and brightness
+                //Setting light color
+                let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+                
+                //Iterating through all lights and changing the color
+                //colorView.backgroundColor = realColor
+                for j in soundButtonArray{
+                    j.backgroundColor = realColor
+                }
+                for i in IntroPage.lightsStruct.lightArray{
+                    let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
+                    setColor.fireAndForget()
+                }
             }
         }
     }
