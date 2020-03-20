@@ -85,8 +85,23 @@ class storyTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return GlobalVar.GlobalItems.storyArray.count
+       
+
     }
 
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && GlobalVar.GlobalItems.storyArray.count > 1{
+            GlobalVar.GlobalItems.storyArray.remove(at: indexPath.row)
+           tableView.deleteRows(at: [indexPath], with: .bottom)
+       }else{
+            let alertConroller = UIAlertController(title: "WARNING", message: "You cannot delete this story becuase it is the last one. Please add another story.", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertConroller.addAction(alertAction)
+            present(alertConroller,animated:true, completion: nil)
+        }
+
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cells.cellID, for: indexPath) as! storyCell
         if (GlobalVar.GlobalItems.storyArray.count != 0){
