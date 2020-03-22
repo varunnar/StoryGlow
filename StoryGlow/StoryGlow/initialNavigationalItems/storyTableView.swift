@@ -54,7 +54,7 @@ class storyTableView: UITableViewController {
             let answer = alert.textFields![0].text
             if (answer != ""){
                 var story = GlobalVar.Story(storyName: storyName)
-                let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+                let scene = GlobalVar.Scenes(sceneName: answer!)
                 story.sceneArray.append(scene)
                 GlobalVar.GlobalItems.storyArray.append(story)
                 self.tableView.reloadData()

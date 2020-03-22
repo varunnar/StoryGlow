@@ -120,7 +120,7 @@ class PageHolder: UIViewController {
         let submitAction = UIAlertAction(title: "Done", style: .default, handler: { [unowned alert] _ in
             let answer = alert.textFields![0].text
             if (answer != ""){ //if scene actually has name
-            let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+            let scene = GlobalVar.Scenes(sceneName: answer!)
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray.append(scene)
             self.title = answer
             let NewPage = EnvironmentController()

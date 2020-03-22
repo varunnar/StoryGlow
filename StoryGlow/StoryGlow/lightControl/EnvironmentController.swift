@@ -75,7 +75,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
-        let previousColor = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal //get color value from data model. Color is initialized to white
+        let scene = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex]
+        //get color value from data model. Color is initialized to white
+        let previousColor = UIColor(red: scene.red, green: scene.green, blue: scene.blue, alpha: scene.alpha)
         previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) //setup colors as HSBK colors and set light colors
         let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
         for i in IntroPage.lightsStruct.lightArray{
@@ -430,9 +432,16 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             var hue: CGFloat = 0
             var saturation: CGFloat = 0
             var brightness: CGFloat = 0
-            var alpha: CGFloat = 0
             if let realColor = RGBcolor{
-                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].colorVal = realColor
+                var red: CGFloat = 0
+                var green: CGFloat = 0
+                var blue: CGFloat = 0
+                var alpha: CGFloat = 0
+                realColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].red = red
+                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].blue = blue
+                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].green = green
+                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].alpha = alpha
                 //converting color from RGB to HSB
                 realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
                 //maybe get saturation and brightness

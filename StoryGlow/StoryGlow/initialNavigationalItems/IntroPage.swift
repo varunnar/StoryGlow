@@ -15,6 +15,8 @@ import LifxDomain
 
 class IntroPage: UIViewController {
     
+    var DataControllerInstance = DataController()
+    
     struct lightsStruct{
         static var lightArray = [Light]() //holds all lights in an array within a struct so it is accessible on any file
     }
@@ -32,6 +34,11 @@ class IntroPage: UIViewController {
     var mainStackView = UIStackView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        let previousStories = DataControllerInstance.getStoriesFromDisk()
+        GlobalVar.GlobalItems.storyArray = previousStories
+        print("InModel")
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(goingToBackEnd), name: UIApplication.willResignActiveNotification, object: nil)
         lightService.start() //start looking for lights
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil) //notification for when light is added
         self.navigationController?.navigationBar.topItem?.title = "Welcome" //set top title
@@ -110,7 +117,7 @@ class IntroPage: UIViewController {
             let answer = alert.textFields![0].text
             if (answer != ""){ //if scene name exists
                 var story = GlobalVar.Story(storyName: storyName)
-                let scene = GlobalVar.Scenes(sceneName: answer!, colorVal: .white)
+                let scene = GlobalVar.Scenes(sceneName: answer!)
                 story.sceneArray.append(scene)
                 GlobalVar.GlobalItems.storyArray.append(story)
                 
@@ -132,6 +139,13 @@ class IntroPage: UIViewController {
         nextScreen.title = "Story List"
         self.navigationController?.pushViewController(nextScreen, animated: true)
     }
+    
+    @objc func goingToBackEnd(){
+          print("closing")
+          DataControllerInstance.saveStoriesToDisk(stories: GlobalVar.GlobalItems.storyArray)
+      }
+    
+    
     
     
     
