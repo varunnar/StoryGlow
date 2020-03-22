@@ -20,6 +20,10 @@ class environmentTableView: UITableViewController {
         super.viewDidLoad()
         setupTableViewCell()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        tableView.dragInteractionEnabled = true
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -30,6 +34,28 @@ class environmentTableView: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
+    }
+    
+
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedObject = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sourceIndexPath.row]
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.remove(at: sourceIndexPath.row)
+        GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.insert(movedObject, at: destinationIndexPath.row)
+    }
+
+ 
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count>1{
+            GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+        }else{
+            //Add alert to tell user you cannot delete that
+            let alertConroller = UIAlertController(title: "WARNING", message: "You cannot delete this scene becuase it is the last one. Please add another scene or delete the story.", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertConroller.addAction(alertAction)
+            present(alertConroller,animated:true, completion: nil)
+        }
+
     }
     
     //User presses add button in top corner to add a new scene
@@ -133,4 +159,24 @@ class environmentTableView: UITableViewController {
     }
     */
 
+}
+
+extension environmentTableView: UITableViewDragDelegate {
+func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+}
+
+extension environmentTableView: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+
+        if session.localDragSession != nil { // Drag originated from the same app.
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+    }
 }
