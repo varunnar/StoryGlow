@@ -41,18 +41,14 @@ class DataController{
         // 1. Create a url for documents-directory/posts.json
         let url = getDocumentUrl().appendingPathComponent("stories.json")
         let decoder = JSONDecoder()
-        if (url != URL(fileURLWithPath: "")){
-            do {
+        do {
                 // 2. Retrieve the data on the file in this path (if there is any)
-                let data = try Data(contentsOf: url, options: [])
+            let data = try Data(contentsOf: url, options: [])
                 // 3. Decode an array of Posts from this Data
-                let stories = try decoder.decode([GlobalVar.Story].self, from: data)
-                return stories
-            } catch {
-                fatalError("could no read data")
-            }
-        }
-        else{
+            let stories = try decoder.decode([GlobalVar.Story].self, from: data)
+            return stories
+        } catch {
+            print("could no get stories")
             return []
         }
     }
