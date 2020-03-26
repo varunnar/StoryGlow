@@ -323,12 +323,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         endTextField.translatesAutoresizingMaskIntoConstraints = false
         endTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         endTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        endTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        endTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
         
         startTextField.translatesAutoresizingMaskIntoConstraints = false
         startTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         startTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        startTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
+        startTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -120).isActive = true
 
     }
     
