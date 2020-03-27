@@ -8,46 +8,65 @@
 
 import UIKit
 
-class environmentTableView: UITableViewController {
+class environmentTableView: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var storyIndex = Int()
     
-    struct cells {
-        static let cellID = "cellID" //why is this in a struct?
-    }
+    let tableView: UITableView = {
+        let SceneTableView = UITableView()
+        SceneTableView.backgroundColor = UIColor.white
+        SceneTableView.separatorColor = UIColor.white
+        SceneTableView.translatesAutoresizingMaskIntoConstraints = false
+        return SceneTableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableViewCell()
+        setupTableView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
         tableView.dropDelegate = self
-
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
+    
+    func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(environmentCell.self, forCellReuseIdentifier: "cellId")
+        
+        view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor)
+        ])
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
 
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let movedObject = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sourceIndexPath.row]
         GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.remove(at: sourceIndexPath.row)
         GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.insert(movedObject, at: destinationIndexPath.row)
+        tableView.reloadData()
     }
 
- 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count>1{
             GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
+            tableView.reloadData()
         }else{
             //Add alert to tell user you cannot delete that
             let alertConroller = UIAlertController(title: "WARNING", message: "You cannot delete this scene becuase it is the last one. Please add another scene or delete the story.", preferredStyle: .alert)
@@ -57,7 +76,7 @@ class environmentTableView: UITableViewController {
         }
 
     }
-    
+
     //User presses add button in top corner to add a new scene
     @objc func addTapped()
     {
@@ -76,91 +95,62 @@ class environmentTableView: UITableViewController {
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
-    
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count
-    }
-    
-    func setupTableViewCell()
-    {
-        tableView.register(environmentCell.self, forCellReuseIdentifier: cells.cellID)
-    }
 
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cells.cellID, for: indexPath) as! environmentCell
+// MARK: - Table view data source
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray.count
+     }
+     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! environmentCell
         if (GlobalVar.GlobalItems.storyArray.count != 0){
-            cell.environmentName.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
-        }
-        else{
+            cell.SceneLabel.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
+            cell.backgroundColor = UIColor.white
+            let strIndexPath = String(indexPath.row + 1)
+            let test = strIndexPath.last!
+            switch test {
+                case "1":
+                    cell.cellView.backgroundColor = UIColor(red:1.00, green:0.78, blue:0.37, alpha:1.00)
+                case "2":
+                    cell.cellView.backgroundColor = UIColor(red:1.00, green:0.59, blue:0.44, alpha:1.00)
+                case "3":
+                    cell.cellView.backgroundColor = UIColor(red:1.00, green:0.44, blue:0.57, alpha:1.00)
+                case "4":
+                    cell.cellView.backgroundColor = UIColor(red:0.84, green:0.36, blue:0.69, alpha:1.00)
+                case "5":
+                    cell.cellView.backgroundColor = UIColor(red:0.52, green:0.37, blue:0.76, alpha:1.00)
+                case "6":
+                    cell.cellView.backgroundColor = UIColor(red:1.00, green:0.78, blue:0.37, alpha:1.00)
+                case "7":
+                    cell.cellView.backgroundColor = UIColor(red:1.00, green:0.59, blue:0.44, alpha:1.00)
+                case "8":
+                    cell.cellView.backgroundColor = UIColor(red:1.00, green:0.44, blue:0.57, alpha:1.00)
+                case "9":
+                    cell.cellView.backgroundColor = UIColor(red:0.84, green:0.36, blue:0.69, alpha:1.00)
+                case "0":
+                    cell.cellView.backgroundColor = UIColor(red:0.52, green:0.37, blue:0.76, alpha:1.00)
+
+                default:
+                    cell.cellView.backgroundColor = UIColor.orange
+            
+            }
+        }else{
             return UITableViewCell()
         }
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nextScreen = PageHolder()
         nextScreen.storyIndex = storyIndex
         nextScreen.currentSceneIndex = indexPath.row
         navigationController?.pushViewController(nextScreen, animated: false)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+//MARK:Extensions
 extension environmentTableView: UITableViewDragDelegate {
 func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         return [UIDragItem(itemProvider: NSItemProvider())]
