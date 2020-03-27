@@ -44,7 +44,17 @@ class IntroPage: UIViewController {
         lightService.start() //start looking for lights
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil) //notification for when light is added
         self.navigationController?.navigationBar.topItem?.title = "Welcome" //set top title
+
         view.backgroundColor = .white
+        view.addSubview(mainStackView)
+        addStoryButton.backgroundColor = UIColor(red:0.84, green:0.36, blue:0.69, alpha:1.00)
+        storyListButton.backgroundColor = UIColor(red:0.52, green:0.37, blue:0.76, alpha:1.00)
+        addStoryButton.setTitle("Add Story", for: .normal)
+        storyListButton.setTitle("Story List", for: .normal)
+        addStoryButton.layer.cornerRadius = 10
+        storyListButton.layer.cornerRadius = 10
+        addStoryButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
+        storyListButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
 
         setupStackview()
         // Do any additional setup after loading the view.
@@ -79,14 +89,6 @@ class IntroPage: UIViewController {
     func setupStackview()
     {
         view.addSubview(mainStackView)
-        
-        addStoryButton.backgroundColor = .red
-        storyListButton.backgroundColor = .blue
-        addStoryButton.setTitle("Add Story", for: .normal)
-        storyListButton.setTitle("Story List", for: .normal)
-        addStoryButton.layer.cornerRadius = 10
-        storyListButton.layer.cornerRadius = 10
-        
         addStoryButton.addTarget(self, action: #selector(storyNameAlert), for: .touchUpInside)
         storyListButton.addTarget(self, action: #selector(navigateToStoryList), for: .touchUpInside)
         mainStackView.addArrangedSubview(addStoryButton)
