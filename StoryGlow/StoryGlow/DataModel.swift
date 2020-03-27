@@ -12,7 +12,7 @@ import UIKit
 class GlobalVar: Codable{
     struct GlobalItems:Codable {
         static var storyArray = [Story]() //By adding this information in a struct, we can reach this information from anywhere
-        
+        static var firstOpening = true
     }
     struct Story: Codable{ //This is the class defining what is needed in a story
         var storyName: String

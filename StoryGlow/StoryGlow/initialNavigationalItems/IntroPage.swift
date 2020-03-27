@@ -36,20 +36,15 @@ class IntroPage: UIViewController {
         super.viewDidLoad()
         let previousStories = DataControllerInstance.getStoriesFromDisk()
         GlobalVar.GlobalItems.storyArray = previousStories
-        print("InModel")
+        //if (GlobalVar.GlobalItems.firstOpening == true){
+            setupTutorial()
+        //}
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(goingToBackEnd), name: UIApplication.willResignActiveNotification, object: nil)
         lightService.start() //start looking for lights
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil) //notification for when light is added
         self.navigationController?.navigationBar.topItem?.title = "Welcome" //set top title
         view.backgroundColor = .white
-        view.addSubview(mainStackView)
-        addStoryButton.backgroundColor = .red
-        storyListButton.backgroundColor = .blue
-        addStoryButton.setTitle("Add Story", for: .normal)
-        storyListButton.setTitle("Story List", for: .normal)
-        addStoryButton.layer.cornerRadius = 10
-        storyListButton.layer.cornerRadius = 10
 
         setupStackview()
         // Do any additional setup after loading the view.
@@ -57,6 +52,14 @@ class IntroPage: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.topItem?.title = "Welcome"
     }
+    
+    func setupTutorial(){
+        let nextScreen = tutorialPageViewController()
+        nextScreen.tutorialPageArrayImage = ["introPage","IntroPageAddStory","addStorySceneName","addSceneIntroPage","IntroPageStoryList"]
+        nextScreen.tutorialPageArrayLabel = ["Welcome to Storyglow. As it's your first time let's give you a little tutorial. This is the homepage where you will start each time you start the app.", "On the welcome page one of the first things you can do is make a story. This is done by clicking the 'Add Story' button","Add a name to the story with this alert. By hitting done you will be moved to the next alert.","Finally, name the first scene of story to start the StoryGlow project. After doing this you will be navigated to the project page","From this page, you can also access your list of previous stories by clicking on the story list"]
+        self.navigationController?.present(nextScreen, animated: true, completion: nil)
+    }
+    
     
     //function for when light is added, randomizes color in order to show user light is connected
     @objc func AddedLight(notification: Notification){
@@ -75,6 +78,15 @@ class IntroPage: UIViewController {
     
     func setupStackview()
     {
+        view.addSubview(mainStackView)
+        
+        addStoryButton.backgroundColor = .red
+        storyListButton.backgroundColor = .blue
+        addStoryButton.setTitle("Add Story", for: .normal)
+        storyListButton.setTitle("Story List", for: .normal)
+        addStoryButton.layer.cornerRadius = 10
+        storyListButton.layer.cornerRadius = 10
+        
         addStoryButton.addTarget(self, action: #selector(storyNameAlert), for: .touchUpInside)
         storyListButton.addTarget(self, action: #selector(navigateToStoryList), for: .touchUpInside)
         mainStackView.addArrangedSubview(addStoryButton)

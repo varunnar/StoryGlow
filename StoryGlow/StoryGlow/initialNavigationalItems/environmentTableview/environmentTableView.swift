@@ -19,6 +19,9 @@ class environmentTableView: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableViewCell()
+        //if (GlobalVar.GlobalItems.firstOpening == true){
+            setupTutorial()
+        //}
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
@@ -30,6 +33,14 @@ class environmentTableView: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func setupTutorial()
+    {
+        let nextScreen = tutorialPageViewController()
+               nextScreen.tutorialPageArrayImage = ["SceneTable","SceneTableAddScene","SceneTableSelectSegment","deleteScene","MoveScene"]
+        nextScreen.tutorialPageArrayLabel = ["After clicking on a story in the story table the next page is the scene table. Like the story table, this page shows all the scenes for that story.", "Adding a scene is done by pressing the add button.", "Clicking on a scene navigates you into that scene in your storyglow project.", "a swipe will delete a scene but like with the story table each story needs at least 1 scene", "a scene can be rearranged by holding it and moving it around in the table. This will also move it's location in the storyglow project."]
+               self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -16,6 +16,9 @@ class storyTableView: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //if (GlobalVar.GlobalItems.firstOpening == true){
+            setupTutorial()
+        //}
         setupTableViewCell()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
 
@@ -24,6 +27,14 @@ class storyTableView: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func setupTutorial()
+    {
+        let nextScreen = tutorialPageViewController()
+               nextScreen.tutorialPageArrayImage = ["storyTable","storyTableAddButton","storyTableSelectSegment","deleteStory"]
+               nextScreen.tutorialPageArrayLabel = ["Welcome to the story table. This portion of the application holds the stories you have constructed in order of add date.","The add button in the top right corner will allow you to add stories from here as well. This story creation is similar to the introductory page but will not navigate you into the storyglow project.","By clicking on the name of the story you can open up a scene table, that displays all the scene you have previously made.","A simple swiping motion will allow you to delete a story. However, 1 story must always be present in the story table"]
+               self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }
         
     //Function that runs when user clicks the tab button in the top right corner. Creates an new story and prompts user through alerts

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		28EDE1B42415A30B004CB220 /* playerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EDE1B32415A30B004CB220 /* playerModel.swift */; };
+		E90A2CED242D4EA800810333 /* tutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90A2CEC242D4EA800810333 /* tutorialPageViewController.swift */; };
+		E90A2CEF242D4ED900810333 /* tutorialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90A2CEE242D4ED900810333 /* tutorialPage.swift */; };
 		E90B993D241F00D000C6C9FF /* storyFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B993C241F00D000C6C9FF /* storyFetching.swift */; };
 		E90B993F241F00E700C6C9FF /* sceneFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B993E241F00E700C6C9FF /* sceneFetching.swift */; };
 		E90B9941241F00F200C6C9FF /* storyUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B9940241F00F200C6C9FF /* storyUpdating.swift */; };
@@ -83,6 +85,8 @@
 
 /* Begin PBXFileReference section */
 		28EDE1B32415A30B004CB220 /* playerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = playerModel.swift; sourceTree = "<group>"; };
+		E90A2CEC242D4EA800810333 /* tutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tutorialPageViewController.swift; sourceTree = "<group>"; };
+		E90A2CEE242D4ED900810333 /* tutorialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tutorialPage.swift; sourceTree = "<group>"; };
 		E90B993C241F00D000C6C9FF /* storyFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyFetching.swift; sourceTree = "<group>"; };
 		E90B993E241F00E700C6C9FF /* sceneFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sceneFetching.swift; sourceTree = "<group>"; };
 		E90B9940241F00F200C6C9FF /* storyUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storyUpdating.swift; sourceTree = "<group>"; };
@@ -150,6 +154,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E90A2CF0242D4EE300810333 /* tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				E90A2CEE242D4ED900810333 /* tutorialPage.swift */,
+				E90A2CEC242D4EA800810333 /* tutorialPageViewController.swift */,
+			);
+			path = tutorial;
+			sourceTree = "<group>";
+		};
 		E90B9939241F008400C6C9FF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +308,7 @@
 				28EDE1B32415A30B004CB220 /* playerModel.swift */,
 				E947453123F08012007AC880 /* DataModel.swift */,
 				E9EE7C752426F7EE0008B11A /* DataController.swift */,
+				E90A2CF0242D4EE300810333 /* tutorial */,
 				E990B5002404EBF900187964 /* soundControl */,
 				E990B5082404F0A900187964 /* lightControl */,
 				E990B5072404F06000187964 /* SceneControl */,
@@ -413,6 +427,7 @@
 				E97E3DBA240CA684000C7BCD /* storyTableView.swift in Sources */,
 				E90B993F241F00E700C6C9FF /* sceneFetching.swift in Sources */,
 				E97E3DBC240CB3C2000C7BCD /* storyCell.swift in Sources */,
+				E90A2CEF242D4ED900810333 /* tutorialPage.swift in Sources */,
 				E97F7D8D23E78C0000ADB1D5 /* NotificationFile.swift in Sources */,
 				E9FCAF4823E38369004A6B9C /* AppDelegate.swift in Sources */,
 				E947453C23F39AC8007AC880 /* PageViewController.swift in Sources */,
@@ -430,6 +445,7 @@
 				E990B4F92404EB1700187964 /* SoundTableViewController.swift in Sources */,
 				E9388BBE241EFE0600391285 /* scene.swift in Sources */,
 				E96B18BE240C5D21004B4308 /* IntroPage.swift in Sources */,
+				E90A2CED242D4EA800810333 /* tutorialPageViewController.swift in Sources */,
 				E9862E5923F39CAF000FEF7C /* AddSceneViewController.swift in Sources */,
 				28EDE1B42415A30B004CB220 /* playerModel.swift in Sources */,
 				E90B9955241F14EA00C6C9FF /* SoundRepository.swift in Sources */,
@@ -576,7 +592,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 32C86W6J58;
+				DEVELOPMENT_TEAM = RF8WDUR5RE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -601,7 +617,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 32C86W6J58;
+				DEVELOPMENT_TEAM = RF8WDUR5RE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

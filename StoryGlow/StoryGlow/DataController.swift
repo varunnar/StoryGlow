@@ -46,9 +46,9 @@ class DataController{
             let data = try Data(contentsOf: url, options: [])
                 // 3. Decode an array of Posts from this Data
             let stories = try decoder.decode([GlobalVar.Story].self, from: data)
+            GlobalVar.GlobalItems.firstOpening = false
             return stories
         } catch {
-            print("could no get stories")
             return []
         }
     }
