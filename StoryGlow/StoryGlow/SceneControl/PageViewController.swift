@@ -29,8 +29,8 @@ class PageHolder: UIViewController {
     var addPageNotification = Notification.Name("addPage") //add page notification
 
     override func viewDidLoad() {
-        self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[currentSceneIndex].sceneName
         super.viewDidLoad()
+        self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[currentSceneIndex].sceneName
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false //make sure the swiping in pageivewcontroller does not swipe back to tableviews and intropage
         setup()
         setupPageControl()
@@ -192,17 +192,5 @@ extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelega
                     }
                 }
         }
-    /*func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-            return pages.count
-        }
-
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        guard let firstViewController = pageViewController.viewControllers?.first,
-            let firstViewControllerIndex = pages.firstIndex(of: firstViewController) else {
-                return 0
-        }
-
-        return firstViewControllerIndex
-    }*/
     
 }

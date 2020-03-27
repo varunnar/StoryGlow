@@ -21,6 +21,8 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
     var player: AVPlayer!
     var SoundNamesArray = [String]()
     var SoundURLArray = [String]()
+    
+    var spinnerView: UIView?
    
     
 //MARK:UI Items
@@ -67,11 +69,13 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
     func MakeApiCall(SearchItem:String){
         self.SoundURLArray.removeAll()
         self.SoundNamesArray.removeAll()
+        self.showSpinner(onView: view)
         let network = Networking(baseURL: createURL(search: SearchItem, page: "1"))
         network.headerFields = ["Authorization": "Token L4bKom5YT2k8DfabolQKJ3duTAkFDIzTuZWnUzpC"]
         network.get(""){
             result in switch (result){
             case.success(let data):
+                self.stopSpinner()
                 let json = data.dictionaryBody
                 let results = json["results"] as! NSArray
                 //traversing results
@@ -85,6 +89,7 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
                     self.tableView.reloadData()
                 }
             case.failure(_):
+                self.stopSpinner()
                 print("Error")
             }
         }
@@ -153,5 +158,31 @@ extension SoundTableViewController: UITableViewDelegate,UITableViewDataSource {
         }
     }
         
+}
+
+extension SoundTableViewController{
+    func showSpinner(onView: UIView)
+    {
+        print("finding sounds")
+        let spinView = UIView.init(frame: onView.bounds)
+        spinView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let spinner = UIActivityIndicatorView.init(style: .medium)
+        spinner.startAnimating()
+        spinner.center = onView.center
+        
+        DispatchQueue.main.async {
+            print("in dispatch queue")
+            spinView.addSubview(spinner)
+            onView.addSubview(spinView)
+        }
+        spinnerView = spinView
+    }
+    
+    func stopSpinner(){
+        DispatchQueue.main.async {
+            self.spinnerView?.removeFromSuperview()
+            self.spinnerView = nil
+        }
+    }
 }
 
