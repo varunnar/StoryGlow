@@ -66,6 +66,7 @@ class tutorialPage: UIViewController {
         imageView.setContentCompressionResistancePriority(.init(rawValue: 748), for: .horizontal)
         imageView.setContentHuggingPriority(.init(rawValue: 248), for: .horizontal)
         view.addSubview(imageView)
+        print(imageString)
         image = UIImage(named: imageString)!
         imageView.image = image
         imageView.layer.borderWidth = 2
