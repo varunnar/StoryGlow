@@ -26,7 +26,8 @@ class SoundTableViewController: UIViewController, UISearchBarDelegate {
    
     
 //MARK:UI Items
-    var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
+    var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+
     var tableView = UITableView()
     struct cells{
         static let soundCell = "SoundCell" //custom tableview cells

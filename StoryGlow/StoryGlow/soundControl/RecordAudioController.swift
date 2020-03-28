@@ -22,10 +22,10 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     var recording = false
     var playing = false
 
-    var RecButton = UIButton(frame: CGRect(x: 100, y: 300, width: 200, height: 50))
-    var PlayButton = UIButton(frame: CGRect(x: 100, y: 400, width: 200, height: 50))
-    var SaveButton = UIButton(frame: CGRect(x: 100, y: 500, width: 200, height: 50))
-    var SearchButton = UIButton(frame: CGRect(x: 100, y: 600, width: 200, height: 50))
+    var RecButton = UIButton(frame: CGRect(x: 100, y: 275, width: 200, height: 200))
+    var PlayButton = UIButton(frame: CGRect(x: 100, y: 500, width: 85, height: 85))
+    var SearchButton = UIButton(frame: CGRect(x: 225, y: 500, width: 85, height: 85))
+    var SaveButton = UIButton(frame: CGRect(x: 100, y: 600, width: 215, height: 50))
 
 
     override func viewDidLoad() {
@@ -37,22 +37,33 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
         RecButton.addTarget(self, action: #selector(RecButtonAction), for: .touchUpInside)
         self.view.addSubview(RecButton)
     //Play Button
-        PlayButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
         ControlPlayButton()
         PlayButton.addTarget(self, action: #selector(playButtonAction), for: .touchUpInside)
+        PlayButton.backgroundColor = UIColor(red:1.00, green:0.44, blue:0.57, alpha:1.00)
+
         self.view.addSubview(PlayButton)
     //Save Button
-        SaveButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.3, blue: 0.5, alpha: 0.4)
         SaveButton.setTitle("Save Sound", for: .normal)
+        SaveButton.titleLabel?.numberOfLines = 0
+        SaveButton.titleLabel?.textAlignment = NSTextAlignment.center
+        SaveButton.backgroundColor = UIColor(red:1.00, green:0.78, blue:0.37, alpha:1.00)
         SaveButton.addTarget(self, action: #selector(saveSound), for: .touchUpInside)
         self.view.addSubview(SaveButton)
         
     //Search Button
-        SearchButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.3, blue: 0.5, alpha: 0.4)
+        SearchButton.backgroundColor = UIColor(red:1.00, green:0.59, blue:0.44, alpha:1.00)
         SearchButton.setTitle("Search for Sound", for: .normal)
+        SearchButton.titleLabel?.textAlignment = NSTextAlignment.center
+        SearchButton.titleLabel?.numberOfLines = 0
         SearchButton.addTarget(self, action: #selector(searchSound), for: .touchUpInside)
         self.view.addSubview(SearchButton)
         
+        
+        RecButton.layer.cornerRadius = 15
+        PlayButton.layer.cornerRadius = 15
+        SaveButton.layer.cornerRadius = 15
+        SearchButton.layer.cornerRadius = 15
+
 //MARK: Other Code in View Did Load
         // enable play and stop since we don't have any audio to work with on load
              //get path for the audio file
@@ -167,19 +178,19 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
 //control UI for record button
     func ControlRecordingButton() {
         if recording == false{
-            RecButton.setTitle("Start Recording", for: .normal)
-            RecButton.backgroundColor = UIColor(displayP3Red: 0.0, green: 0.7, blue: 0.0, alpha: 1.0)
+            RecButton.setImage(UIImage(named: "startRecord.png"), for: .normal)
         }else{
-            RecButton.setTitle("Stop Recording", for: .normal)
-            RecButton.backgroundColor = UIColor(displayP3Red: 0.7, green: 0.0, blue: 0.0, alpha: 1.0)
+            RecButton.setImage(UIImage(named: "stopRecord.png"), for: .normal)
         }
     }
     //control UI for play button
     func ControlPlayButton(){
         if playing == false{
-            PlayButton.setTitle("Play Sound", for: .normal)
+            PlayButton.setImage(UIImage(named: "whitePlay"), for: .normal)
+
         }else{
-            PlayButton.setTitle("Pause Sound", for: .normal)
+            PlayButton.setImage(UIImage(named: "whitePause"), for: .normal)
+
         }
     }
 
