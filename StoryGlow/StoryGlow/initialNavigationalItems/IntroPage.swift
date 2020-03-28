@@ -65,7 +65,7 @@ class IntroPage: UIViewController {
     
     func setupTutorial(){
         let nextScreen = tutorialPageViewController()
-        nextScreen.tutorialPageArrayImage = ["introPage","IntroPageAddStory","addStorySceneName","addSceneIntroPage","IntroPageStoryList"]
+        nextScreen.tutorialPageArrayImage = ["IntroPage","IntroPageAddStory","IntroPageStoryName","introPageSceneName","IntroPageStoryList"]
         nextScreen.tutorialPageArrayLabel = ["Welcome to Storyglow. As it's your first time let's give you a little tutorial. This is the homepage where you will start each time you start the app.", "On the welcome page one of the first things you can do is make a story. This is done by clicking the 'Add Story' button","Add a name to the story with this alert. By hitting done you will be moved to the next alert.","Finally, name the first scene of story to start the StoryGlow project. After doing this you will be navigated to the project page","From this page, you can also access your list of previous stories by clicking on the story list"]
         self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }

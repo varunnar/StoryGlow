@@ -23,7 +23,17 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        //if (GlobalVar.GlobalItems.firstOpening == true){
+            setupTutorial()
+        //}
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+    }
+    
+    func setupTutorial(){
+        let nextScreen = tutorialPageViewController()
+        nextScreen.tutorialPageArrayImage = ["StoryTable","StoryTableAddStory","storyTableOpenStory","StoryTableDeleteStory"]
+        nextScreen.tutorialPageArrayLabel = ["In the Story Table you can view the stories that you have already created, created new stories, navigate into stories and delete stories.", "By clicking the add button in the top right corner you can create a new story. This process closely resembles adding a story from the welcome page, though you will not be immediately navigated in. That way you can setup multiple stories at once.","Clicking on a story will allow you to navigate into the story and view the scene table for that story.","By swiping to the left on a story you can delete a story. However, at least one story must always be present within the storyglow table."]
+        self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }
     
     func setupTableView() {

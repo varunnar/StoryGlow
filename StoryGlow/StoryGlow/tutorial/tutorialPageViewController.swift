@@ -18,7 +18,6 @@ class tutorialPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(tutorialPageArrayImage[0])
         setupPageViewController()
         setupPageControl()
         pageviewControl.delegate = self
@@ -30,7 +29,6 @@ class tutorialPageViewController: UIViewController {
     
     @objc func dismissTutorial()
     {
-        print("nav")
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
@@ -90,11 +88,8 @@ class tutorialPageViewController: UIViewController {
 extension tutorialPageViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource{
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let viewControllerIndex = self.pages.firstIndex(of: viewController) {
-            print("index backward \(viewControllerIndex)")
-            print("in this function")
             if viewControllerIndex != 0 {
                 // wrap to last page in array
-                print("lookingback")
                 return self.pages[viewControllerIndex - 1]
             } /*else {
                 // go to previous page in array
@@ -106,8 +101,6 @@ extension tutorialPageViewController: UIPageViewControllerDelegate, UIPageViewCo
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let viewControllerIndex = self.pages.firstIndex(of: viewController) {
-            print("index forward \(viewControllerIndex)")
-            print("pages \(self.pages.count)")
             if viewControllerIndex < self.pages.count - 1 {
                 // go to next page in array
                 return self.pages[viewControllerIndex + 1]

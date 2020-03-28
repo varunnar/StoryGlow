@@ -22,6 +22,9 @@ class environmentTableView: UIViewController,UITableViewDelegate,UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //if (GlobalVar.GlobalItems.firstOpening == true){
+            setupTutorial()
+        //}
         setupTableView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         tableView.dragInteractionEnabled = true
@@ -31,6 +34,13 @@ class environmentTableView: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
+    }
+    
+    func setupTutorial(){
+        let nextScreen = tutorialPageViewController()
+        nextScreen.tutorialPageArrayImage = ["SceneTable","SceneTableAddScene","SceneTableOpenScene","SceneTableDelete", "SceneTableMove"]
+        nextScreen.tutorialPageArrayLabel = ["In the Scene Table you can view the scenes that you have already created in a story, created new scenes, navigate into your storyglow project, delete scenes and reorder them.", "By clicking the add button in the top right corner you can create a new scene. Like with the story table, you will not be immediately navigated into the storyglow project. That way you can setup multiple scenes at once.","Clicking on a scene will allow you to navigate into the storyglow project at that specific scene.","By swiping to the left on a story you can delete a scene. However, at least one story must always be present within the scene table.","By holding down on the scene, you can swap it with other scenes. This will also swap it's location within the storyglow project"]
+        self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }
     
     

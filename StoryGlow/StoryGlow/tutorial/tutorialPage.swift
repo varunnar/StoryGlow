@@ -18,6 +18,7 @@ class tutorialPage: UIViewController {
     var navBar = UINavigationBar()
 
     override func viewDidLoad() {
+        title = "Tutorial"
         super.viewDidLoad()
         view.backgroundColor = .white
         setupNavigationBar()
@@ -34,7 +35,6 @@ class tutorialPage: UIViewController {
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         navBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         navBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        let navigationItem = UINavigationItem(title: imageString)
         let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: nil, action: #selector(done))
         navigationItem.rightBarButtonItem = doneBtn
         navBar.setItems([navigationItem], animated: false)
@@ -61,16 +61,20 @@ class tutorialPage: UIViewController {
     
     func setupImage()
     {
+        imageView.setContentCompressionResistancePriority(.init(rawValue: 748), for: .vertical)
+        imageView.setContentHuggingPriority(.init(rawValue: 248), for: .vertical)
+        imageView.setContentCompressionResistancePriority(.init(rawValue: 748), for: .horizontal)
+        imageView.setContentHuggingPriority(.init(rawValue: 248), for: .horizontal)
         view.addSubview(imageView)
         image = UIImage(named: imageString)!
         imageView.image = image
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imageView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 10).isActive = true
         imageView.bottomAnchor.constraint(equalTo: imageLabel.topAnchor, constant: -10).isActive = true
+        imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1118/606).isActive = true
     }
     
 
