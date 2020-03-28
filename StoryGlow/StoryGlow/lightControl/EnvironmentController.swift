@@ -40,6 +40,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     var ColorWheel = UIImage()
     let startTextField =  UITextField(frame: CGRect(x: 100, y: 100, width: 200, height: 30))
     let endTextField =  UITextField(frame: CGRect(x: 100, y: 100, width: 200, height: 30))
+    let endTextFieldOutline = UIButton()
+    let startTextFieldOutline = UIButton()
+    let lightControlLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+    let soundLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
 
     
 
@@ -57,6 +61,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SetupStackView1()
         SetupStackView2()
         SoundButtonSyncing()
+        setUplabel()
         SetupColorWheel()
         
         //Adding gestures to the image to allow color selection
@@ -90,6 +95,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
             if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != "")
             {
+                soundButtonArray[n].setImage(UIImage(named: ""), for: .normal)
                 soundButtonArray[n].interactions = []
                 let interaction = UIContextMenuInteraction(delegate: self)
                 soundButtonArray[n].addInteraction(interaction)
@@ -111,8 +117,8 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             }
             SegmentedControl.selectedSegmentIndex = 1
         }else{
-            startTextField.borderStyle = UITextField.BorderStyle.line
-            endTextField.borderStyle = UITextField.BorderStyle.line
+            startTextField.borderStyle = UITextField.BorderStyle.none
+            endTextField.borderStyle = UITextField.BorderStyle.none
             startTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
             endTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
             startTextField.isUserInteractionEnabled = true
@@ -134,23 +140,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         soundButtonArray.append(SoundButton4)
         soundButtonArray.append(SoundButton5)
         soundButtonArray.append(SoundButton6)
-        /*SoundButton1.accessibilityIdentifier = "soundButton1"
-        SoundButton2.accessibilityIdentifier = "soundButton2"
-        SoundButton3.accessibilityIdentifier = "soundButton3"
-        SoundButton4.accessibilityIdentifier = "soundButton4"
-        SoundButton5.accessibilityIdentifier = "soundButton5"
-        SoundButton6.accessibilityIdentifier = "soundButton6"
-        SoundButton1.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-        SoundButton2.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-        SoundButton3.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-        SoundButton4.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-        SoundButton5.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-        SoundButton6.addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)*/
         for i in 0...5{
             soundButtonArray[i].layer.borderColor = UIColor.gray.cgColor
             soundButtonArray[i].layer.borderWidth = 2
             soundButtonArray[i].accessibilityIdentifier = "soundButton\(i+1)"
             soundButtonArray[i].addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
+            soundButtonArray[i].setImage(UIImage(named: "add.png"), for: .normal)
         }
     }
     
@@ -238,6 +233,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         if sender.selectedSegmentIndex == 1{
             startTextField.borderStyle = UITextField.BorderStyle.none
             endTextField.borderStyle = UITextField.BorderStyle.none
+            startTextFieldOutline.backgroundColor = UIColor.white
+            endTextFieldOutline.backgroundColor = UIColor.white
+            endTextField.backgroundColor = UIColor.white
+            startTextField.backgroundColor = UIColor.white
             startTextField.text = "Start: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
             endTextField.text = "Stop: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
             startTextField.isUserInteractionEnabled = false
@@ -252,8 +251,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
         // if in edit mode load all buttons
         else{
-            startTextField.borderStyle = UITextField.BorderStyle.line
-            endTextField.borderStyle = UITextField.BorderStyle.line
+            startTextFieldOutline.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+            endTextFieldOutline.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+            endTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+            startTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+            startTextField.borderStyle = UITextField.BorderStyle.none
+            endTextField.borderStyle = UITextField.BorderStyle.none
             startTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
             endTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
             startTextField.isUserInteractionEnabled = true
@@ -279,8 +282,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SegmentedControl.addTarget(self, action: #selector(EnvironmentController.indexChanged(_:)), for: .valueChanged)
 
         SegmentedControl.layer.cornerRadius = 5.0
-        SegmentedControl.backgroundColor = .orange
-        SegmentedControl.tintColor = .yellow
+        SegmentedControl.backgroundColor = UIColor(red:1.00, green:0.59, blue:0.44, alpha:1.00)
 
         self.view.addSubview(SegmentedControl)
         SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -291,10 +293,28 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
 
     }
     
-    //Addint the edit texts
+    //Adding the edit texts
     func editTextConfig(){
-        startTextField.borderStyle = UITextField.BorderStyle.line
-        startTextField.backgroundColor = UIColor.white
+        
+        startTextFieldOutline.layer.cornerRadius = 10
+        startTextFieldOutline.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+        self.view.addSubview(startTextFieldOutline)
+        endTextFieldOutline.layer.cornerRadius = 10
+        endTextFieldOutline.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+        self.view.addSubview(endTextFieldOutline)
+        
+        
+        endTextFieldOutline.translatesAutoresizingMaskIntoConstraints = false
+        endTextFieldOutline.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        endTextFieldOutline.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        endTextFieldOutline.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
+
+        startTextFieldOutline.translatesAutoresizingMaskIntoConstraints = false
+        startTextFieldOutline.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        startTextFieldOutline.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        startTextFieldOutline.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -130).isActive = true
+        
+        startTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
         startTextField.placeholder = "Start"
         startTextField.font = UIFont.systemFont(ofSize: 15)
         startTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -306,9 +326,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         startTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
         self.view.addSubview(startTextField)
         
-        
-        endTextField.borderStyle = UITextField.BorderStyle.line
-        endTextField.backgroundColor = UIColor.white
+        endTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
         endTextField.placeholder = "Stop"
         endTextField.font = UIFont.systemFont(ofSize: 15)
         endTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -319,16 +337,18 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         endTextField.delegate = self as? UITextFieldDelegate
         endTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
         self.view.addSubview(endTextField)
-
+        
+        
         endTextField.translatesAutoresizingMaskIntoConstraints = false
         endTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         endTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        endTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
+        endTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
         
         startTextField.translatesAutoresizingMaskIntoConstraints = false
         startTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         startTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        startTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -120).isActive = true
+        startTextField.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -130).isActive = true
+        
 
     }
     
@@ -359,7 +379,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         StackView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         StackView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         StackView1.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 170).isActive = true
+        StackView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
         
     }
     
@@ -391,6 +411,35 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         StackView2.heightAnchor.constraint(equalToConstant: 80).isActive = true
         StackView2.topAnchor.constraint(equalTo: StackView1.bottomAnchor, constant: 20).isActive = true
     }
+    
+    func setUplabel(){
+        lightControlLabel.textAlignment = .center
+        lightControlLabel.text = "Assign Color to Lights"
+        lightControlLabel.textColor = .black
+        lightControlLabel.font = UIFont.boldSystemFont(ofSize: 20)
+
+        
+        self.view.addSubview(lightControlLabel)
+        lightControlLabel.translatesAutoresizingMaskIntoConstraints = false
+        lightControlLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        lightControlLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        lightControlLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        lightControlLabel.topAnchor.constraint(equalTo: StackView2.bottomAnchor, constant: 10).isActive = true
+        
+        soundLabel.textAlignment = .center
+        soundLabel.text = "Sound Board"
+        soundLabel.textColor = .black
+        soundLabel.font = UIFont.boldSystemFont(ofSize: 20)
+
+        
+
+        self.view.addSubview(soundLabel)
+        soundLabel.translatesAutoresizingMaskIntoConstraints = false
+        soundLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        soundLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        soundLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        soundLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 130).isActive = true
+    }
     //configuring stackview2's constraints
     func SetupColorWheel()
     {
@@ -407,7 +456,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     {
         ColorWheelView.translatesAutoresizingMaskIntoConstraints = false
         ColorWheelView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        ColorWheelView.topAnchor.constraint(equalTo: StackView2.bottomAnchor, constant: 50).isActive = true
+        ColorWheelView.topAnchor.constraint(equalTo: lightControlLabel.bottomAnchor, constant: -10).isActive = true
         //making sure UIImageView is the same size as the image so the CGimage pixels line up with the UIImage pixels
         ColorWheelView.widthAnchor.constraint(equalToConstant: ColorWheel.size.width).isActive = true
         ColorWheelView.heightAnchor.constraint(equalToConstant: ColorWheel.size.height).isActive = true

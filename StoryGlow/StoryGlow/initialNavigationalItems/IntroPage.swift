@@ -32,6 +32,7 @@ class IntroPage: UIViewController {
     var addStoryButton = UIButton()
     var storyListButton = UIButton()
     var mainStackView = UIStackView()
+    let imageView = UIImageView(image: UIImage(named: "logo"))
     override func viewDidLoad() {
         super.viewDidLoad()
         let previousStories = DataControllerInstance.getStoriesFromDisk()
@@ -55,6 +56,10 @@ class IntroPage: UIViewController {
         storyListButton.layer.cornerRadius = 10
         addStoryButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
         storyListButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
+        
+        imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        view.addSubview(imageView)
+        //NEEDS CONTRAINTS
 
         setupStackview()
         // Do any additional setup after loading the view.
