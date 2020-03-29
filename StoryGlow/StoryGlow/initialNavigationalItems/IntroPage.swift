@@ -56,9 +56,7 @@ class IntroPage: UIViewController {
         storyListButton.layer.cornerRadius = 10
         addStoryButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
         storyListButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
-        
-        imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-        view.addSubview(imageView)
+        setupImageView()
         //NEEDS CONTRAINTS
 
         setupStackview()
@@ -66,6 +64,16 @@ class IntroPage: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.topItem?.title = "Welcome"
+    }
+    
+    func setupImageView()
+    {
+        view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -30).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     func setupTutorial(){
