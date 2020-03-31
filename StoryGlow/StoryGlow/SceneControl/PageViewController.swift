@@ -38,6 +38,8 @@ class PageHolder: UIViewController {
         pageviewControl.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(addPage), name: .some(addPageNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(controlEditMode), name: .some(editModeNotification), object: nil)
+        pageControl.pageIndicatorTintColor = UIColor.gray
+        pageControl.currentPageIndicatorTintColor = UIColor.white
 
         // Do any additional setup after loading the view.
     }

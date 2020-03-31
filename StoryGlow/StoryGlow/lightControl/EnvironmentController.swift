@@ -189,11 +189,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             soundButtonArray[i].layer.borderWidth = 2
             soundButtonArray[i].accessibilityIdentifier = "soundButton\(i+1)"
             soundButtonArray[i].addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-
-            soundButtonArray[i].setImage(UIImage(named: "whiteAdd.png"), for: .normal)
+            soundButtonArray[i].setImage(UIImage(named: "add.png"), for: .normal)
             soundButtonArray[i].titleLabel?.numberOfLines = 0
-            soundButtonArray[i].backgroundColor = UIColor.black
             soundButtonArray[i].setTitleColor(.black, for: .normal)
+            soundButtonArray[i].backgroundColor = .white
             soundButtonArray[i].layer.cornerRadius = 10
         }
     }
