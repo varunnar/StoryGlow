@@ -329,7 +329,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SegmentedControl.selectedSegmentIndex = 0
         SegmentedControl.addTarget(self, action: #selector(EnvironmentController.indexChanged(_:)), for: .valueChanged)
         SegmentedControl.layer.cornerRadius = 5.0
-        SegmentedControl.backgroundColor = UIColor(red:1.00, green:0.59, blue:0.44, alpha:1.00)
+        SegmentedControl.backgroundColor = UIColor(red:0.84, green:0.36, blue:0.69, alpha:1.00)
         self.contentView.addSubview(SegmentedControl)
         SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         SegmentedControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor , constant: 15).isActive = true
