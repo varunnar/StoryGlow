@@ -41,5 +41,6 @@ class GlobalVar: Codable{
         static var StoryTableFirstOpening = true
         static var SceneTableFirstOpening = true
         static var pageHolderFirstOpening = true
+        static var soundPageFirstOpening = true
     }
 }

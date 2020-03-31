@@ -73,7 +73,7 @@ class tutorialPage: UIViewController {
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 10).isActive = true
+        imageView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 20).isActive = true
         imageView.bottomAnchor.constraint(equalTo: imageLabel.topAnchor, constant: -10).isActive = true
         imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1118/606).isActive = true
     }

@@ -91,7 +91,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
-        //scrollView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         self.scrollView.addSubview(contentView)
@@ -118,7 +117,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) //setup colors as HSBK colors and set light colors
         let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
         colorWheelOnOffButton.backgroundColor = previousColor
-        print(previousColor)
         for i in IntroPage.lightsStruct.lightArray{
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
             setColor.fireAndForget()
@@ -132,13 +130,16 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         
         //readding sounds to buttons on swiping
         for n in 0...5{
-        soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
+    soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
             let red = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorRed
             let green = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorGreen
             let blue = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorBlue
+            if (blue != 0 && green == 0){
+                print(blue)
+                soundButtonArray[n].setTitleColor(.white, for: .normal)
+            }
             soundButtonArray[n].backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
-            if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != "")
-            {
+            if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != ""){
                 soundButtonArray[n].setImage(UIImage(named: ""), for: .normal)
                 soundButtonArray[n].interactions = []
                 let interaction = UIContextMenuInteraction(delegate: self)
@@ -176,8 +177,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
     //adds soundbuttons to sound array, give them accessibilityIndentifiers for contextMenus and add target functionality
-    func SoundButtonSyncing()
-    {
+    func SoundButtonSyncing(){
         soundButtonArray.append(SoundButton1)
         soundButtonArray.append(SoundButton2)
         soundButtonArray.append(SoundButton3)
@@ -199,11 +199,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     //MARK: Button Control
     //Navigating to sound screen and getting button info
-    @objc func AddSounds(sender: UIButton)
-    {
+    @objc func AddSounds(sender: UIButton){
         //this is also where we will need to sort out if we are adding or playing the item
-        if let buttonIndex = self.soundButtonArray.firstIndex(of: sender)
-        {
+        if let buttonIndex = self.soundButtonArray.firstIndex(of: sender){
             //if we are in edit mode
             if PageHolder.editModeStruct.editMode == true{
                let nextScreen = RecordAudioController()//change later
@@ -221,8 +219,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
     //function that actually plays sound
-    func playSounds(buttonIndex:Int)
-    {
+    func playSounds(buttonIndex:Int){
         //If audio string is an url from freesound
         if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[buttonIndex].soundVal.contains("https") == true {
             //If player boolean is true and player is playing (boolean may not be needed)
@@ -291,8 +288,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             endTextField.text = "Stop: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
             startTextField.isUserInteractionEnabled = false
             endTextField.isUserInteractionEnabled = false
-            for i in 0...5
-                {
+            for i in 0...5{
                 if GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[i].soundName == ""{
                     soundButtonArray[i].isHidden = true //hide unused buttons
                 }
@@ -390,8 +386,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
      //setting up buttons and adding them to stackview1
-    func SetupStackView1()
-    {
+    func SetupStackView1(){
         contentView.addSubview(StackView1)
         StackView1.addArrangedSubview(SoundButton1)
         StackView1.addArrangedSubview(SoundButton2)
@@ -404,19 +399,16 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
     //configuring stackview1's constraints
-    func StackViewConfig1()
-    {
+    func StackViewConfig1(){
         StackView1.translatesAutoresizingMaskIntoConstraints = false
         StackView1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         StackView1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         StackView1.heightAnchor.constraint(equalToConstant: 80).isActive = true
         StackView1.topAnchor.constraint(equalTo: soundLabel.bottomAnchor, constant: 10).isActive = true
-        
     }
     
     //setting up buttons and adding them to stackview2
-    func SetupStackView2()
-    {
+    func SetupStackView2(){
         contentView.addSubview(StackView2)
         StackView2.addArrangedSubview(SoundButton4)
         StackView2.addArrangedSubview(SoundButton5)
@@ -428,8 +420,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         StackViewConfig2()
     }
     
-    func StackViewConfig2()
-    {
+    func StackViewConfig2(){
         StackView2.translatesAutoresizingMaskIntoConstraints = false
         StackView2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         StackView2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
@@ -448,7 +439,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         soundLabel.translatesAutoresizingMaskIntoConstraints = false
         soundLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         soundLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
-        //soundLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
         soundLabel.topAnchor.constraint(equalTo: SegmentedControl.bottomAnchor, constant: 10).isActive = true
     }
     
@@ -463,12 +453,10 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         lightControlLabel.translatesAutoresizingMaskIntoConstraints = false
         lightControlLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         lightControlLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
-        //lightControlLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
         lightControlLabel.topAnchor.constraint(equalTo: StackView2.bottomAnchor, constant: 20).isActive = true
     }
     
-    func setupEditTextLabel()
-    {
+    func setupEditTextLabel(){
         self.contentView.addSubview(editTextLabel)
         editTextLabel.text = "Mapping to the Book"
         editTextLabel.textAlignment = .center
@@ -481,8 +469,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
 
     }
     //configuring stackview2's constraints
-    func SetupColorWheel()
-    {
+    func SetupColorWheel(){
         ColorWheel = UIImage(named: "colorwheel2")!
         ColorWheelView = UIImageView(image: ColorWheel)
         contentView.addSubview(ColorWheelView)
@@ -498,8 +485,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     }
     
     //Setting up the Colorwheel image and adding Constraints
-    func setupColorWheelOnOff()
-    {
+    func setupColorWheelOnOff(){
         view.addSubview(colorWheelOnOffButton)
         colorWheelOnOffButton.backgroundColor = .white
         colorWheelOnOffButton.setBackgroundImage(UIImage(named: "onLight"), for: .normal)
@@ -514,12 +500,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         colorWheelOnOffButton.addTarget(self, action: #selector(turnOff), for: .touchUpInside)
         print(ColorWheelView.frame.width)
         colorWheelOnOffButton.clipsToBounds = true
-        //colorWheelOnOffButton.layer.borderWidth = 1
-        //colorWheelOnOffButton.layer.borderColor = UIColor.black.cgColor
     }
     
-    @objc func turnOff()
-    {
+    @objc func turnOff(){
         if (IntroPage.lightsStruct.lightsOn == true){
             colorWheelOnOffButton.setBackgroundImage(UIImage(named: "offLight"), for: .normal)
         }
@@ -533,8 +516,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     //MARK: Image
     //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
-    @objc func imageTap(recognizer: UITapGestureRecognizer)
-    {
+    @objc func imageTap(recognizer: UITapGestureRecognizer){
         let point = recognizer.location(in: ColorWheelView)
         let point2 = recognizer.location(in: contentView)
         let centerPoint = ColorWheelView.center
@@ -604,7 +586,6 @@ extension UIImage {
         let g = CGFloat(pureData[pixelData + 1]) / 255.0
         let b = CGFloat(pureData[pixelData + 2]) / 255.0
         let a = CGFloat(pureData[pixelData + 3]) / 255.0
-
         return UIColor(red: r, green: g, blue: b, alpha: a)
             
     }
@@ -625,8 +606,7 @@ extension EnvironmentController: UIContextMenuInteractionDelegate{
     }
     
     //Building context menu
-    func makeContextMenu(interact: UIContextMenuInteraction) -> UIMenu
-    {
+    func makeContextMenu(interact: UIContextMenuInteraction) -> UIMenu{
         var buttonIndex = 0
         for i in 0...self.soundButtonArray.count-1{
             if (interact.view?.accessibilityIdentifier == self.soundButtonArray[i].accessibilityIdentifier){
@@ -681,17 +661,19 @@ extension EnvironmentController: UIContextMenuInteractionDelegate{
         }
         let blue = UIAction(title: "blue", image: UIImage(named: "blue")){_ in
             self.soundButtonArray[buttonIndex].backgroundColor = .blue
+            self.soundButtonArray[buttonIndex].setTitleColor(.white, for: .normal)
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 0.0
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 1.0
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.0
         }
         let purple = UIAction(title: "purple", image: UIImage(named: "purple")){_ in
             self.soundButtonArray[buttonIndex].backgroundColor = .purple
+            self.soundButtonArray[buttonIndex].setTitleColor(.white, for: .normal)
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 0.5
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.0
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.5
         }
-        let setColor = UIMenu(title: "Set Color", children: [red,orange,yellow,green,blue,purple])
+        let setColor = UIMenu(title: "Set Color", image: UIImage(named: "paint") , children: [red,orange,yellow,green,blue,purple])
         let edit = UIMenu(title: "Edit...", children: [rename, delete, setColor])
         let play = UIAction(title: "play", image: UIImage(systemName: "play")){ action in
             self.playSounds(buttonIndex: buttonIndex)

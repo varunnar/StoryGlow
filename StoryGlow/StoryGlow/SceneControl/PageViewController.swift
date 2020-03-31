@@ -32,7 +32,13 @@ class PageHolder: UIViewController {
         super.viewDidLoad()
         self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[currentSceneIndex].sceneName
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false //make sure the swiping in pageivewcontroller does not swipe back to tableviews and intropage
-        setup()
+        if (GlobalVar.tutorial.firstOpening == true){
+            if (GlobalVar.tutorial.pageHolderFirstOpening == true){
+                setupTutorial()
+                GlobalVar.tutorial.pageHolderFirstOpening = false
+            }
+        }
+        setupPageViewController()
         setupPageControl()
         pageviewControl.delegate = self
         pageviewControl.dataSource = self
@@ -62,9 +68,17 @@ class PageHolder: UIViewController {
         pageControl.currentPage = currentSceneIndex
     }
     
+    func setupTutorial()
+    {
+        let nextScreen = tutorialPageViewController()
+        nextScreen.tutorialPageArrayImage = ["PageHolder","PageHolderSoundBoard","PageHolderLightControl","PageHolderColorWheelButton","PageHolderMapping","PageHolderSegmentedControl","PageHolderPresentationMode","PageHolderContextMenu1","PageHolderContextMenu2","AddPage","PageHolderMappingSwipeIndicator"]
+        nextScreen.tutorialPageArrayLabel = ["Welcome to your First Storyglow project! This is where the magic happens! There are several components to this page you should familiarize yourself with.", "At the top of the page is the sound board. The sound board is where you can add sound affects to the scene. In edit mode, the mode you will start out in, clicking these buttons will send you to our sound selection pages where you can record or find sound affects that fit your needs.","The colorwheel here is your light color selection. By selecting a color on this board you can select the color of your LIFX lights, to light the environment appropriately. Both tapping and dragging motions will work.","In the center of the colorwheel is a lightbulb button. The background of this button will reflect the color choose on the wheel. By pressing the button you can turn on or off your LIFX lights.","At the bottom of the page is the mapping section of the app. This application may be used alongside an actual book. If that is the case, you can put quotes or titles in these sections to indicate where in the story this scene takes place. This will hopefully make the transitions between scenes seemless.","While editing mode is good, it may help to remove some of the clutter and unneeded functionality when actually presenting the book. Simply switch to presentation with the control at the very top.","Only the populated sound affect buttons will show, and you don't have to worry about mistakely changing the start stop mapping labels. While in editting mode clicking on a sound button will take you back to sound selection, clicking on a button here will play your sound","Speaking of sounds there are a variety of other functionality we have given you. By holding down on a populated sound button in editting mode, you can use the content menu. You can edit or play the sound","Editting allows the users to rename the sound, delete it or assign it a color. This can make sound affects more seemless and help differentiate them.","The final page of the storyglow project is reserved for the add scene page. While adding scenes can be done in the scene table as well, this will allow users to quickly add scenes and continue working.", "The small dots on the bottom refer to the total number of pages in the project and the current page so you should have no trouble keeping track of where you are in the project"]
+        self.navigationController?.present(nextScreen, animated: true, completion: nil)
+    }
+    
     
     //add initial pages and setup pageviewcontroller
-    func setup()
+    func setupPageViewController()
     {
         pageviewControl = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         let page1 = EnvironmentController()

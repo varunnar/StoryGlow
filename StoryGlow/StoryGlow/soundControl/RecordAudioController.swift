@@ -31,6 +31,13 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        
+        if (GlobalVar.tutorial.firstOpening == true){
+            if (GlobalVar.tutorial.soundPageFirstOpening == true){
+                setupTutorial()
+                GlobalVar.tutorial.soundPageFirstOpening = false
+            }
+        }
 //MARK: UI FOR APP
     //Record button
         ControlRecordingButton()
@@ -99,6 +106,13 @@ class RecordAudioController: UIViewController, AVAudioPlayerDelegate, AVAudioRec
                  print("Audio recorder error")
          }
      }
+    
+    func setupTutorial(){
+        let nextScreen = tutorialPageViewController()
+        nextScreen.tutorialPageArrayImage = ["soundSelection","soundSelectionRecord","soundSelectionPlay","soundSelectionSave","soundSelectionSearch","SoundSearch","SoundSearchedPlay","SoundSearchedAdd"]
+        nextScreen.tutorialPageArrayLabel = ["This is the sound selection screen. Here you can record a sound, play it and add it or you can search for a sound with our integration with freesounds.org","By clicking the record button you can record yourself making sound affects! Of course you have to allow the app to use your mic or this step will not work.","After recording the sound you can play it back using the play button.","If the sound sounds good, go ahead and save it. It'll be added to one of your sound buttons in your Storyglow scene.","If the sound affect you need is not something you think you can record you can hit search for sound.","This is the page where you will find searched sounds. Just type in a word and we will look through freesounds.org to see if there are some sound affects you can use.","After a quick pause your potential sound affects will appear. Just hit play to sample them and find one you like.","Once you find one you like click the add button to add it to your project! A sound affect is found."]
+        self.navigationController?.present(nextScreen, animated: true, completion: nil)
+    }
     
 //MARK:Button actions
     //load table view
