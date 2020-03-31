@@ -13,9 +13,9 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let tableview: UITableView = {
         let StoryTableView = UITableView()
-        StoryTableView.backgroundColor = UIColor.white
+        StoryTableView.backgroundColor = UIColor.black
         StoryTableView.translatesAutoresizingMaskIntoConstraints = false
-        StoryTableView.separatorColor = UIColor.white
+        StoryTableView.separatorColor = UIColor.black
         return StoryTableView
     }()
     
@@ -32,7 +32,7 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setupTutorial(){
         let nextScreen = tutorialPageViewController()
         nextScreen.tutorialPageArrayImage = ["StoryTable","StoryTableAddStory","storyTableOpenStory","StoryTableDeleteStory"]
-        nextScreen.tutorialPageArrayLabel = ["In the Story Table you can view the stories that you have already created, created new stories, navigate into stories and delete stories.", "By clicking the add button in the top right corner you can create a new story. This process closely resembles adding a story from the welcome page, though you will not be immediately navigated in. That way you can setup multiple stories at once.","Clicking on a story will allow you to navigate into the story and view the scene table for that story.","By swiping to the left on a story you can delete a story. However, at least one story must always be present within the storyglow table."]
+        nextScreen.tutorialPageArrayLabel = ["In the Story List you can view the stories that you have already created, created new stories, navigate into stories and delete stories.", "By clicking the add button in the top right corner you can create a new story. This process closely resembles adding a story from the welcome page, though you will not be immediately navigated in. That way you can setup multiple stories at once.","Clicking on a story will allow you to navigate into the story and view the scene table for that story.","By swiping to the left on a story you can delete a story. However, at least one story must always be present within the storyglow table."]
         self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }
     
@@ -64,7 +64,7 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableview.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! storyCell
         if (GlobalVar.GlobalItems.storyArray.count != 0){
             cell.storyLabel.text = GlobalVar.GlobalItems.storyArray[indexPath.row].storyName
-            cell.backgroundColor = UIColor.white
+            cell.backgroundColor = UIColor.black
             let strIndexPath = String(indexPath.row + 1)
             let test = strIndexPath.last!
             switch test {

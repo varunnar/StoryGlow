@@ -25,8 +25,9 @@ class AddSceneViewController: UIViewController {
     
     func setupAddButton()
     {
-        AddButton.setTitle("Add Environment", for: .normal)
-        AddButton.backgroundColor = .blue
+        AddButton.setTitle("Add a New Scene", for: .normal)
+        AddButton.backgroundColor = UIColor(red:1.00, green:0.44, blue:0.57, alpha:1.00)
+        AddButton.layer.cornerRadius = 10
         AddButton.addTarget(self, action: #selector(AddViewController), for: .touchUpInside)
         AddButton.translatesAutoresizingMaskIntoConstraints = false
         AddButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

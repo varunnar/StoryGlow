@@ -14,8 +14,8 @@ class environmentTableView: UIViewController,UITableViewDelegate,UITableViewData
     
     let tableView: UITableView = {
         let SceneTableView = UITableView()
-        SceneTableView.backgroundColor = UIColor.white
-        SceneTableView.separatorColor = UIColor.white
+        SceneTableView.backgroundColor = UIColor.black
+        SceneTableView.separatorColor = UIColor.black
         SceneTableView.translatesAutoresizingMaskIntoConstraints = false
         return SceneTableView
     }()
@@ -39,7 +39,7 @@ class environmentTableView: UIViewController,UITableViewDelegate,UITableViewData
     func setupTutorial(){
         let nextScreen = tutorialPageViewController()
         nextScreen.tutorialPageArrayImage = ["SceneTable","SceneTableAddScene","SceneTableOpenScene","SceneTableDelete", "SceneTableMove"]
-        nextScreen.tutorialPageArrayLabel = ["In the Scene Table you can view the scenes that you have already created in a story, created new scenes, navigate into your storyglow project, delete scenes and reorder them.", "By clicking the add button in the top right corner you can create a new scene. Like with the story table, you will not be immediately navigated into the storyglow project. That way you can setup multiple scenes at once.","Clicking on a scene will allow you to navigate into the storyglow project at that specific scene.","By swiping to the left on a story you can delete a scene. However, at least one story must always be present within the scene table.","By holding down on the scene, you can swap it with other scenes. This will also swap it's location within the storyglow project"]
+        nextScreen.tutorialPageArrayLabel = ["In the Scene Table you can view the scenes that you have already created in a story, created new scenes, navigate into your storyglow project, delete scenes and reorder them.", "By clicking the add button in the top right corner you can create a new scene. Like with the story list, you will not be immediately navigated into the storyglow project. That way you can setup multiple scenes at once.","Clicking on a scene will allow you to navigate into the storyglow project at that specific scene.","By swiping to the left on a story you can delete a scene. However, at least one story must always be present within the scene table.","By holding down on the scene, you can swap it with other scenes. This will also swap it's location within the storyglow project"]
         self.navigationController?.present(nextScreen, animated: true, completion: nil)
     }
     
@@ -116,7 +116,7 @@ class environmentTableView: UIViewController,UITableViewDelegate,UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! environmentCell
         if (GlobalVar.GlobalItems.storyArray.count != 0){
             cell.SceneLabel.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[indexPath.row].sceneName
-            cell.backgroundColor = UIColor.white
+            cell.backgroundColor = UIColor.black
             let strIndexPath = String(indexPath.row + 1)
             let test = strIndexPath.last!
             switch test {

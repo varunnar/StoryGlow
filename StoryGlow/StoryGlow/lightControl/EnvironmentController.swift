@@ -53,7 +53,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         super.viewDidLoad()
         edgesForExtendedLayout = []
         self.title = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].sceneName
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         scrollViewSetup()
         //setting up Segmented Control
         SegmentedControlConfig()
@@ -89,7 +89,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         
         self.scrollView.addSubview(contentView)
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .black
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
@@ -172,7 +172,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             soundButtonArray[i].layer.borderWidth = 2
             soundButtonArray[i].accessibilityIdentifier = "soundButton\(i+1)"
             soundButtonArray[i].addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
-            soundButtonArray[i].setImage(UIImage(named: "add.png"), for: .normal)
+            soundButtonArray[i].setImage(UIImage(named: "WhiteAdd.png"), for: .normal)
+            soundButtonArray[i].titleLabel?.numberOfLines = 0
+
         }
     }
     
@@ -260,10 +262,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         if sender.selectedSegmentIndex == 1{
             startTextField.borderStyle = UITextField.BorderStyle.none
             endTextField.borderStyle = UITextField.BorderStyle.none
-            startTextFieldOutline.backgroundColor = UIColor.white
-            endTextFieldOutline.backgroundColor = UIColor.white
-            endTextField.backgroundColor = UIColor.white
-            startTextField.backgroundColor = UIColor.white
+            startTextFieldOutline.backgroundColor = UIColor.black
+            endTextFieldOutline.backgroundColor = UIColor.black
+            endTextField.backgroundColor = UIColor.black
+            startTextField.backgroundColor = UIColor.black
+            startTextField.textColor = UIColor.white
+            endTextField.textColor = UIColor.white
             startTextField.text = "Start: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
             endTextField.text = "Stop: " + GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].endText
             startTextField.isUserInteractionEnabled = false
@@ -278,10 +282,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         }
         // if in edit mode load all buttons
         else{
-            startTextFieldOutline.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
-            endTextFieldOutline.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
-            endTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
-            startTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+            startTextFieldOutline.backgroundColor = UIColor.white
+            endTextFieldOutline.backgroundColor = UIColor.white
+            endTextField.backgroundColor = UIColor.white
+            startTextField.backgroundColor = UIColor.white
+            endTextField.textColor = UIColor.black
+            startTextField.textColor = UIColor.black
             startTextField.borderStyle = UITextField.BorderStyle.none
             endTextField.borderStyle = UITextField.BorderStyle.none
             startTextField.text = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].startText
@@ -307,24 +313,27 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SegmentedControl.center = self.view.center
         SegmentedControl.selectedSegmentIndex = 0
         SegmentedControl.addTarget(self, action: #selector(EnvironmentController.indexChanged(_:)), for: .valueChanged)
-
         SegmentedControl.layer.cornerRadius = 5.0
         SegmentedControl.backgroundColor = UIColor(red:1.00, green:0.59, blue:0.44, alpha:1.00)
-
         self.contentView.addSubview(SegmentedControl)
         SegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        SegmentedControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        SegmentedControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        SegmentedControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor , constant: 15).isActive = true
+        SegmentedControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:  -15).isActive = true
         SegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        SegmentedControl.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        SegmentedControl.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10).isActive = true
     }
     
     //Adding the edit texts
     func editTextConfig(){
-        startTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
+        startTextFieldOutline.backgroundColor = UIColor.white
+        endTextFieldOutline.backgroundColor = UIColor.white
+        endTextField.backgroundColor = UIColor.white
+        startTextField.backgroundColor = UIColor.white
+        endTextField.textColor = UIColor.black
+        startTextField.textColor = UIColor.black
         startTextField.layer.cornerRadius = 10
         endTextField.layer.cornerRadius = 10
-        startTextField.placeholder = "Start"
+        startTextField.placeholder = "Starting Point"
         startTextField.font = UIFont.systemFont(ofSize: 15)
         startTextField.autocorrectionType = UITextAutocorrectionType.no
         startTextField.keyboardType = UIKeyboardType.default
@@ -335,8 +344,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         startTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
         self.contentView.addSubview(startTextField)
         
-        endTextField.backgroundColor = UIColor(red:0.99, green:0.95, blue:0.87, alpha:1.00)
-        endTextField.placeholder = "Stop"
+        endTextField.placeholder = "Stoping Point"
         endTextField.font = UIFont.systemFont(ofSize: 15)
         endTextField.autocorrectionType = UITextAutocorrectionType.no
         endTextField.keyboardType = UIKeyboardType.default
@@ -349,14 +357,14 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         
         
         endTextField.translatesAutoresizingMaskIntoConstraints = false
-        endTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        endTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
+        endTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        endTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
         endTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
         endTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         startTextField.translatesAutoresizingMaskIntoConstraints = false
-        startTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        startTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
+        startTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        startTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
         startTextField.bottomAnchor.constraint(equalTo: endTextField.topAnchor, constant: -10).isActive = true
         startTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
@@ -425,7 +433,7 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     func setupSoundLabel(){
         soundLabel.textAlignment = .center
         soundLabel.text = "Sound Board"
-        soundLabel.textColor = .black
+        soundLabel.textColor = .white
         soundLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
 
@@ -439,8 +447,8 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     
     func setupLightLabel(){
         lightControlLabel.textAlignment = .center
-        lightControlLabel.text = "Assign Color to Lights"
-        lightControlLabel.textColor = .black
+        lightControlLabel.text = "Assign Color to LIFX Bulbs"
+        lightControlLabel.textColor = .white
         lightControlLabel.font = UIFont.boldSystemFont(ofSize: 20)
 
         
@@ -455,9 +463,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     func setupEditTextLabel()
     {
         self.contentView.addSubview(editTextLabel)
-        editTextLabel.text = "Mapping to The Book"
+        editTextLabel.text = "Mapping to the Book"
         editTextLabel.textAlignment = .center
-        editTextLabel.textColor = .black
+        editTextLabel.textColor = .white
         editTextLabel.font = UIFont.boldSystemFont(ofSize: 20)
         editTextLabel.translatesAutoresizingMaskIntoConstraints = false
         editTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true

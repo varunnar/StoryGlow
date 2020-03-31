@@ -32,7 +32,7 @@ class IntroPage: UIViewController {
     var addStoryButton = UIButton()
     var storyListButton = UIButton()
     var mainStackView = UIStackView()
-    let imageView = UIImageView(image: UIImage(named: "logo"))
+    let imageView = UIImageView(image: UIImage(named: "logo-1"))
     override func viewDidLoad() {
         super.viewDidLoad()
         let previousStories = DataControllerInstance.getStoriesFromDisk()
@@ -44,9 +44,9 @@ class IntroPage: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(goingToBackEnd), name: UIApplication.willResignActiveNotification, object: nil)
         lightService.start() //start looking for lights
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil) //notification for when light is added
-        self.navigationController?.navigationBar.topItem?.title = "Welcome" //set top title
+        self.navigationController?.navigationBar.topItem?.title = "Welcome to StoryGlow" //set top title
 
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.addSubview(mainStackView)
         addStoryButton.backgroundColor = UIColor(red:0.84, green:0.36, blue:0.69, alpha:1.00)
         storyListButton.backgroundColor = UIColor(red:0.52, green:0.37, blue:0.76, alpha:1.00)
@@ -63,7 +63,7 @@ class IntroPage: UIViewController {
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = "Welcome"
+        self.navigationController?.navigationBar.topItem?.title = "Welcome to StoryGlow"
     }
     
     func setupImageView()
