@@ -10,7 +10,6 @@ import UIKit
 
 class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
     let tableview: UITableView = {
         let StoryTableView = UITableView()
         StoryTableView.backgroundColor = UIColor.white
@@ -23,9 +22,12 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        //if (GlobalVar.GlobalItems.firstOpening == true){
-            setupTutorial()
-        //}
+        if (GlobalVar.tutorial.firstOpening == true){
+            if (GlobalVar.tutorial.StoryTableFirstOpening == true){
+                setupTutorial()
+                GlobalVar.tutorial.StoryTableFirstOpening = false
+            }
+        }
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }
     
@@ -109,7 +111,7 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
                let alertConroller = UIAlertController(title: "WARNING", message: "You cannot delete this story becuase it is the last one. Please add another story.", preferredStyle: .alert)
                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                alertConroller.addAction(alertAction)
-               present(alertConroller,animated:true, completion: nil)
+               present(alertConroller, animated:true, completion: nil)
         }
     }
 
@@ -161,7 +163,7 @@ class storyTableView: UIViewController, UITableViewDelegate, UITableViewDataSour
         let nextScreen = environmentTableView()
         nextScreen.title = GlobalVar.GlobalItems.storyArray[indexPath.row].storyName
         nextScreen.storyIndex = indexPath.row
-        self.navigationController?.pushViewController(nextScreen, animated: false)
+        self.navigationController?.pushViewController(nextScreen, animated: true)
     }
 
 }

@@ -35,15 +35,21 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     var SoundButton4 = UIButton()
     var SoundButton5 = UIButton()
     var SoundButton6 = UIButton()
+    
     let SegmentedControl = UISegmentedControl(items : ["Edit Mode" , "Presentation Mode"])
     var StackView1 = UIStackView()
     var StackView2 = UIStackView()
+    
     var ColorWheelView = UIImageView()
     var ColorWheel = UIImage()
+    var colorWheelOnOffButton = UIButton()
+    
     let startTextField =  UITextField(frame: CGRect(x: 100, y: 100, width: 200, height: 30))
     let endTextField =  UITextField(frame: CGRect(x: 100, y: 100, width: 200, height: 30))
+    
     let endTextFieldOutline = UIButton()
     let startTextFieldOutline = UIButton()
+    
     let lightControlLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     let soundLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     let editTextLabel = UILabel()
@@ -59,12 +65,12 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         SegmentedControlConfig()
         setupSoundLabel()
         //setting up the stackviews and images
+        SoundButtonSyncing()
         SetupStackView1()
         SetupStackView2()
         editTextConfig()
         setupEditTextLabel()
         setupLightLabel()
-        SoundButtonSyncing()
         SetupColorWheel()
         
         let imageClickedGesture = UITapGestureRecognizer(target: self, action: #selector(imageTap))
@@ -111,15 +117,26 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         let previousColor = UIColor(red: scene.red, green: scene.green, blue: scene.blue, alpha: scene.alpha)
         previousColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) //setup colors as HSBK colors and set light colors
         let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
+        colorWheelOnOffButton.backgroundColor = previousColor
+        print(previousColor)
         for i in IntroPage.lightsStruct.lightArray{
             let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
             setColor.fireAndForget()
+        }
+        if (IntroPage.lightsStruct.lightsOn == true){
+            colorWheelOnOffButton.setBackgroundImage(UIImage(named: "onLight"), for: .normal)
+        }
+        else{
+            colorWheelOnOffButton.setBackgroundImage(UIImage(named: "offLight"), for: .normal)
         }
         
         //readding sounds to buttons on swiping
         for n in 0...5{
         soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
-            soundButtonArray[n].backgroundColor = previousColor
+            let red = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorRed
+            let green = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorGreen
+            let blue = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorBlue
+            soundButtonArray[n].backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
             if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != "")
             {
                 soundButtonArray[n].setImage(UIImage(named: ""), for: .normal)
@@ -173,6 +190,9 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
             soundButtonArray[i].accessibilityIdentifier = "soundButton\(i+1)"
             soundButtonArray[i].addTarget(self, action: #selector(AddSounds(sender:)), for: .touchUpInside)
             soundButtonArray[i].setImage(UIImage(named: "add.png"), for: .normal)
+            soundButtonArray[i].backgroundColor = .white
+            soundButtonArray[i].setTitleColor(.black, for: .normal)
+            soundButtonArray[i].layer.cornerRadius = 10
         }
     }
     
@@ -365,12 +385,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
      //setting up buttons and adding them to stackview1
     func SetupStackView1()
     {
-        SoundButton1.backgroundColor = .gray
-        SoundButton2.backgroundColor = .gray
-        SoundButton3.backgroundColor = .gray
-        SoundButton1.layer.cornerRadius = 10
-        SoundButton2.layer.cornerRadius = 10
-        SoundButton3.layer.cornerRadius = 10
         contentView.addSubview(StackView1)
         StackView1.addArrangedSubview(SoundButton1)
         StackView1.addArrangedSubview(SoundButton2)
@@ -396,12 +410,6 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     //setting up buttons and adding them to stackview2
     func SetupStackView2()
     {
-        SoundButton4.backgroundColor = .gray
-        SoundButton5.backgroundColor = .gray
-        SoundButton6.backgroundColor = .gray
-        SoundButton4.layer.cornerRadius = 10
-        SoundButton5.layer.cornerRadius = 10
-        SoundButton6.layer.cornerRadius = 10
         contentView.addSubview(StackView2)
         StackView2.addArrangedSubview(SoundButton4)
         StackView2.addArrangedSubview(SoundButton5)
@@ -470,22 +478,51 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
     {
         ColorWheel = UIImage(named: "colorwheel2")!
         ColorWheelView = UIImageView(image: ColorWheel)
-        ColorWheelView.layer.cornerRadius = ColorWheelView.frame.width/2
-        ColorWheelView.clipsToBounds = true
         contentView.addSubview(ColorWheelView)
-        colorwheelConfig()
-    }
-    
-    //Setting up the Colorwheel image and adding Constraints
-    func colorwheelConfig()
-    {
+        
         ColorWheelView.translatesAutoresizingMaskIntoConstraints = false
         ColorWheelView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         ColorWheelView.topAnchor.constraint(equalTo: lightControlLabel.bottomAnchor, constant: 10).isActive = true
         //making sure UIImageView is the same size as the image so the CGimage pixels line up with the UIImage pixels
         ColorWheelView.widthAnchor.constraint(equalToConstant: ColorWheel.size.width).isActive = true
         ColorWheelView.heightAnchor.constraint(equalToConstant: ColorWheel.size.height).isActive = true
+        
+        setupColorWheelOnOff()
     }
+    
+    //Setting up the Colorwheel image and adding Constraints
+    func setupColorWheelOnOff()
+    {
+        view.addSubview(colorWheelOnOffButton)
+        colorWheelOnOffButton.backgroundColor = .white
+        colorWheelOnOffButton.setBackgroundImage(UIImage(named: "onLight"), for: .normal)
+        colorWheelOnOffButton.translatesAutoresizingMaskIntoConstraints = false
+        colorWheelOnOffButton.centerXAnchor.constraint(equalTo: ColorWheelView.centerXAnchor).isActive = true
+        colorWheelOnOffButton.centerYAnchor.constraint(equalTo: ColorWheelView.centerYAnchor).isActive = true
+        colorWheelOnOffButton.widthAnchor.constraint(equalTo: ColorWheelView.widthAnchor, multiplier: 1/4).isActive = true
+        colorWheelOnOffButton.heightAnchor.constraint(equalTo: ColorWheelView.heightAnchor, multiplier: 1/4).isActive = true
+        colorWheelOnOffButton.layer.cornerRadius = ColorWheelView.frame.width/8
+        colorWheelOnOffButton.contentMode = .center
+        colorWheelOnOffButton.imageView?.contentMode = .scaleAspectFit
+        colorWheelOnOffButton.addTarget(self, action: #selector(turnOff), for: .touchUpInside)
+        print(ColorWheelView.frame.width)
+        colorWheelOnOffButton.clipsToBounds = true
+        //colorWheelOnOffButton.layer.borderWidth = 1
+        //colorWheelOnOffButton.layer.borderColor = UIColor.black.cgColor
+    }
+    
+    @objc func turnOff()
+    {
+        if (IntroPage.lightsStruct.lightsOn == true){
+            colorWheelOnOffButton.setBackgroundImage(UIImage(named: "offLight"), for: .normal)
+        }
+        else{
+            colorWheelOnOffButton.setBackgroundImage(UIImage(named: "onLight"), for: .normal)
+        }
+            NotificationCenter.default.post(Notification(name: Notification.Name("turnLightsOff")))
+    }
+    
+    
     
     //MARK: Image
     //Checks if image is clicked, check the color of the image at the point, change the color of the button and the color of every light. May not be needed with longtap gesture recognizer as well
@@ -519,14 +556,14 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
                 //converting color from RGB to HSB
                 realColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
                 //maybe get saturation and brightness
+                print("saturation\(saturation)")
+                print("brightness \(brightness)")
                 //Setting light color
                 let color = HSBK(hue: UInt16(65535*hue), saturation: UInt16(65535*saturation), brightness: UInt16(65535*brightness), kelvin: 0)
                 
                 //Iterating through all lights and changing the color
                 //colorView.backgroundColor = realColor
-                for j in soundButtonArray{
-                    j.backgroundColor = realColor
-                }
+                colorWheelOnOffButton.backgroundColor = realColor
                 for i in IntroPage.lightsStruct.lightArray{
                     let setColor = LightSetColorCommand.create(light: i, color: color, duration: 0)
                     setColor.fireAndForget()
@@ -611,7 +648,44 @@ extension EnvironmentController: UIContextMenuInteractionDelegate{
             self.soundButtonArray[buttonIndex].interactions = []
             self.soundButtonArray[buttonIndex].setTitle("", for: .normal)
         }
-        let edit = UIMenu(title: "Edit...", children: [rename, delete])
+        let red = UIAction(title: "red", image: UIImage(named: "red")){_ in
+            self.soundButtonArray[buttonIndex].backgroundColor = .red
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 1.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.0
+        }
+        let orange = UIAction(title: "orange", image: UIImage(named: "orange")){_ in
+            self.soundButtonArray[buttonIndex].backgroundColor = .orange
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 1.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.5
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.0
+        }
+        let yellow = UIAction(title: "yellow", image: UIImage(named: "yellow")){_ in
+            self.soundButtonArray[buttonIndex].backgroundColor = .yellow
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 1.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 1.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.0
+        }
+        let green = UIAction(title: "green", image: UIImage(named: "green")){_ in
+            self.soundButtonArray[buttonIndex].backgroundColor = .green
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 0.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 1.0
+        }
+        let blue = UIAction(title: "blue", image: UIImage(named: "blue")){_ in
+            self.soundButtonArray[buttonIndex].backgroundColor = .blue
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 0.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 1.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.0
+        }
+        let purple = UIAction(title: "purple", image: UIImage(named: "purple")){_ in
+            self.soundButtonArray[buttonIndex].backgroundColor = .purple
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorRed = 0.5
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.0
+            GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.5
+        }
+        let setColor = UIMenu(title: "Set Color", children: [red,orange,yellow,green,blue,purple])
+        let edit = UIMenu(title: "Edit...", children: [rename, delete, setColor])
         let play = UIAction(title: "play", image: UIImage(systemName: "play")){ action in
             self.playSounds(buttonIndex: buttonIndex)
         }
