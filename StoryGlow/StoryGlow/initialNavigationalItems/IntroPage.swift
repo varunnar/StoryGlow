@@ -19,6 +19,7 @@ class IntroPage: UIViewController {
     
     struct lightsStruct{
         static var lightArray = [Light]() //holds all lights in an array within a struct so it is accessible on any file
+        static var lightsOn = true
     }
     
     //setups up light services
@@ -37,13 +38,19 @@ class IntroPage: UIViewController {
         super.viewDidLoad()
         let previousStories = DataControllerInstance.getStoriesFromDisk()
         GlobalVar.GlobalItems.storyArray = previousStories
-        //if (GlobalVar.GlobalItems.firstOpening == true){
-            setupTutorial()
-        //}
+        if (GlobalVar.tutorial.firstOpening == true){
+            if (GlobalVar.tutorial.introPageFirstOpening == true){
+                setupTutorial()
+                GlobalVar.tutorial.introPageFirstOpening = false
+            }
+        }
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(goingToBackEnd), name: UIApplication.willResignActiveNotification, object: nil)
         lightService.start() //start looking for lights
         NotificationCenter.default.addObserver(self, selector: #selector(AddedLight), name: NSNotification.Name(rawValue: "LightAdded"), object: nil) //notification for when light is added
+        self.navigationController?.navigationBar.topItem?.title = "Welcome to StoryGlow" //set top title
+
+        NotificationCenter.default.addObserver(self, selector: #selector(turnOffLights), name: NSNotification.Name(rawValue: "turnLightsOff"), object: nil)
         self.navigationController?.navigationBar.topItem?.title = "Welcome to StoryGlow" //set top title
 
         view.backgroundColor = .black
@@ -86,16 +93,31 @@ class IntroPage: UIViewController {
     
     //function for when light is added, randomizes color in order to show user light is connected
     @objc func AddedLight(notification: Notification){
-           if let light = notification.object as? Light{
-               lightsStruct.lightArray.append(light)
-               let color = HSBK(hue: UInt16(.random(in: 0...1) * Float(UInt16.max)), saturation: UInt16(.random(in: 0...1) * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0)
-               print(color.brightness)
-               print(color.hue)
-               print(color.saturation)
-               let setColor = LightSetColorCommand.create(light: light, color: color, duration: 0)
+        if let light = notification.object as? Light{
+            lightsStruct.lightArray.append(light)
+            let color = HSBK(hue: UInt16(.random(in: 0...1) * Float(UInt16.max)), saturation: UInt16(.random(in: 0...1) * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0)
+            let setColor = LightSetColorCommand.create(light: light, color: color, duration: 0)
                setColor.fireAndForget()
-           }
-       }
+        }
+    }
+    
+    @objc func turnOffLights()
+    {
+        if lightsStruct.lightsOn == true{
+            lightsStruct.lightsOn = false
+            for light in lightsStruct.lightArray{
+                let power = LightSetPowerCommand.create(light: light, status: false, duration: 0)
+                power.fireAndForget()
+            }
+        }
+        else{
+            lightsStruct.lightsOn = true
+            for light in lightsStruct.lightArray{
+                let power = LightSetPowerCommand.create(light: light, status: true, duration: 0)
+                power.fireAndForget()
+            }
+        }
+    }
     
     //MARK: Setup and Constraints
     

@@ -22,9 +22,12 @@ class environmentTableView: UIViewController,UITableViewDelegate,UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //if (GlobalVar.GlobalItems.firstOpening == true){
-            setupTutorial()
-        //}
+        if (GlobalVar.tutorial.firstOpening == true){
+            if (GlobalVar.tutorial.SceneTableFirstOpening == true){
+                setupTutorial()
+                GlobalVar.tutorial.SceneTableFirstOpening = false
+            }
+        }
         setupTableView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         tableView.dragInteractionEnabled = true
