@@ -130,6 +130,11 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
         
         //readding sounds to buttons on swiping
         for n in 0...5{
+            if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName == "")
+            {
+                soundButtonArray[n].setImage(UIImage(named: "add.png"), for: .normal)
+                GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n] = GlobalVar.SoundAffects(soundName: "", soundVal: "")
+            }
     soundButtonArray[n].setTitle(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName, for: .normal)
             let red = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorRed
             let green = GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundColorGreen
@@ -138,8 +143,13 @@ class EnvironmentController: UIViewController, AVAudioPlayerDelegate{
                 print(blue)
                 soundButtonArray[n].setTitleColor(.white, for: .normal)
             }
+            else
+            {
+                soundButtonArray[n].setTitleColor(.black, for: .normal)
+            }
             soundButtonArray[n].backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
             if (GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName != ""){
+                print("in viewdidappear\(GlobalVar.GlobalItems.storyArray[storyIndex].sceneArray[sceneIndex].buttonInfo[n].soundName)")
                 soundButtonArray[n].setImage(UIImage(named: ""), for: .normal)
                 soundButtonArray[n].interactions = []
                 let interaction = UIContextMenuInteraction(delegate: self)
@@ -673,8 +683,46 @@ extension EnvironmentController: UIContextMenuInteractionDelegate{
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorGreen = 0.0
             GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex].soundColorBlue = 0.5
         }
+        var ReplaceActions = [UIAction]()
+        for i in 0...5{
+            if (i != buttonIndex)
+            {
+                let replaceItem = UIAction(title: GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[i].soundName, handler: {_ in
+                    let currentButtonNameInfo = GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex]
+                    let currentName = self.soundButtonArray[buttonIndex].currentTitle
+                    let currentNameColor = self.soundButtonArray[buttonIndex].currentTitleColor
+                    let currentColor = self.soundButtonArray[buttonIndex].backgroundColor
+                    let newButtonName = self.soundButtonArray[i].currentTitle
+                    let newButtonNameColor = self.soundButtonArray[i].currentTitleColor
+                    let newColor = self.soundButtonArray[i].backgroundColor
+                    GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[buttonIndex] = GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[i]
+                    GlobalVar.GlobalItems.storyArray[self.storyIndex].sceneArray[self.sceneIndex].buttonInfo[i] = currentButtonNameInfo
+                    if (newButtonName == "" || newButtonName == nil){
+                        self.soundButtonArray[buttonIndex].setImage(UIImage(named: "add.png"), for: .normal)
+                        self.soundButtonArray[buttonIndex].setTitle("", for: .normal)
+                        self.soundButtonArray[buttonIndex].interactions = []
+                    }
+                    else
+                    {
+                        self.soundButtonArray[buttonIndex].setTitle(newButtonName, for: .normal)
+                        self.soundButtonArray[buttonIndex].setTitleColor(newButtonNameColor, for: .normal)
+                    }
+                    self.soundButtonArray[buttonIndex].backgroundColor = newColor
+                    let interaction = UIContextMenuInteraction(delegate: self)
+                    self.soundButtonArray[i].addInteraction(interaction)
+                    self.soundButtonArray[i].setImage(nil, for: .normal)
+                    self.soundButtonArray[i].setTitle(currentName, for: .normal)
+                    self.soundButtonArray[i].setTitleColor(currentNameColor, for: .normal)
+                    self.soundButtonArray[i].backgroundColor = currentColor
+                    
+                })
+                ReplaceActions.append(replaceItem)
+                
+            }
+        }
+        let replace = UIMenu(title: "replace",children: ReplaceActions)
         let setColor = UIMenu(title: "Set Color", image: UIImage(named: "paint") , children: [red,orange,yellow,green,blue,purple])
-        let edit = UIMenu(title: "Edit...", children: [rename, delete, setColor])
+        let edit = UIMenu(title: "Edit...", children: [rename, delete, setColor,replace])
         let play = UIAction(title: "play", image: UIImage(systemName: "play")){ action in
             self.playSounds(buttonIndex: buttonIndex)
         }

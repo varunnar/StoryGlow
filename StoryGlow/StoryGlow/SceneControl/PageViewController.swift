@@ -205,6 +205,7 @@ extension PageHolder: UIPageViewControllerDataSource, UIPageViewControllerDelega
                 if let viewControllerIndex = self.pages.firstIndex(of: viewControllers[0]) {
                     navigationItem.title = viewControllers[0].title
                         pageControl.currentPage = viewControllerIndex
+                        currentSceneIndex = viewControllerIndex
                     }
                 }
         }
