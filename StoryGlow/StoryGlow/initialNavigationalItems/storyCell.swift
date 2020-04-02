@@ -65,7 +65,7 @@ class storyCell: UITableViewCell {
         ])
         
         storyLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        storyLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        storyLabel.widthAnchor.constraint(equalToConstant: 400).isActive = true
         storyLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor).isActive = true
         storyLabel.leftAnchor.constraint(equalTo: cellView.leftAnchor, constant: 20).isActive = true
     }
@@ -74,14 +74,6 @@ class storyCell: UITableViewCell {
     {
         storyName.text = cellHold.title
         storyName.font = UIFont.boldSystemFont(ofSize: 20)
-    }
-    
-    func configStoryName()
-    {
-        storyLabel.translatesAutoresizingMaskIntoConstraints = false
-        storyLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        storyLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        storyLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
 
